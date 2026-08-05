@@ -7,7 +7,7 @@ const { useState, useEffect, useRef } = React;
 const {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line,
-} = Recharts;
+} = window.Recharts || {};
 
 // ---------- Ícones (SVG simples, sem depender de biblioteca externa) ----------
 function Ic(elementos) {
@@ -4608,6 +4608,36 @@ function SistemaPAF() {
 }
 
 
+// ---------- Rede de segurança: evita tela branca se algo der erro ----------
+class ErroGeral extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { erro: null };
+  }
+  static getDerivedStateFromError(erro) {
+    return { erro };
+  }
+  componentDidCatch(erro, info) {
+    console.error("Erro capturado pela aplicação:", erro, info);
+  }
+  render() {
+    if (this.state.erro) {
+      return React.createElement(
+        "div",
+        { style: { minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 24, fontFamily: "sans-serif", textAlign: "center" } },
+        React.createElement(
+          "div",
+          null,
+          React.createElement("div", { style: { fontSize: 16, fontWeight: 600, marginBottom: 8 } }, "Ops, algo deu errado ao carregar esta parte do sistema."),
+          React.createElement("div", { style: { fontSize: 13, color: "#64748b", marginBottom: 12 } }, "Tente recarregar a página. Se o erro continuar, avise o suporte com a mensagem abaixo."),
+          React.createElement("pre", { style: { fontSize: 11, color: "#b91c1c", background: "#fef2f2", padding: 12, borderRadius: 6, maxWidth: 600, overflow: "auto", textAlign: "left" } }, String(this.state.erro && this.state.erro.message))
+        )
+      );
+    }
+    return this.props.children;
+  }
+}
+
 // ---------- Ponto de entrada ----------
 const raiz = ReactDOM.createRoot(document.getElementById("root"));
-raiz.render(React.createElement(SistemaPAF));
+raiz.render(React.createElement(ErroGeral, null, React.createElement(SistemaPAF)));
