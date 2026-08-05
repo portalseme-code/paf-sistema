@@ -182,6 +182,14 @@ const EyeOff = Ic([
   { tag: "path", attrs: { d: "M9.53 9.53A3.5 3.5 0 0 0 12 15.5a3.5 3.5 0 0 0 2.47-1.03" } },
   { tag: "line", attrs: { x1: 2, y1: 2, x2: 22, y2: 22 } },
 ]);
+const TrendingUp = Ic([
+  { tag: "polyline", attrs: { points: "22 7 13.5 15.5 8.5 10.5 2 17" } },
+  { tag: "polyline", attrs: { points: "16 7 22 7 22 13" } },
+]);
+
+
+
+
 
 
 
@@ -524,6 +532,7 @@ const initialDB = {
       ],
     },
   ],
+  rendimentos: [],
 };
 
 let nextId = 90000;
@@ -1078,7 +1087,7 @@ function PresidenteView({ db, setDb, conselhoId, setConselhoId, menuAberto, setM
     registrarHistorico(setDb, { perfil: "Presidente", usuario: usuarioLogado?.nomeCompleto || conselho.presidente, conselhoId, conselhoNome: conselho.nomeConselho, acao: "Excluiu um arquivo do Plano de Aplicação" });
   }
 
-  function adicionarLancamento(payload) {
+  async function adicionarLancamento(payload) {
     if (dataEstaTravada(db, conselhoId, payload.dataNF)) {
       alert("Este período já foi encaminhado para a prestação de contas e está travado. Solicite o desbloqueio ao Coordenador para lançar despesas nesta data.");
       return;
@@ -1087,16 +1096,31 @@ function PresidenteView({ db, setDb, conselhoId, setConselhoId, menuAberto, setM
     const papel = souAssessor ? "assessor" : "presidente";
     const statusInicial = souAssessor ? "aguardando autorização" : "registrado";
     const novoId = genId();
+
+    const arquivosNFFinal = [];
+    for (const a of payload.arquivosNF || []) {
+      const base64 = await arquivoParaBase64(a.file);
+      const resultado = await apiUploadArquivo(base64, a.nome, a.file.type || "application/pdf", conselho.nomeConselho);
+      arquivosNFFinal.push({ id: genId(), nome: a.nome, url: resultado?.url || "" });
+    }
+    const orcamentosFinal = [];
+    for (const a of payload.orcamentos || []) {
+      const base64 = await arquivoParaBase64(a.file);
+      const resultado = await apiUploadArquivo(base64, a.nome, a.file.type || "application/pdf", conselho.nomeConselho);
+      orcamentosFinal.push({ id: genId(), nome: a.nome, url: resultado?.url || "" });
+    }
+
     const novoLancamento = {
       id: novoId, conselhoId, repasseId: Number(payload.repasseId), categoriaId: Number(payload.categoriaId),
       data: payload.dataNF, fornecedor: payload.fornecedor, numeroNF: payload.numeroNF,
       valor: payload.valorTotal, descricao: payload.itens.map((i) => i.descricao).join("; "),
-      itens: payload.itens, arquivosNF: payload.arquivosNF || [], lancadoPor: `${nomeUsuario} (${papel})`, status: statusInicial, historico: [],
+      itens: payload.itens, arquivosNF: arquivosNFFinal, orcamentos: orcamentosFinal, lancadoPor: `${nomeUsuario} (${papel})`, status: statusInicial, historico: [],
     };
     setDb((prev) => ({ ...prev, lancamentos: [...prev.lancamentos, novoLancamento] }));
     apiInserir("lancamentos", { id: novoId, conselhoId, repasseId: novoLancamento.repasseId, categoriaId: novoLancamento.categoriaId, data: novoLancamento.data, fornecedor: novoLancamento.fornecedor, numeroNF: novoLancamento.numeroNF, valor: novoLancamento.valor, descricao: novoLancamento.descricao, lancadoPor: novoLancamento.lancadoPor, status: novoLancamento.status });
     payload.itens.forEach((it) => apiInserir("lancamentoItens", { lancamentoId: novoId, descricao: it.descricao, quantidade: it.quantidade, valorUnitario: it.valorUnitario }));
-    (payload.arquivosNF || []).forEach((a) => apiInserir("arquivosNF", { lancamentoId: novoId, nome: a.nome, url: a.url }));
+    arquivosNFFinal.forEach((a) => apiInserir("arquivosNF", { id: a.id, lancamentoId: novoId, nome: a.nome, url: a.url }));
+    orcamentosFinal.forEach((a) => apiInserir("lancamentoOrcamentos", { id: a.id, lancamentoId: novoId, nome: a.nome, url: a.url }));
     registrarHistorico(setDb, { perfil: souAssessor ? "Assessor" : "Presidente", usuario: nomeUsuario, conselhoId, conselhoNome: conselho.nomeConselho, acao: `Lançou despesa de ${brl(payload.valorTotal)} (NF ${payload.numeroNF}, fornecedor ${payload.fornecedor})` });
   }
 
@@ -1112,6 +1136,7 @@ function PresidenteView({ db, setDb, conselhoId, setConselhoId, menuAberto, setM
     apiExcluir("lancamentos", id);
     apiExcluirEmCascata("lancamentoItens", "lancamentoId", id);
     apiExcluirEmCascata("arquivosNF", "lancamentoId", id);
+    apiExcluirEmCascata("lancamentoOrcamentos", "lancamentoId", id);
     registrarHistorico(setDb, { perfil: "Presidente", usuario: usuarioLogado?.nomeCompleto || conselho.presidente, conselhoId, conselhoNome: conselho.nomeConselho, acao: `Excluiu o lançamento de ${brl(l?.valor || 0)} (${categoriaById[l?.categoriaId]?.nome || "categoria"})` });
   }
 
@@ -1145,6 +1170,25 @@ function PresidenteView({ db, setDb, conselhoId, setConselhoId, menuAberto, setM
     apiInserir("remanejamentos", registro);
     registrarHistorico(setDb, { perfil: "Presidente", usuario: usuarioLogado?.nomeCompleto || conselho.presidente, conselhoId, conselhoNome: conselho.nomeConselho, acao: `Solicitou remanejamento de ${brl(centsToReais(novoRemanejamento.valorCents))} (${categoriaById[Number(novoRemanejamento.origemId)]?.nome} → ${categoriaById[Number(novoRemanejamento.destinoId)]?.nome})` });
     setNovoRemanejamento({ repasseId: "", origemId: "", destinoId: "", valorCents: 0, justificativa: "" });
+  }
+
+  async function enviarRendimento(payload) {
+    const nomeUsuario = usuarioLogado?.nomeCompleto || conselho.presidente;
+    const base64 = await arquivoParaBase64(payload.arquivoExtrato.file);
+    const resultado = await apiUploadArquivo(base64, payload.arquivoExtrato.nome, payload.arquivoExtrato.file.type || "application/pdf", conselho.nomeConselho);
+    const url = resultado?.url || "";
+    const id = genId();
+    const registro = {
+      id, conselhoId, repasseId: Number(payload.repasseId),
+      valorInformado: payload.valor, valor: payload.valor,
+      extratoNome: payload.arquivoExtrato.nome, extratoUrl: url,
+      alocacoes: payload.alocacoes, status: "aguardando avaliação",
+      dataEnvio: todayISO(), enviadoPor: nomeUsuario, observacaoCoordenador: null,
+    };
+    setDb((prev) => ({ ...prev, rendimentos: [...(prev.rendimentos || []), registro] }));
+    apiInserir("rendimentos", { id, conselhoId, repasseId: registro.repasseId, valorInformado: registro.valorInformado, valor: registro.valor, extratoNome: registro.extratoNome, extratoUrl: url, status: "aguardando avaliação", dataEnvio: registro.dataEnvio, enviadoPor: nomeUsuario, observacaoCoordenador: "" });
+    payload.alocacoes.forEach((a) => apiInserir("rendimentoAlocacoes", { rendimentoId: id, categoriaId: a.categoriaId, valor: a.valor }));
+    registrarHistorico(setDb, { perfil: "Presidente", usuario: nomeUsuario, conselhoId, conselhoNome: conselho.nomeConselho, acao: `Informou rendimento de ${brl(payload.valor)} da conta` });
   }
 
   function fecharPrestacaoContas(ano, periodo) {
@@ -1191,11 +1235,12 @@ function PresidenteView({ db, setDb, conselhoId, setConselhoId, menuAberto, setM
     { id: "lancamentos", label: "Lançamentos", icon: ClipboardCheck },
     { id: "autorizacoes", label: `Autorizações${pendentesAutorizacao.length ? ` (${pendentesAutorizacao.length})` : ""}`, icon: CheckCircle2 },
     { id: "remanejamento", label: "Remanejamento", icon: ArrowLeftRight },
+    { id: "rendimentos", label: "Rendimentos", icon: TrendingUp },
     { id: "prestacao", label: "Prestação de Contas", icon: Lock },
     { id: "relatorios", label: "Relatórios", icon: BarChart3 },
     { id: "historico", label: "Histórico", icon: History },
   ];
-  const tabs = souAssessor ? tabsCompletas.filter((t) => t.id !== "autorizacoes" && t.id !== "remanejamento" && t.id !== "prestacao") : tabsCompletas;
+  const tabs = souAssessor ? tabsCompletas.filter((t) => t.id !== "autorizacoes" && t.id !== "remanejamento" && t.id !== "prestacao" && t.id !== "rendimentos") : tabsCompletas;
 
   return (
     <div className={isMobile ? "flex flex-col gap-4" : "flex flex-row gap-6"}>
@@ -1565,6 +1610,14 @@ function PresidenteView({ db, setDb, conselhoId, setConselhoId, menuAberto, setM
                         ))}
                       </div>
                     )}
+                    {l.orcamentos && l.orcamentos.length > 0 && (
+                      <div className="mt-2 pt-2 border-t border-slate-100 flex flex-wrap items-center gap-2">
+                        <span className="text-xs text-slate-400">Orçamentos:</span>
+                        {l.orcamentos.map((a, idx) => (
+                          <a key={idx} href={a.url} target="_blank" rel="noreferrer" className="text-xs text-teal-700 underline flex items-center gap-1"><FileText size={11} /> {a.nome}</a>
+                        ))}
+                      </div>
+                    )}
                     {editando === l.id && <EditLancamentoForm lanc={l} onSave={salvarEdicaoLancamento} onCancel={() => setEditando(null)} />}
                     {l.historico.length > 0 && (
                       <div className="mt-2 pt-2 border-t border-slate-100 text-xs text-slate-500 space-y-0.5">
@@ -1663,6 +1716,43 @@ function PresidenteView({ db, setDb, conselhoId, setConselhoId, menuAberto, setM
                 </Card>
               ))}
             </div>
+          </div>
+        )}
+
+        {tab === "rendimentos" && (
+          <div>
+            <SectionTitle icon={TrendingUp}>Rendimentos da conta</SectionTitle>
+            <div className="text-xs text-slate-500 mb-3">Quando o dinheiro na conta render (juros bancários), informe aqui o valor, anexe o extrato e indique para quais categorias o Coordenador deve alocar esse valor.</div>
+            <NovoRendimentoForm
+              repasses={repasses}
+              categorias={categorias}
+              defaultRepasseId={(() => { const def = repasses.filter((r) => r.valoresDefinidos); return def.length ? String(def[def.length - 1].id) : ""; })()}
+              onCriar={enviarRendimento}
+            />
+            <div className="text-xs font-medium text-slate-500 mb-2">Rendimentos informados</div>
+            {(db.rendimentos || []).filter((r) => r.conselhoId === conselhoId).length === 0 ? (
+              <div className="text-sm text-slate-500">Nenhum rendimento informado ainda.</div>
+            ) : (
+              <div className="space-y-2">
+                {(db.rendimentos || []).filter((r) => r.conselhoId === conselhoId).slice().sort((a, b) => b.id - a.id).map((r) => (
+                  <Card key={r.id}>
+                    <div className="flex items-center justify-between flex-wrap gap-2">
+                      <div>
+                        <div className="text-sm text-slate-800">{brl(r.valor)} — repasse: {repasses.find((x) => x.id === r.repasseId)?.descricao || "-"}</div>
+                        <div className="text-xs text-slate-500">Enviado em {displayDate(r.dataEnvio)} · <a href={r.extratoUrl} target="_blank" rel="noreferrer" className="text-teal-700 underline">Ver extrato</a></div>
+                      </div>
+                      <Badge status={r.status} />
+                    </div>
+                    <div className="text-xs text-slate-500 mt-2 space-y-0.5">
+                      {(r.alocacoes || []).map((a, idx) => <div key={idx}>{categoriaById[a.categoriaId]?.nome}: {brl(a.valor)}</div>)}
+                    </div>
+                    {r.status === "reprovado" && r.observacaoCoordenador && (
+                      <div className="text-xs text-red-600 mt-1">Motivo da reprovação: {r.observacaoCoordenador}</div>
+                    )}
+                  </Card>
+                ))}
+              </div>
+            )}
           </div>
         )}
 
@@ -1958,6 +2048,106 @@ function UploadArquivosPlano({ repasses, onSalvar }) {
   );
 }
 
+function NovoRendimentoForm({ repasses, categorias, defaultRepasseId, onCriar }) {
+  const isMobile = useIsMobile();
+  const [repasseId, setRepasseId] = useState(defaultRepasseId || "");
+  const [valorCents, setValorCents] = useState(0);
+  const [arquivoExtrato, setArquivoExtrato] = useState(null);
+  const inputExtratoRef = useRef(null);
+  const idRef = useRef(1);
+  const [alocacoes, setAlocacoes] = useState([{ id: 1, categoriaId: "", valorCents: 0 }]);
+  const [erro, setErro] = useState(null);
+  const [enviando, setEnviando] = useState(false);
+
+  useEffect(() => { setRepasseId(defaultRepasseId || ""); }, [defaultRepasseId]);
+
+  function handleExtrato(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.type !== "application/pdf") { alert("Envie um arquivo em PDF."); return; }
+    setArquivoExtrato({ nome: file.name, file });
+    if (inputExtratoRef.current) inputExtratoRef.current.value = "";
+  }
+
+  function adicionarAlocacao() {
+    idRef.current += 1;
+    setAlocacoes((prev) => [...prev, { id: idRef.current, categoriaId: "", valorCents: 0 }]);
+  }
+  function atualizarAlocacao(id, campo, valor) {
+    setAlocacoes((prev) => prev.map((a) => (a.id === id ? { ...a, [campo]: valor } : a)));
+  }
+  function removerAlocacao(id) {
+    setAlocacoes((prev) => prev.filter((a) => a.id !== id));
+  }
+
+  const somaAlocacoesCents = alocacoes.reduce((s, a) => s + (a.valorCents || 0), 0);
+  const somaBate = somaAlocacoesCents === valorCents;
+
+  function limpar() {
+    setValorCents(0); setArquivoExtrato(null); idRef.current = 1;
+    setAlocacoes([{ id: 1, categoriaId: "", valorCents: 0 }]); setErro(null);
+  }
+
+  async function handleEnviar() {
+    if (!repasseId || !valorCents) { setErro("Selecione o repasse e informe o valor do rendimento."); return; }
+    if (!arquivoExtrato) { setErro("Anexe o extrato bancário."); return; }
+    const alocacoesValidas = alocacoes.filter((a) => a.categoriaId && a.valorCents > 0);
+    if (alocacoesValidas.length === 0) { setErro("Indique ao menos uma categoria para alocar o rendimento."); return; }
+    if (!somaBate) { setErro(`A soma das alocações (${brl(centsToReais(somaAlocacoesCents))}) precisa ser igual ao valor do rendimento (${brl(centsToReais(valorCents))}).`); return; }
+    setErro(null);
+    setEnviando(true);
+    await onCriar({
+      repasseId, valor: centsToReais(valorCents), arquivoExtrato,
+      alocacoes: alocacoesValidas.map((a) => ({ categoriaId: Number(a.categoriaId), valor: centsToReais(a.valorCents) })),
+    });
+    setEnviando(false);
+    limpar();
+  }
+
+  return (
+    <Card className="mb-4">
+      <div className="text-sm font-medium text-slate-800 mb-3">Informar rendimento da conta</div>
+      <div className={isMobile ? "grid grid-cols-1 gap-3 mb-3" : "grid grid-cols-2 gap-3 mb-3"}>
+        <Field label="Repasse">
+          <select value={repasseId} onChange={(e) => setRepasseId(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1 text-sm">
+            <option value="">Selecione</option>
+            {repasses.filter((r) => r.valoresDefinidos).map((r) => <option key={r.id} value={r.id}>{r.descricao}</option>)}
+          </select>
+        </Field>
+        <Field label="Valor do rendimento"><CurrencyInput cents={valorCents} onChangeCents={setValorCents} /></Field>
+      </div>
+      <div className="mb-3">
+        <div className="text-xs text-slate-500 mb-1">Anexar extrato bancário (PDF)</div>
+        {arquivoExtrato ? (
+          <div className="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-md px-3 py-1.5 text-sm">
+            <span className="truncate">{arquivoExtrato.nome}</span>
+            <button onClick={() => setArquivoExtrato(null)} className="text-slate-400 hover:text-red-600 shrink-0"><Trash2 size={14} /></button>
+          </div>
+        ) : (
+          <input ref={inputExtratoRef} type="file" accept="application/pdf" onChange={handleExtrato} className="text-sm" />
+        )}
+      </div>
+      <div className="text-xs font-medium text-slate-500 mb-2">Para onde alocar (categorias de Custeio/Capital)</div>
+      <div className="space-y-2 mb-2">
+        {alocacoes.map((a) => (
+          <div key={a.id} className="flex flex-wrap items-center gap-2 bg-slate-50 border border-slate-200 rounded-md p-2">
+            <select value={a.categoriaId} onChange={(e) => atualizarAlocacao(a.id, "categoriaId", e.target.value)} className="flex-1 min-w-[160px] border border-slate-300 rounded px-2 py-1 text-sm bg-white">
+              <option value="">Selecione a categoria</option>
+              {categorias.map((c) => <option key={c.id} value={c.id}>{c.nome} ({c.tipo})</option>)}
+            </select>
+            <div className="w-28 shrink-0"><CurrencyInput cents={a.valorCents} onChangeCents={(v) => atualizarAlocacao(a.id, "valorCents", v)} /></div>
+            {alocacoes.length > 1 && <button onClick={() => removerAlocacao(a.id)} className="text-slate-400 hover:text-red-600 shrink-0"><Trash2 size={14} /></button>}
+          </div>
+        ))}
+      </div>
+      <GhostButton onClick={adicionarAlocacao} className="mb-3"><Plus size={12} /> Adicionar categoria</GhostButton>
+      <div className={`text-xs mb-3 ${somaBate ? "text-slate-500" : "text-red-600"}`}>Soma das alocações: {brl(centsToReais(somaAlocacoesCents))} de {brl(centsToReais(valorCents))}</div>
+      {erro && <div className="text-xs text-red-600 mb-3">{erro}</div>}
+      <PrimaryButton onClick={handleEnviar} disabled={enviando}>{enviando ? "Enviando..." : (<><Send size={14} /> Enviar solicitação de rendimento</>)}</PrimaryButton>
+    </Card>
+  );
+}
+
 function NovoLancamentoForm({ repasses, categorias, defaultRepasseId, getInfoCategoria, onCriar }) {
   const isMobile = useIsMobile();
   const [repasseId, setRepasseId] = useState(defaultRepasseId || "");
@@ -1968,6 +2158,9 @@ function NovoLancamentoForm({ repasses, categorias, defaultRepasseId, getInfoCat
   const [valorTotalCents, setValorTotalCents] = useState(0);
   const [arquivosNF, setArquivosNF] = useState([]);
   const inputNFRef = useRef(null);
+  const [orcamentos, setOrcamentos] = useState([]);
+  const inputOrcamentosRef = useRef(null);
+  const [enviando, setEnviando] = useState(false);
   const idRef = useRef(1);
   const [itens, setItens] = useState([{ id: 1, descricao: "", quantidade: "", valorUnitarioCents: 0 }]);
   const [erro, setErro] = useState(null);
@@ -1994,7 +2187,7 @@ function NovoLancamentoForm({ repasses, categorias, defaultRepasseId, getInfoCat
     const files = Array.from(e.target.files || []);
     const validos = files.filter((f) => f.type === "application/pdf");
     if (validos.length !== files.length) alert("Apenas arquivos em PDF são aceitos.");
-    const novos = validos.map((f) => ({ nome: f.name, url: URL.createObjectURL(f) }));
+    const novos = validos.map((f) => ({ nome: f.name, file: f }));
     setArquivosNF((prev) => [...prev, ...novos]);
     if (inputNFRef.current) inputNFRef.current.value = "";
   }
@@ -2002,23 +2195,37 @@ function NovoLancamentoForm({ repasses, categorias, defaultRepasseId, getInfoCat
     setArquivosNF((prev) => prev.filter((_, i) => i !== idx));
   }
 
-  function limpar() {
-    setCategoriaId(""); setFornecedor(""); setNumeroNF(""); setDataNF(todayISO()); setValorTotalCents(0);
-    idRef.current = 1; setItens([{ id: 1, descricao: "", quantidade: "", valorUnitarioCents: 0 }]); setErro(null); setArquivosNF([]);
+  function handleOrcamentos(e) {
+    const files = Array.from(e.target.files || []);
+    const validos = files.filter((f) => f.type === "application/pdf");
+    if (validos.length !== files.length) alert("Apenas arquivos em PDF são aceitos.");
+    const novos = validos.map((f) => ({ nome: f.name, file: f }));
+    setOrcamentos((prev) => [...prev, ...novos]);
+    if (inputOrcamentosRef.current) inputOrcamentosRef.current.value = "";
+  }
+  function removerOrcamento(idx) {
+    setOrcamentos((prev) => prev.filter((_, i) => i !== idx));
   }
 
-  function handleLancar() {
+  function limpar() {
+    setCategoriaId(""); setFornecedor(""); setNumeroNF(""); setDataNF(todayISO()); setValorTotalCents(0);
+    idRef.current = 1; setItens([{ id: 1, descricao: "", quantidade: "", valorUnitarioCents: 0 }]); setErro(null); setArquivosNF([]); setOrcamentos([]);
+  }
+
+  async function handleLancar() {
     if (!repasseId || !categoriaId || !fornecedor || !numeroNF || !dataNF || !valorTotalCents) { setErro("Preencha todos os campos da nota fiscal."); return; }
     const itensValidos = itens.filter((i) => i.descricao && Number(i.quantidade) > 0 && i.valorUnitarioCents > 0);
     if (itensValidos.length === 0) { setErro("Adicione pelo menos um item da nota fiscal."); return; }
     if (!somaBate) { setErro(`A soma dos itens (${brl(somaItensReais)}) precisa ser igual ao valor total da NF (${brl(valorTotalReais)}).`); return; }
     if (info && valorTotalReais > info.disponivel) { setErro(`Valor maior que o disponível para esta categoria: ${brl(info.disponivel)}.`); return; }
     setErro(null);
-    onCriar({
+    setEnviando(true);
+    await onCriar({
       repasseId, categoriaId, fornecedor, numeroNF, dataNF, valorTotal: valorTotalReais,
       itens: itensValidos.map((i) => ({ descricao: i.descricao, quantidade: Number(i.quantidade), valorUnitario: centsToReais(i.valorUnitarioCents) })),
-      arquivosNF,
+      arquivosNF, orcamentos,
     });
+    setEnviando(false);
     limpar();
   }
 
@@ -2073,6 +2280,20 @@ function NovoLancamentoForm({ repasses, categorias, defaultRepasseId, getInfoCat
             </div>
           )}
         </div>
+        <div className="mt-3">
+          <div className="text-xs text-slate-500 mb-1">Anexar orçamentos usados para essa compra (PDF)</div>
+          <input ref={inputOrcamentosRef} type="file" accept="application/pdf" multiple onChange={handleOrcamentos} className="text-sm" />
+          {orcamentos.length > 0 && (
+            <div className="space-y-1.5 mt-2">
+              {orcamentos.map((a, idx) => (
+                <div key={idx} className="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-md px-3 py-1.5 text-sm">
+                  <span className="truncate">{a.nome}</span>
+                  <button onClick={() => removerOrcamento(idx)} className="text-slate-400 hover:text-red-600 shrink-0"><Trash2 size={14} /></button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="border-t border-slate-100 pt-3 mb-3">
@@ -2101,7 +2322,7 @@ function NovoLancamentoForm({ repasses, categorias, defaultRepasseId, getInfoCat
       </div>
 
       {erro && <div className="text-xs text-red-600 mb-3">{erro}</div>}
-      <PrimaryButton onClick={handleLancar}><Plus size={14} /> Lançar despesa</PrimaryButton>
+      <PrimaryButton onClick={handleLancar} disabled={enviando}>{enviando ? "Enviando..." : (<><Plus size={14} /> Lançar despesa</>)}</PrimaryButton>
     </Card>
   );
 }
@@ -2136,7 +2357,6 @@ function ConselhoForm({ inicial, onSalvar, onCancelar }) {
   function salvar() {
     const escolasLimpas = escolas.map((e) => e.trim()).filter(Boolean);
     if (!nomeConselho || !cnpj || escolasLimpas.length === 0) { setErro("Preencha nome, CNPJ e ao menos uma escola."); return; }
-    if (!validarCNPJ(cnpj)) { setErro("CNPJ inválido. Confira o número digitado."); return; }
     setErro(null);
     onSalvar({ nomeConselho, escolas: escolasLimpas, cnpj, presidente, tesoureiro: tesoureiro || null, vencimento });
   }
@@ -2257,6 +2477,94 @@ function CategoriaEditForm({ categoria, onSalvar, onCancelar }) {
 }
 
 // ================= COORDENADOR =================
+function RendimentoCard({ r, conselhoNome, categorias, categoriaById, onDecidir }) {
+  const isMobile = useIsMobile();
+  const [valorCents, setValorCents] = useState(reaisToCents(r.valor));
+  const idRef = useRef(r.alocacoes.length);
+  const [alocacoes, setAlocacoes] = useState(r.alocacoes.map((a, idx) => ({ id: idx + 1, categoriaId: String(a.categoriaId), valorCents: reaisToCents(a.valor) })));
+  const [observacao, setObservacao] = useState("");
+  const [mostrarReprovar, setMostrarReprovar] = useState(false);
+
+  function adicionarAlocacao() {
+    idRef.current += 1;
+    setAlocacoes((prev) => [...prev, { id: idRef.current, categoriaId: "", valorCents: 0 }]);
+  }
+  function atualizarAlocacao(id, campo, valor) {
+    setAlocacoes((prev) => prev.map((a) => (a.id === id ? { ...a, [campo]: valor } : a)));
+  }
+  function removerAlocacao(id) {
+    setAlocacoes((prev) => prev.filter((a) => a.id !== id));
+  }
+
+  const somaCents = alocacoes.reduce((s, a) => s + (a.valorCents || 0), 0);
+  const somaBate = somaCents === valorCents;
+
+  function aprovar() {
+    if (!somaBate) { alert("A soma das alocações precisa ser igual ao valor do rendimento."); return; }
+    const alocacoesFinais = alocacoes.filter((a) => a.categoriaId && a.valorCents > 0).map((a) => ({ categoriaId: Number(a.categoriaId), valor: centsToReais(a.valorCents) }));
+    if (alocacoesFinais.length === 0) { alert("Indique ao menos uma categoria."); return; }
+    onDecidir(r, true, centsToReais(valorCents), alocacoesFinais, null);
+  }
+  function reprovar() {
+    onDecidir(r, false, r.valor, r.alocacoes, observacao);
+    setMostrarReprovar(false);
+  }
+
+  return (
+    <Card>
+      <div className="flex items-center justify-between flex-wrap gap-2">
+        <div>
+          <div className="text-sm font-medium text-slate-800">{conselhoNome} — {brl(r.valorInformado)} informado</div>
+          <div className="text-xs text-slate-500">Enviado por {r.enviadoPor} em {displayDate(r.dataEnvio)} · <a href={r.extratoUrl} target="_blank" rel="noreferrer" className="text-teal-700 underline">Ver extrato</a></div>
+        </div>
+        <Badge status={r.status} />
+      </div>
+      {r.status === "aguardando avaliação" ? (
+        <div className="mt-3 pt-3 border-t border-slate-100">
+          <div className={isMobile ? "grid grid-cols-1 gap-2 mb-3" : "grid grid-cols-2 gap-2 mb-3"}>
+            <Field label="Valor do rendimento (pode corrigir se estiver errado)"><CurrencyInput cents={valorCents} onChangeCents={setValorCents} /></Field>
+          </div>
+          <div className="text-xs font-medium text-slate-500 mb-2">Alocação por categoria (pode editar)</div>
+          <div className="space-y-2 mb-2">
+            {alocacoes.map((a) => (
+              <div key={a.id} className="flex flex-wrap items-center gap-2 bg-slate-50 border border-slate-200 rounded-md p-2">
+                <select value={a.categoriaId} onChange={(e) => atualizarAlocacao(a.id, "categoriaId", e.target.value)} className="flex-1 min-w-[160px] border border-slate-300 rounded px-2 py-1 text-sm bg-white">
+                  <option value="">Selecione a categoria</option>
+                  {categorias.map((c) => <option key={c.id} value={c.id}>{c.nome} ({c.tipo})</option>)}
+                </select>
+                <div className="w-28 shrink-0"><CurrencyInput cents={a.valorCents} onChangeCents={(v) => atualizarAlocacao(a.id, "valorCents", v)} /></div>
+                {alocacoes.length > 1 && <button onClick={() => removerAlocacao(a.id)} className="text-slate-400 hover:text-red-600 shrink-0"><Trash2 size={14} /></button>}
+              </div>
+            ))}
+          </div>
+          <GhostButton onClick={adicionarAlocacao} className="mb-2"><Plus size={12} /> Adicionar categoria</GhostButton>
+          <div className={`text-xs mb-2 ${somaBate ? "text-slate-500" : "text-red-600"}`}>Soma: {brl(centsToReais(somaCents))} de {brl(centsToReais(valorCents))}</div>
+          {!mostrarReprovar ? (
+            <div className="flex gap-2">
+              <GhostButton tone="green" onClick={aprovar}><CheckCircle2 size={13} /> Aprovar</GhostButton>
+              <GhostButton tone="red" onClick={() => setMostrarReprovar(true)}><XCircle size={13} /> Reprovar</GhostButton>
+            </div>
+          ) : (
+            <div>
+              <textarea placeholder="Motivo da reprovação (opcional)" value={observacao} onChange={(e) => setObservacao(e.target.value.toUpperCase())} className="w-full border border-slate-300 rounded px-2 py-1 text-sm mb-2" rows={2} />
+              <div className="flex gap-2">
+                <GhostButton tone="red" onClick={reprovar}>Confirmar reprovação</GhostButton>
+                <GhostButton onClick={() => setMostrarReprovar(false)}>Cancelar</GhostButton>
+              </div>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="text-xs text-slate-500 mt-2 space-y-0.5">
+          {r.status === "aprovado" && <div className="font-medium text-slate-700">Valor aprovado: {brl(r.valor)}</div>}
+          {(r.alocacoes || []).map((a, idx) => <div key={idx}>{categoriaById[a.categoriaId]?.nome}: {brl(a.valor)}</div>)}
+          {r.status === "reprovado" && r.observacaoCoordenador && <div className="text-red-600 mt-1">Motivo: {r.observacaoCoordenador}</div>}
+        </div>
+      )}
+    </Card>
+  );
+}
+
 function PrestacaoContasCard({ p, conselhoNome, onDecidir, onReabrir }) {
   const [observacao, setObservacao] = useState("");
   const [mostrarReprovar, setMostrarReprovar] = useState(false);
@@ -2575,6 +2883,61 @@ function CoordenadorView({ db, setDb, menuAberto, setMenuAberto, usuarioLogado }
     registrarHistorico(setDb, { perfil: "Coordenador", usuario: usuarioLogado?.nomeCompleto || "Coordenador", conselhoId: prestacao?.conselhoId, conselhoNome: conselhoById[prestacao?.conselhoId]?.nomeConselho, acao: `${aprovado ? "Aprovou" : "Reprovou"} a prestação de contas do período "${prestacao?.periodo} de ${prestacao?.ano}"` });
   }
 
+  function decidirRendimento(rendimento, aprovado, valorFinalReais, alocacoesFinais, observacao) {
+    setDb((prev) => {
+      let repasses = prev.repasses;
+      let planos = prev.planos;
+      if (aprovado) {
+        let addCusteio = 0, addCapital = 0;
+        alocacoesFinais.forEach((a) => {
+          const cat = (prev.categoriasPorConselho[rendimento.conselhoId] || []).find((c) => c.id === a.categoriaId);
+          if (cat?.tipo === "Custeio") addCusteio += a.valor; else addCapital += a.valor;
+        });
+        repasses = prev.repasses.map((r) => (r.id === rendimento.repasseId ? { ...r, custeio: r.custeio + addCusteio, capital: r.capital + addCapital } : r));
+        planos = prev.planos.map((p) => {
+          if (p.repasseId !== rendimento.repasseId) return p;
+          let itens = [...p.itens];
+          alocacoesFinais.forEach((a) => {
+            const existe = itens.some((i) => i.categoriaId === a.categoriaId);
+            itens = existe ? itens.map((i) => (i.categoriaId === a.categoriaId ? { ...i, valorPrevisto: i.valorPrevisto + a.valor } : i)) : [...itens, { categoriaId: a.categoriaId, valorPrevisto: a.valor }];
+          });
+          return { ...p, itens };
+        });
+      }
+      return {
+        ...prev, repasses, planos,
+        rendimentos: prev.rendimentos.map((r) => (r.id === rendimento.id ? { ...r, valor: valorFinalReais, alocacoes: alocacoesFinais, status: aprovado ? "aprovado" : "reprovado", observacaoCoordenador: aprovado ? null : (observacao || "Sem observação informada.") } : r)),
+      };
+    });
+
+    if (aprovado) {
+      const repasse = db.repasses.find((r) => r.id === rendimento.repasseId);
+      const idx = db.repasses.filter((r) => r.conselhoId === rendimento.conselhoId).findIndex((r) => r.id === rendimento.repasseId);
+      let addCusteio = 0, addCapital = 0;
+      alocacoesFinais.forEach((a) => {
+        const cat = categoriaById[a.categoriaId];
+        if (cat?.tipo === "Custeio") addCusteio += a.valor; else addCapital += a.valor;
+      });
+      apiAtualizar("repasses", rendimento.repasseId, { custeio: (repasse?.custeio || 0) + addCusteio, capital: (repasse?.capital || 0) + addCapital });
+      const plano = db.planos.find((p) => p.repasseId === rendimento.repasseId);
+      alocacoesFinais.forEach((a) => {
+        const item = plano?.itens.find((i) => i.categoriaId === a.categoriaId);
+        if (item) {
+          apiChamar({ action: "atualizarPorFiltro", sheet: "planoItens", filtros: { repasseId: rendimento.repasseId, categoriaId: a.categoriaId }, dados: { valorPrevisto: item.valorPrevisto + a.valor } });
+        } else {
+          apiInserir("planoItens", { repasseId: rendimento.repasseId, categoriaId: a.categoriaId, valorPrevisto: a.valor });
+        }
+      });
+    }
+    apiAtualizar("rendimentos", rendimento.id, { valor: valorFinalReais, status: aprovado ? "aprovado" : "reprovado", observacaoCoordenador: aprovado ? "" : (observacao || "Sem observação informada.") });
+    if (aprovado) {
+      apiExcluirEmCascata("rendimentoAlocacoes", "rendimentoId", rendimento.id);
+      alocacoesFinais.forEach((a) => apiInserir("rendimentoAlocacoes", { rendimentoId: rendimento.id, categoriaId: a.categoriaId, valor: a.valor }));
+    }
+    registrarHistorico(setDb, { perfil: "Coordenador", usuario: usuarioLogado?.nomeCompleto || "Coordenador", conselhoId: rendimento.conselhoId, conselhoNome: conselhoById[rendimento.conselhoId]?.nomeConselho, acao: `${aprovado ? "Aprovou" : "Reprovou"} o rendimento de ${brl(valorFinalReais)} informado pelo conselho` });
+  }
+
+
   function reabrirPrestacaoContas(id) {
     const prestacao = db.prestacoesContas.find((p) => p.id === id);
     setDb((prev) => ({ ...prev, prestacoesContas: prev.prestacoesContas.map((p) => (p.id === id ? { ...p, status: "reaberta" } : p)) }));
@@ -2605,6 +2968,7 @@ function CoordenadorView({ db, setDb, menuAberto, setMenuAberto, usuarioLogado }
     { id: "repasses", label: "Repasses", icon: Wallet },
     { id: "categorias", label: "Categorias", icon: FileText },
     { id: "remanejamentos", label: "Remanejamentos", icon: ArrowLeftRight },
+    { id: "rendimentos", label: `Rendimentos${(db.rendimentos || []).filter((r) => r.status === "aguardando avaliação").length ? ` (${(db.rendimentos || []).filter((r) => r.status === "aguardando avaliação").length})` : ""}`, icon: TrendingUp },
     { id: "lancamentos", label: "Lançamentos", icon: Receipt },
     { id: "conferencia", label: "Conferência", icon: ClipboardCheck },
     { id: "prestacao", label: `Prestação de Contas${(db.prestacoesContas || []).filter((p) => p.status === "aguardando avaliação").length ? ` (${(db.prestacoesContas || []).filter((p) => p.status === "aguardando avaliação").length})` : ""}`, icon: Lock },
@@ -3054,6 +3418,14 @@ function CoordenadorView({ db, setDb, menuAberto, setMenuAberto, usuarioLogado }
                         ))}
                       </div>
                     )}
+                    {l.orcamentos && l.orcamentos.length > 0 && (
+                      <div className="mt-2 pt-2 border-t border-slate-100 flex flex-wrap items-center gap-2">
+                        <span className="text-xs text-slate-400">Orçamentos:</span>
+                        {l.orcamentos.map((a, idx) => (
+                          <a key={idx} href={a.url} target="_blank" rel="noreferrer" className="text-xs text-teal-700 underline flex items-center gap-1"><FileText size={11} /> {a.nome}</a>
+                        ))}
+                      </div>
+                    )}
                     {l.historico.length > 0 && (
                       <div className="mt-2 pt-2 border-t border-slate-100 text-xs text-slate-500 space-y-0.5">
                         {l.historico.map((h, idx) => <div key={idx}>{h.data} — {h.campo}: {h.de} → {h.para}</div>)}
@@ -3095,6 +3467,42 @@ function CoordenadorView({ db, setDb, menuAberto, setMenuAberto, usuarioLogado }
                 </Card>
               ))}
             </div>
+          </div>
+        )}
+
+        {tab === "rendimentos" && (
+          <div>
+            <SectionTitle icon={TrendingUp}>Rendimentos informados pelos conselhos</SectionTitle>
+            <div className="text-xs text-slate-500 mb-3">Avalie os rendimentos informados. Você pode corrigir o valor e a alocação por categoria antes de aprovar.</div>
+            {(() => {
+              const rendimentos = (db.rendimentos || []).slice().sort((a, b) => b.id - a.id);
+              const pendentes = rendimentos.filter((r) => r.status === "aguardando avaliação");
+              const decididos = rendimentos.filter((r) => r.status !== "aguardando avaliação");
+              return (
+                <div className="space-y-6">
+                  <div>
+                    <div className="text-xs font-medium text-slate-500 mb-2">Aguardando avaliação</div>
+                    {pendentes.length === 0 ? <div className="text-sm text-slate-500">Nenhum rendimento pendente.</div> : (
+                      <div className="space-y-2">
+                        {pendentes.map((r) => (
+                          <RendimentoCard key={r.id} r={r} conselhoNome={conselhoById[r.conselhoId]?.nomeConselho} categorias={db.categoriasPorConselho[r.conselhoId] || []} categoriaById={categoriaById} onDecidir={decidirRendimento} />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <div className="text-xs font-medium text-slate-500 mb-2">Histórico de decisões</div>
+                    {decididos.length === 0 ? <div className="text-sm text-slate-500">Nenhum rendimento avaliado ainda.</div> : (
+                      <div className="space-y-2">
+                        {decididos.map((r) => (
+                          <RendimentoCard key={r.id} r={r} conselhoNome={conselhoById[r.conselhoId]?.nomeConselho} categorias={db.categoriasPorConselho[r.conselhoId] || []} categoriaById={categoriaById} onDecidir={decidirRendimento} />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         )}
 
@@ -3493,6 +3901,14 @@ function GeralView({ db, menuAberto, setMenuAberto, usuarioLogado }) {
                         ))}
                       </div>
                     )}
+                    {l.orcamentos && l.orcamentos.length > 0 && (
+                      <div className="mt-2 pt-2 border-t border-slate-100 flex flex-wrap items-center gap-2">
+                        <span className="text-xs text-slate-400">Orçamentos:</span>
+                        {l.orcamentos.map((a, idx) => (
+                          <a key={idx} href={a.url} target="_blank" rel="noreferrer" className="text-xs text-teal-700 underline flex items-center gap-1"><FileText size={11} /> {a.nome}</a>
+                        ))}
+                      </div>
+                    )}
                   </Card>
                 ))}
             </div>
@@ -3771,7 +4187,6 @@ function RegistroPage({ onEnviar, onVoltar }) {
 
   async function handleEnviar() {
     if (!nomeCompleto || !cpf || !telefone || !cargo || !email) { setErro("Preencha todos os campos."); return; }
-    if (!validarCPF(cpf)) { setErro("CPF inválido. Confira o número digitado."); return; }
     setErro(null);
     const resultado = await onEnviar({ nomeCompleto, cpf, telefone, cargo, email, nivelAcesso });
     if (!resultado?.ok) { setErro("Não foi possível enviar a solicitação agora. Tente novamente."); return; }
@@ -3855,7 +4270,6 @@ function UsuarioForm({ inicial, conselhos, onSalvar, onCancelar }) {
 
   function salvar() {
     if (!nomeCompleto || !cpf || !telefone || !cargo || !email) { setErro("Preencha todos os campos."); return; }
-    if (!validarCPF(cpf)) { setErro("CPF inválido. Confira o número digitado."); return; }
     if (precisaConselho && !conselhoId) { setErro("Selecione o conselho."); return; }
     setErro(null);
     onSalvar({ nomeCompleto, cpf, telefone, cargo, email, nivelAcesso, conselhoId: precisaConselho ? Number(conselhoId) : null });
