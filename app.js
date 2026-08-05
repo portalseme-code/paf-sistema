@@ -172,6 +172,17 @@ const Lock = Ic([
   { tag: "rect", attrs: { x: 3, y: 11, width: 18, height: 11, rx: 2 } },
   { tag: "path", attrs: { d: "M7 11V7a5 5 0 0 1 10 0v4" } },
 ]);
+const Eye = Ic([
+  { tag: "path", attrs: { d: "M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z" } },
+  { tag: "circle", attrs: { cx: 12, cy: 12, r: 3 } },
+]);
+const EyeOff = Ic([
+  { tag: "path", attrs: { d: "M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a13.16 13.16 0 0 1-1.67 2.68" } },
+  { tag: "path", attrs: { d: "M6.61 6.61A13.526 13.526 0 0 0 1 12s4 8 11 8a9.26 9.26 0 0 0 5.39-1.61" } },
+  { tag: "path", attrs: { d: "M9.53 9.53A3.5 3.5 0 0 0 12 15.5a3.5 3.5 0 0 0 2.47-1.03" } },
+  { tag: "line", attrs: { x1: 2, y1: 2, x2: 22, y2: 22 } },
+]);
+
 
 
 
@@ -400,6 +411,29 @@ function Field({ label, children }) {
     <div>
       <div className="text-xs text-slate-500 mb-1">{label}</div>
       {children}
+    </div>
+  );
+}
+
+function CampoSenha({ value, onChange, placeholder, className }) {
+  const [mostrar, setMostrar] = useState(false);
+  return (
+    <div className="relative">
+      <input
+        type={mostrar ? "text" : "password"}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className={`${className || "w-full border border-slate-300 rounded px-2 py-1.5 text-sm"} pr-9`}
+      />
+      <button
+        type="button"
+        onClick={() => setMostrar((v) => !v)}
+        className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+        title={mostrar ? "Ocultar senha" : "Mostrar senha"}
+      >
+        {mostrar ? <EyeOff size={16} /> : <Eye size={16} />}
+      </button>
     </div>
   );
 }
@@ -3692,7 +3726,7 @@ function LoginPage({ usuarios, onLogin, onIrParaRegistro, avisoOffline }) {
                   <input value={login} onChange={(e) => setLogin(e.target.value)} placeholder="NOME.ULTIMOSOBRENOME" className="w-full border border-slate-300 rounded px-2 py-1.5 text-sm" />
                 </Field>
                 <Field label="Senha">
-                  <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1.5 text-sm" />
+                  <CampoSenha value={senha} onChange={(e) => setSenha(e.target.value)} />
                 </Field>
               </div>
               {erro && <div className="text-xs text-red-600 mb-3">{erro}</div>}
@@ -4471,8 +4505,8 @@ function MeuPerfilPanel({ usuarioLogado, onSalvar, onFechar }) {
       <div className="border-t border-slate-100 mt-3 pt-3">
         <div className="text-xs font-medium text-slate-500 mb-2">Trocar senha (opcional)</div>
         <div className="space-y-2">
-          <Field label="Nova senha"><input type="password" value={novaSenha} onChange={(e) => setNovaSenha(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1 text-sm" /></Field>
-          <Field label="Confirmar nova senha"><input type="password" value={confirmarSenha} onChange={(e) => setConfirmarSenha(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1 text-sm" /></Field>
+          <Field label="Nova senha"><CampoSenha value={novaSenha} onChange={(e) => setNovaSenha(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1 text-sm" /></Field>
+          <Field label="Confirmar nova senha"><CampoSenha value={confirmarSenha} onChange={(e) => setConfirmarSenha(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1 text-sm" /></Field>
         </div>
       </div>
       {erro && <div className="text-xs text-red-600 mt-3">{erro}</div>}
