@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import {
   Landmark, Wallet, FileText, CheckCircle2, XCircle, ArrowLeftRight,
   Users, LayoutDashboard, Plus, ChevronRight, AlertCircle, School,
-  ClipboardCheck, BarChart3, Pencil, Send, Trash2, CalendarClock, Flag, Save, Receipt, Package, FileDown, History, Printer, Menu, Clock, Bell, UserCircle, Lock
+  ClipboardCheck, BarChart3, Pencil, Send, Trash2, CalendarClock, Flag, Save, Receipt, Package, FileDown, History, Printer, Menu, Clock, Bell, UserCircle, Lock, Eye, EyeOff
 } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from "recharts";
 
@@ -229,6 +229,29 @@ function Field({ label, children }) {
     <div>
       <div className="text-xs text-slate-500 mb-1">{label}</div>
       {children}
+    </div>
+  );
+}
+
+function CampoSenha({ value, onChange, placeholder, className }) {
+  const [mostrar, setMostrar] = useState(false);
+  return (
+    <div className="relative">
+      <input
+        type={mostrar ? "text" : "password"}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className={`${className || "w-full border border-slate-300 rounded px-2 py-1.5 text-sm"} pr-9`}
+      />
+      <button
+        type="button"
+        onClick={() => setMostrar((v) => !v)}
+        className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+        title={mostrar ? "Ocultar senha" : "Mostrar senha"}
+      >
+        {mostrar ? <EyeOff size={16} /> : <Eye size={16} />}
+      </button>
     </div>
   );
 }
@@ -3521,7 +3544,7 @@ function LoginPage({ usuarios, onLogin, onIrParaRegistro, avisoOffline }) {
                   <input value={login} onChange={(e) => setLogin(e.target.value)} placeholder="NOME.ULTIMOSOBRENOME" className="w-full border border-slate-300 rounded px-2 py-1.5 text-sm" />
                 </Field>
                 <Field label="Senha">
-                  <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1.5 text-sm" />
+                  <CampoSenha value={senha} onChange={(e) => setSenha(e.target.value)} />
                 </Field>
               </div>
               {erro && <div className="text-xs text-red-600 mb-3">{erro}</div>}
@@ -4300,8 +4323,8 @@ function MeuPerfilPanel({ usuarioLogado, onSalvar, onFechar }) {
       <div className="border-t border-slate-100 mt-3 pt-3">
         <div className="text-xs font-medium text-slate-500 mb-2">Trocar senha (opcional)</div>
         <div className="space-y-2">
-          <Field label="Nova senha"><input type="password" value={novaSenha} onChange={(e) => setNovaSenha(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1 text-sm" /></Field>
-          <Field label="Confirmar nova senha"><input type="password" value={confirmarSenha} onChange={(e) => setConfirmarSenha(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1 text-sm" /></Field>
+          <Field label="Nova senha"><CampoSenha value={novaSenha} onChange={(e) => setNovaSenha(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1 text-sm" /></Field>
+          <Field label="Confirmar nova senha"><CampoSenha value={confirmarSenha} onChange={(e) => setConfirmarSenha(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1 text-sm" /></Field>
         </div>
       </div>
       {erro && <div className="text-xs text-red-600 mt-3">{erro}</div>}
