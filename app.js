@@ -644,7 +644,7 @@ function emitirRelatorioPDF(titulo, header, linhas) {
   <h1>${escapeHtml(titulo)}</h1>
   <div class="emitido">Emitido em ${todayStr()}</div>
   <table><thead><tr>${headerHtml}</tr></thead><tbody>${linhasHtml}</tbody></table>
-  <script>window.onload = function () { setTimeout(function () { window.print(); }, 250); };</script>
+  <script>window.onload = function () { setTimeout(function () { window.print(); }, 250); };<\/script>
 </body></html>`;
   const win = window.open("", "_blank");
   if (!win) { alert("Não foi possível abrir a janela de impressão. Verifique o bloqueador de pop-ups do navegador."); return; }
@@ -685,7 +685,7 @@ function imprimirComprovanteLancamento(l, conselhoNome, categoriaNome) {
     <tbody>${itensHtml || `<tr><td colspan="4">${escapeHtml(l.descricao || "-")}</td></tr>`}</tbody>
   </table>
   <div class="total">Valor total: ${escapeHtml(brl(l.valor))}</div>
-  <script>window.onload = function () { setTimeout(function () { window.print(); }, 250); };</script>
+  <script>window.onload = function () { setTimeout(function () { window.print(); }, 250); };<\/script>
 </body></html>`;
   const win = window.open("", "_blank");
   if (!win) { alert("Não foi possível abrir a janela de impressão. Verifique o bloqueador de pop-ups do navegador."); return; }
@@ -736,7 +736,7 @@ function emitirRelatorioConsolidadoPrestacao(p, conselhoNome) {
   <h2>Itens adquiridos (todas as notas fiscais)</h2>
   <table><thead><tr><th>Nº NF</th><th>Fornecedor</th><th>Item</th><th>Qtd</th><th>Valor unitário</th><th>Subtotal</th></tr></thead><tbody>${linhasItens}</tbody></table>
 
-  <script>window.onload = function () { setTimeout(function () { window.print(); }, 250); };</script>
+  <script>window.onload = function () { setTimeout(function () { window.print(); }, 250); };<\/script>
 </body></html>`;
   const win = window.open("", "_blank");
   if (!win) { alert("Não foi possível abrir a janela de impressão. Verifique o bloqueador de pop-ups do navegador."); return; }
