@@ -1,0 +1,5122 @@
+// ======================================================================
+// Arquivo gerado automaticamente a partir do protótipo React para rodar
+// direto no navegador (sem etapa de build), via Babel Standalone.
+// ======================================================================
+
+const { useState, useEffect, useRef } = React;
+const {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+  ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line,
+} = window.Recharts || {};
+
+// ---------- Ícones (SVG simples, sem depender de biblioteca externa) ----------
+function Ic(elementos) {
+  return function IconeComponente({ size = 18, className = "", ...resto }) {
+    return React.createElement(
+      "svg",
+      { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round", className, ...resto },
+      elementos.map((el, i) => React.createElement(el.tag, { key: i, ...el.attrs }))
+    );
+  };
+}
+
+const Landmark = Ic([
+  { tag: "line", attrs: { x1: 3, y1: 22, x2: 21, y2: 22 } },
+  { tag: "line", attrs: { x1: 6, y1: 18, x2: 6, y2: 11 } },
+  { tag: "line", attrs: { x1: 10, y1: 18, x2: 10, y2: 11 } },
+  { tag: "line", attrs: { x1: 14, y1: 18, x2: 14, y2: 11 } },
+  { tag: "line", attrs: { x1: 18, y1: 18, x2: 18, y2: 11 } },
+  { tag: "path", attrs: { d: "M2 11 12 3l10 8Z" } },
+]);
+const Wallet = Ic([
+  { tag: "rect", attrs: { x: 2, y: 6, width: 20, height: 13, rx: 2 } },
+  { tag: "path", attrs: { d: "M2 10h20" } },
+  { tag: "circle", attrs: { cx: 17, cy: 14, r: 1 } },
+]);
+const FileText = Ic([
+  { tag: "path", attrs: { d: "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" } },
+  { tag: "path", attrs: { d: "M14 2v6h6" } },
+  { tag: "line", attrs: { x1: 8, y1: 13, x2: 16, y2: 13 } },
+  { tag: "line", attrs: { x1: 8, y1: 17, x2: 16, y2: 17 } },
+]);
+const CheckCircle2 = Ic([
+  { tag: "circle", attrs: { cx: 12, cy: 12, r: 10 } },
+  { tag: "path", attrs: { d: "m9 12 2 2 4-4" } },
+]);
+const XCircle = Ic([
+  { tag: "circle", attrs: { cx: 12, cy: 12, r: 10 } },
+  { tag: "line", attrs: { x1: 15, y1: 9, x2: 9, y2: 15 } },
+  { tag: "line", attrs: { x1: 9, y1: 9, x2: 15, y2: 15 } },
+]);
+const ArrowLeftRight = Ic([
+  { tag: "path", attrs: { d: "m17 3 4 4-4 4" } },
+  { tag: "path", attrs: { d: "M3 7h18" } },
+  { tag: "path", attrs: { d: "m7 21-4-4 4-4" } },
+  { tag: "path", attrs: { d: "M21 17H3" } },
+]);
+const Users = Ic([
+  { tag: "path", attrs: { d: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" } },
+  { tag: "circle", attrs: { cx: 9, cy: 7, r: 4 } },
+  { tag: "path", attrs: { d: "M22 21v-2a4 4 0 0 0-3-3.87" } },
+  { tag: "path", attrs: { d: "M16 3.13a4 4 0 0 1 0 7.75" } },
+]);
+const LayoutDashboard = Ic([
+  { tag: "rect", attrs: { x: 3, y: 3, width: 7, height: 9, rx: 1 } },
+  { tag: "rect", attrs: { x: 14, y: 3, width: 7, height: 5, rx: 1 } },
+  { tag: "rect", attrs: { x: 14, y: 12, width: 7, height: 9, rx: 1 } },
+  { tag: "rect", attrs: { x: 3, y: 16, width: 7, height: 5, rx: 1 } },
+]);
+const Plus = Ic([
+  { tag: "line", attrs: { x1: 12, y1: 5, x2: 12, y2: 19 } },
+  { tag: "line", attrs: { x1: 5, y1: 12, x2: 19, y2: 12 } },
+]);
+const ChevronRight = Ic([{ tag: "path", attrs: { d: "m9 18 6-6-6-6" } }]);
+const AlertCircle = Ic([
+  { tag: "circle", attrs: { cx: 12, cy: 12, r: 10 } },
+  { tag: "line", attrs: { x1: 12, y1: 8, x2: 12, y2: 12 } },
+  { tag: "line", attrs: { x1: 12, y1: 16, x2: 12.01, y2: 16 } },
+]);
+const School = Ic([
+  { tag: "path", attrs: { d: "m4 6 8-4 8 4-8 4-8-4Z" } },
+  { tag: "path", attrs: { d: "M18 10v6H6v-6" } },
+  { tag: "path", attrs: { d: "M4 6v9" } },
+  { tag: "path", attrs: { d: "M20 6v9" } },
+  { tag: "path", attrs: { d: "M12 14v6" } },
+]);
+const ClipboardCheck = Ic([
+  { tag: "rect", attrs: { x: 6, y: 3, width: 12, height: 18, rx: 2 } },
+  { tag: "rect", attrs: { x: 9, y: 1.5, width: 6, height: 3, rx: 1 } },
+  { tag: "path", attrs: { d: "m9 14 2 2 4-4" } },
+]);
+const BarChart3 = Ic([
+  { tag: "line", attrs: { x1: 3, y1: 21, x2: 21, y2: 21 } },
+  { tag: "line", attrs: { x1: 7, y1: 21, x2: 7, y2: 11 } },
+  { tag: "line", attrs: { x1: 12, y1: 21, x2: 12, y2: 6 } },
+  { tag: "line", attrs: { x1: 17, y1: 21, x2: 17, y2: 14 } },
+]);
+const Pencil = Ic([{ tag: "path", attrs: { d: "M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" } }]);
+const Send = Ic([
+  { tag: "line", attrs: { x1: 22, y1: 2, x2: 11, y2: 13 } },
+  { tag: "path", attrs: { d: "M22 2 15 22l-4-9-9-4Z" } },
+]);
+const Trash2 = Ic([
+  { tag: "path", attrs: { d: "M3 6h18" } },
+  { tag: "path", attrs: { d: "M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" } },
+  { tag: "path", attrs: { d: "M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" } },
+  { tag: "line", attrs: { x1: 10, y1: 11, x2: 10, y2: 17 } },
+  { tag: "line", attrs: { x1: 14, y1: 11, x2: 14, y2: 17 } },
+]);
+const CalendarClock = Ic([
+  { tag: "rect", attrs: { x: 3, y: 4, width: 18, height: 17, rx: 2 } },
+  { tag: "line", attrs: { x1: 3, y1: 9, x2: 21, y2: 9 } },
+  { tag: "line", attrs: { x1: 8, y1: 2, x2: 8, y2: 5 } },
+  { tag: "line", attrs: { x1: 16, y1: 2, x2: 16, y2: 5 } },
+  { tag: "circle", attrs: { cx: 15, cy: 15, r: 3 } },
+  { tag: "path", attrs: { d: "M15 14v1.5l1 .5" } },
+]);
+const Flag = Ic([
+  { tag: "path", attrs: { d: "M4 15s1-1 4-1 5 2 8 2 4-1 4-1V4s-1 1-4 1-5-2-8-2-4 1-4 1Z" } },
+  { tag: "line", attrs: { x1: 4, y1: 22, x2: 4, y2: 4 } },
+]);
+const Save = Ic([
+  { tag: "path", attrs: { d: "M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z" } },
+  { tag: "path", attrs: { d: "M17 21v-8H7v8" } },
+  { tag: "path", attrs: { d: "M7 3v5h8" } },
+]);
+const Receipt = Ic([
+  { tag: "path", attrs: { d: "M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" } },
+  { tag: "line", attrs: { x1: 8, y1: 7, x2: 16, y2: 7 } },
+  { tag: "line", attrs: { x1: 8, y1: 11, x2: 16, y2: 11 } },
+  { tag: "line", attrs: { x1: 8, y1: 15, x2: 12, y2: 15 } },
+]);
+const Package = Ic([
+  { tag: "path", attrs: { d: "M21 8 12 3 3 8v8l9 5 9-5Z" } },
+  { tag: "path", attrs: { d: "M3 8l9 5 9-5" } },
+  { tag: "line", attrs: { x1: 12, y1: 13, x2: 12, y2: 21 } },
+]);
+const FileDown = Ic([
+  { tag: "path", attrs: { d: "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" } },
+  { tag: "path", attrs: { d: "M14 2v6h6" } },
+  { tag: "line", attrs: { x1: 12, y1: 11, x2: 12, y2: 17 } },
+  { tag: "path", attrs: { d: "m9 15 3 3 3-3" } },
+]);
+const History = Ic([
+  { tag: "path", attrs: { d: "M3 12a9 9 0 1 0 3-6.7" } },
+  { tag: "path", attrs: { d: "M3 4v5h5" } },
+  { tag: "path", attrs: { d: "M12 7v5l3 3" } },
+]);
+const Printer = Ic([
+  { tag: "path", attrs: { d: "M6 9V2h12v7" } },
+  { tag: "path", attrs: { d: "M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" } },
+  { tag: "rect", attrs: { x: 6, y: 14, width: 12, height: 8 } },
+]);
+const Menu = Ic([
+  { tag: "line", attrs: { x1: 3, y1: 6, x2: 21, y2: 6 } },
+  { tag: "line", attrs: { x1: 3, y1: 12, x2: 21, y2: 12 } },
+  { tag: "line", attrs: { x1: 3, y1: 18, x2: 21, y2: 18 } },
+]);
+const Clock = Ic([
+  { tag: "circle", attrs: { cx: 12, cy: 12, r: 10 } },
+  { tag: "path", attrs: { d: "M12 6v6l4 2" } },
+]);
+const Bell = Ic([
+  { tag: "path", attrs: { d: "M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" } },
+  { tag: "path", attrs: { d: "M10.3 21a1.94 1.94 0 0 0 3.4 0" } },
+]);
+const UserCircle = Ic([
+  { tag: "circle", attrs: { cx: 12, cy: 12, r: 10 } },
+  { tag: "circle", attrs: { cx: 12, cy: 10, r: 3 } },
+  { tag: "path", attrs: { d: "M6.2 19a6 6 0 0 1 11.6 0" } },
+]);
+const Lock = Ic([
+  { tag: "rect", attrs: { x: 3, y: 11, width: 18, height: 11, rx: 2 } },
+  { tag: "path", attrs: { d: "M7 11V7a5 5 0 0 1 10 0v4" } },
+]);
+const Eye = Ic([
+  { tag: "path", attrs: { d: "M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z" } },
+  { tag: "circle", attrs: { cx: 12, cy: 12, r: 3 } },
+]);
+const EyeOff = Ic([
+  { tag: "path", attrs: { d: "M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a13.16 13.16 0 0 1-1.67 2.68" } },
+  { tag: "path", attrs: { d: "M6.61 6.61A13.526 13.526 0 0 0 1 12s4 8 11 8a9.26 9.26 0 0 0 5.39-1.61" } },
+  { tag: "path", attrs: { d: "M9.53 9.53A3.5 3.5 0 0 0 12 15.5a3.5 3.5 0 0 0 2.47-1.03" } },
+  { tag: "line", attrs: { x1: 2, y1: 2, x2: 22, y2: 22 } },
+]);
+const TrendingUp = Ic([
+  { tag: "polyline", attrs: { points: "22 7 13.5 15.5 8.5 10.5 2 17" } },
+  { tag: "polyline", attrs: { points: "16 7 22 7 22 13" } },
+]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const LOGO_PAF = "data:image/png;base64,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";
+const LOGO_DKN = "data:image/png;base64,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";
+const LOGO_PAF_LOGIN = "data:image/png;base64,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Rnc/oHQILIC41siyspCobMSvv/NjPDXnEUhhQQgTjlLQzXnBnl5LBogkBNyypkQM0yu5YmuNvL7d8e1ffR8PfPgvnDvrEjQhjpgKwRQONAskKAOfbNmOXfWNMKXlSkOoryxIk6rvK6+8Mnzr1q03bN68uX99ff3MmTNn/hAA3n333cGbNm36bWVl5aCqqqpT/va3v90zZcqUbAA8bdq0Uc8///wflVKDlVKDq6qq/jBkyJAxAFgIwWPHjj1v9erVN6elpfVsbGw8c+XKlbNPOumkLACorq6+uL6+/oyNGzcOqa6uvmXw4MGnJMEqpURZWdn9r7766nXJmr8A6P333/9H7969L/eofHL27NmZd999d9nSpUvP9kJO9Ic//CHtjTfeeOrXv/71lBTp37zmKisrr66rqzu2srJyfEVFxR3FxcVTALBlWVixYsUP169fP3nHjh1Dt23bNmrnzp1dWkqQ3/zmN92ffvrpVy+77LLjk2Guurq6KcuXL08mGWDz5s1569evLzEMA3v27Om9bdu2E7Zu3XpbdXX1iM2bNxcYhoGCgoKLm5qabklLS+tZV1d36h133PH7k08+uRsARCKRgf/5z3+eGz16dB4AXrlyZd6yZctKkgXnJk+efFZDQ8MtoVCoe01NzZSnnnrq95dcckkOAGzbtm34P/7xj/8UFxfnJTeXbt26nb948eJHAWDevHm+1atX/6KhoaH53l555ZXpy5cv/9err76a1prKLVp3krWQ4sSQ7BIXlGA4RBAsYdiuiqwkISFsBIWNU4cNwVmjRiNDamgnCoMZtmIEjRws/2AJrjv9O3jrqXmQUkKzgtYKTAoa2mNAeUndrAEhoA0JSAnTA2luQXd86/++h0feL8d3/+9GGBkCYacWJhxoAAlIQKRjbeVOLFu3ETB9X6tcm/r6+jTLst6qq6v76549e27w+XyFwWCwBzNrn8+3oqam5sGqqqrbpJRVmzZtGj5lyhRjyZIlt/l8vvs++uij+xYvXnzf4MGDfxUOh39YVlYmzz333IKKioqTevToccNrr7326JYtW265/vrr7xwxYkTCCxfFKioqfl9fX//AzJkzbxw0aNCxXn4qT5w48dRIJFKrtbZuu+22oLcwfOFweFdlZWVJUVHRMUII54knnvh5U1OTmUgk4smF/Pjjj08C8EFTU9Npd955Z0azMuZV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";
+
+// ---------- helpers ----------
+const brl = (v) =>
+  (v || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
+const centsToReais = (cents) => (cents || 0) / 100;
+const centsToBRL = (cents) => centsToReais(cents).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+const reaisToCents = (v) => Math.round((Number(v) || 0) * 100);
+
+const pad2 = (n) => String(n).padStart(2, "0");
+const toISO = (d) => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+const isoToDate = (iso) => {
+  if (!iso) return null;
+  const [y, m, d] = iso.split("-").map(Number);
+  if (!y || !m || !d) return null;
+  return new Date(y, m - 1, d);
+};
+const displayDate = (iso) => {
+  const d = isoToDate(iso);
+  return d ? `${pad2(d.getDate())}/${pad2(d.getMonth() + 1)}/${d.getFullYear()}` : "—";
+};
+const addDays = (base, n) => { const d = new Date(base); d.setDate(d.getDate() + n); return d; };
+const diasRestantes = (iso) => {
+  const alvo = isoToDate(iso);
+  if (!alvo) return null;
+  const hoje = new Date();
+  hoje.setHours(0, 0, 0, 0);
+  alvo.setHours(0, 0, 0, 0);
+  return Math.round((alvo - hoje) / (1000 * 60 * 60 * 24));
+};
+const todayISO = () => toISO(new Date());
+const anoExercicio = (dataISO) => (dataISO ? dataISO.slice(0, 4) : "");
+const MESES_ABREV = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+function agruparLancamentosPorMes(lancamentos) {
+  const grupos = {};
+  lancamentos.filter((l) => l.status !== "aguardando autorização").forEach((l) => {
+    const chave = l.data.slice(0, 7);
+    grupos[chave] = (grupos[chave] || 0) + l.valor;
+  });
+  return Object.keys(grupos).sort().map((chave) => {
+    const [ano, mes] = chave.split("-");
+    return { mes: `${MESES_ABREV[parseInt(mes, 10) - 1]}/${ano.slice(2)}`, Executado: grupos[chave] };
+  });
+}
+const PERIODOS_PRESTACAO = ["1º Trimestre", "2º Trimestre", "3º Trimestre", "4º Trimestre", "Anual"];
+function intervaloDoPeriodo(ano, periodo) {
+  const faixas = { "1º Trimestre": [1, 3], "2º Trimestre": [4, 6], "3º Trimestre": [7, 9], "4º Trimestre": [10, 12], "Anual": [1, 12] };
+  const [m1, m2] = faixas[periodo] || [1, 12];
+  const inicio = `${ano}-${pad2(m1)}-01`;
+  const ultimoDia = new Date(ano, m2, 0).getDate();
+  const fim = `${ano}-${pad2(m2)}-${pad2(ultimoDia)}`;
+  return [inicio, fim];
+}
+function dataEstaTravada(db, conselhoId, dataISO) {
+  return (db.prestacoesContas || []).some((p) => {
+    if (p.conselhoId !== conselhoId || (p.status !== "aguardando avaliação" && p.status !== "aprovada")) return false;
+    const [inicio, fim] = intervaloDoPeriodo(p.ano, p.periodo);
+    return dataISO >= inicio && dataISO <= fim;
+  });
+}
+const formatarCNPJ = (valor) => {
+  let d = valor.replace(/\D/g, "").slice(0, 14);
+  if (d.length > 12) d = d.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{1,2})$/, "$1.$2.$3/$4-$5");
+  else if (d.length > 8) d = d.replace(/^(\d{2})(\d{3})(\d{3})(\d{1,4})$/, "$1.$2.$3/$4");
+  else if (d.length > 5) d = d.replace(/^(\d{2})(\d{3})(\d{1,3})$/, "$1.$2.$3");
+  else if (d.length > 2) d = d.replace(/^(\d{2})(\d{1,3})$/, "$1.$2");
+  return d;
+};
+const validarCPF = (cpf) => {
+  const d = (cpf || "").replace(/\D/g, "");
+  if (d.length !== 11 || /^(\d)\1{10}$/.test(d)) return false;
+  let soma = 0;
+  for (let i = 0; i < 9; i++) soma += parseInt(d[i], 10) * (10 - i);
+  let resto = (soma * 10) % 11;
+  if (resto === 10) resto = 0;
+  if (resto !== parseInt(d[9], 10)) return false;
+  soma = 0;
+  for (let i = 0; i < 10; i++) soma += parseInt(d[i], 10) * (11 - i);
+  resto = (soma * 10) % 11;
+  if (resto === 10) resto = 0;
+  return resto === parseInt(d[10], 10);
+};
+const validarCNPJ = (cnpj) => {
+  const d = (cnpj || "").replace(/\D/g, "");
+  if (d.length !== 14 || /^(\d)\1{13}$/.test(d)) return false;
+  const calcDV = (base) => {
+    const pesos = base.length === 12 ? [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2] : [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
+    let soma = 0;
+    for (let i = 0; i < base.length; i++) soma += parseInt(base[i], 10) * pesos[i];
+    const resto = soma % 11;
+    return resto < 2 ? 0 : 11 - resto;
+  };
+  const dv1 = calcDV(d.slice(0, 12));
+  const dv2 = calcDV(d.slice(0, 12) + dv1);
+  return parseInt(d[12], 10) === dv1 && parseInt(d[13], 10) === dv2;
+};
+const formatarCPF = (valor) => {
+  let d = valor.replace(/\D/g, "").slice(0, 11);
+  if (d.length > 9) d = d.replace(/^(\d{3})(\d{3})(\d{3})(\d{1,2})$/, "$1.$2.$3-$4");
+  else if (d.length > 6) d = d.replace(/^(\d{3})(\d{3})(\d{1,3})$/, "$1.$2.$3");
+  else if (d.length > 3) d = d.replace(/^(\d{3})(\d{1,3})$/, "$1.$2");
+  return d;
+};
+const formatarTelefone = (valor) => {
+  let d = valor.replace(/\D/g, "").slice(0, 11);
+  if (d.length > 10) d = d.replace(/^(\d{2})(\d{5})(\d{1,4})$/, "($1) $2-$3");
+  else if (d.length > 6) d = d.replace(/^(\d{2})(\d{4})(\d{1,4})$/, "($1) $2-$3");
+  else if (d.length > 2) d = d.replace(/^(\d{2})(\d{1,5})$/, "($1) $2");
+  return d;
+};
+const semAcento = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+const gerarLogin = (nomeCompleto) => {
+  const partes = nomeCompleto.trim().split(/\s+/).filter(Boolean);
+  if (partes.length === 0) return "";
+  const primeiro = semAcento(partes[0]).toUpperCase().replace(/[^A-Z]/g, "");
+  const ultimo = semAcento(partes[partes.length - 1]).toUpperCase().replace(/[^A-Z]/g, "");
+  return partes.length > 1 ? `${primeiro}.${ultimo}` : primeiro;
+};
+const gerarSenha = () => {
+  const letras = "ABCDEFGHJKLMNPQRSTUVWXYZ";
+  const l1 = letras[Math.floor(Math.random() * letras.length)];
+  const l2 = letras[Math.floor(Math.random() * letras.length)].toLowerCase();
+  const l3 = letras[Math.floor(Math.random() * letras.length)].toLowerCase();
+  const numeros = Math.floor(1000 + Math.random() * 9000);
+  return `${l1}${l2}${l3}@${numeros}`;
+};
+const NIVEIS_ACESSO = ["Presidente do conselho", "Coordenador", "Secretário", "Assessor educacional administrativo financeiro", "Administrador Geral"];
+
+const todayStr = () => {
+  const d = new Date();
+  return `${displayDate(toISO(d))} ${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+};
+
+const STATUS_STYLES = {
+  solicitado: "bg-amber-50 text-amber-700 border-amber-200",
+  aprovado: "bg-emerald-50 text-emerald-700 border-emerald-200",
+  reprovado: "bg-red-50 text-red-700 border-red-200",
+  registrado: "bg-emerald-50 text-emerald-700 border-emerald-200",
+  "com pendência": "bg-red-50 text-red-700 border-red-200",
+  "aguardando autorização": "bg-violet-50 text-violet-700 border-violet-200",
+  "aguardando aprovação": "bg-amber-50 text-amber-700 border-amber-200",
+  ativo: "bg-emerald-50 text-emerald-700 border-emerald-200",
+  inativo: "bg-slate-100 text-slate-600 border-slate-200",
+  pendente: "bg-amber-50 text-amber-700 border-amber-200",
+  "aguardando arquivo": "bg-slate-100 text-slate-600 border-slate-200",
+  "aguardando valores": "bg-violet-50 text-violet-700 border-violet-200",
+  "aguardando avaliação": "bg-amber-50 text-amber-700 border-amber-200",
+  "aprovada": "bg-emerald-50 text-emerald-700 border-emerald-200",
+  "reprovada": "bg-red-50 text-red-700 border-red-200",
+  "reaberta": "bg-violet-50 text-violet-700 border-violet-200",
+};
+
+function Badge({ status }) {
+  return (
+    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${STATUS_STYLES[status] || "bg-slate-100 text-slate-600 border-slate-200"}`}>
+      {status}
+    </span>
+  );
+}
+
+function VencimentoBadge({ vencimento }) {
+  const dias = diasRestantes(vencimento);
+  if (dias === null) return null;
+  let tone = "bg-emerald-50 text-emerald-700 border-emerald-200";
+  let texto = `Vence em ${dias} dias`;
+  if (dias < 0) { tone = "bg-red-50 text-red-700 border-red-200"; texto = `Vencido há ${Math.abs(dias)} dias`; }
+  else if (dias <= 30) { tone = "bg-amber-50 text-amber-700 border-amber-200"; texto = dias === 0 ? "Vence hoje" : `Vence em ${dias} dias`; }
+  return (
+    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium border ${tone}`}>
+      <CalendarClock size={11} /> {texto}
+    </span>
+  );
+}
+
+function Card({ children, className = "" }) {
+  return <div className={`bg-white border border-slate-200 rounded-lg p-4 ${className}`}>{children}</div>;
+}
+
+function SectionTitle({ icon: Icon, children }) {
+  return (
+    <h2 className="flex items-center gap-2 text-[15px] font-medium text-slate-800 mb-3">
+      <Icon size={17} className="text-teal-700" /> {children}
+    </h2>
+  );
+}
+
+function LegendaGrafico({ itens }) {
+  return (
+    <div className="flex flex-wrap justify-center gap-x-3 gap-y-1.5 mt-2 px-1">
+      {itens.map((it, idx) => (
+        <div key={idx} className="flex items-center gap-1.5 text-xs text-slate-600">
+          <span className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ backgroundColor: it.cor }} />
+          <span>{it.nome}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function PrimaryButton({ children, onClick, disabled, className = "" }) {
+  return (
+    <button onClick={onClick} disabled={disabled} className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium bg-teal-700 text-white hover:bg-teal-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors ${className}`}>
+      {children}
+    </button>
+  );
+}
+
+function GhostButton({ children, onClick, className = "", tone = "slate", disabled = false }) {
+  const tones = {
+    slate: "text-slate-600 hover:bg-slate-100 border-slate-300",
+    green: "text-emerald-700 hover:bg-emerald-50 border-emerald-300",
+    red: "text-red-700 hover:bg-red-50 border-red-300",
+  };
+  return (
+    <button onClick={onClick} disabled={disabled} className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium border ${tones[tone]} disabled:opacity-40 disabled:cursor-not-allowed transition-colors ${className}`}>
+      {children}
+    </button>
+  );
+}
+
+function CurrencyDisplayInput({ cents, onChangeCents }) {
+  return (
+    <div className="w-40">
+      <CurrencyInput cents={cents} onChangeCents={onChangeCents} />
+    </div>
+  );
+}
+
+function Field({ label, children }) {
+  return (
+    <div>
+      <div className="text-xs text-slate-500 mb-1">{label}</div>
+      {children}
+    </div>
+  );
+}
+
+function CampoSenha({ value, onChange, placeholder, className }) {
+  const [mostrar, setMostrar] = useState(false);
+  return (
+    <div className="relative">
+      <input
+        type={mostrar ? "text" : "password"}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className={`${className || "w-full border border-slate-300 rounded px-2 py-1.5 text-sm"} pr-9`}
+      />
+      <button
+        type="button"
+        onClick={() => setMostrar((v) => !v)}
+        className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+        title={mostrar ? "Ocultar senha" : "Mostrar senha"}
+      >
+        {mostrar ? <EyeOff size={16} /> : <Eye size={16} />}
+      </button>
+    </div>
+  );
+}
+
+function DateInput({ value, onChange }) {
+  return (
+    <input type="date" value={value || ""} onChange={(e) => onChange(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1 text-sm" />
+  );
+}
+
+function CurrencyInput({ cents, onChangeCents, placeholder }) {
+  return (
+    <input
+      type="text"
+      inputMode="numeric"
+      placeholder={placeholder || "R$ 0,00"}
+      value={cents ? centsToBRL(cents) : ""}
+      onChange={(e) => {
+        const digits = e.target.value.replace(/\D/g, "");
+        onChangeCents(digits ? parseInt(digits, 10) : 0);
+      }}
+      className="w-full border border-slate-300 rounded px-2 py-1 text-sm"
+    />
+  );
+}
+
+// ---------- initial mock data ----------
+const hoje = new Date();
+
+const initialDB = {
+  conselhos: [
+    { id: 1, nomeConselho: "Conselho Escolar Ana Lima", escolas: ["EM Prof. Ana Lima"], cnpj: "12.345.678/0001-95", presidente: "Carla Souza", tesoureiro: "João Pedro", vencimento: toISO(addDays(hoje, 380)) },
+    { id: 2, nomeConselho: "Conselho Escolar São José", escolas: ["EM São José"], cnpj: "23.456.789/0001-95", presidente: "Marcos Vinícius", tesoureiro: null, vencimento: toISO(addDays(hoje, 45)) },
+    { id: 3, nomeConselho: "Conselho Vila Nova / Vila Verde", escolas: ["EM Vila Nova", "EM Vila Verde"], cnpj: "34.567.890/0001-30", presidente: "Fernanda Alves", tesoureiro: "Rita Gomes", vencimento: toISO(addDays(hoje, -5)) },
+  ],
+  categoriasPorConselho: {
+    1: [
+      { id: 11, nome: "Material de limpeza", tipo: "Custeio", subtipo: "Consumo" },
+      { id: 12, nome: "Material didático", tipo: "Custeio", subtipo: "Consumo" },
+      { id: 13, nome: "Reforma da quadra", tipo: "Capital" },
+    ],
+    2: [
+      { id: 21, nome: "Manutenção predial", tipo: "Custeio", subtipo: "Serviço" },
+      { id: 22, nome: "Compra de mobiliário", tipo: "Capital" },
+    ],
+    3: [
+      { id: 31, nome: "Alimentação escolar complementar", tipo: "Custeio", subtipo: "Consumo" },
+      { id: 32, nome: "Equipamentos de informática", tipo: "Capital" },
+    ],
+  },
+  repasses: [
+    { id: 101, conselhoId: 1, descricao: "1º Repasse", custeio: 45000, capital: 55000, data: "2026-02-10", saldoAnterior: 0, valoresDefinidos: true },
+    { id: 201, conselhoId: 2, descricao: "1º Repasse", custeio: 30000, capital: 20000, data: "2026-02-15", saldoAnterior: 0, valoresDefinidos: true },
+    { id: 301, conselhoId: 3, descricao: "1º Repasse", custeio: 40000, capital: 60000, data: "2026-01-20", saldoAnterior: 0, valoresDefinidos: true },
+    { id: 302, conselhoId: 3, descricao: "2º Repasse", custeio: 10000, capital: 5000, data: "2026-07-01", saldoAnterior: 8000, valoresDefinidos: true },
+    { id: 102, conselhoId: 1, descricao: "2º Repasse", custeio: 0, capital: 0, data: "2026-07-20", saldoAnterior: 0, valoresDefinidos: false },
+  ],
+  planos: [
+    { id: 1001, repasseId: 101, itens: [{ categoriaId: 11, valorPrevisto: 20000 }, { categoriaId: 12, valorPrevisto: 25000 }, { categoriaId: 13, valorPrevisto: 55000 }] },
+    { id: 2001, repasseId: 201, itens: [{ categoriaId: 21, valorPrevisto: 30000 }, { categoriaId: 22, valorPrevisto: 20000 }] },
+    { id: 3001, repasseId: 301, itens: [{ categoriaId: 31, valorPrevisto: 40000 }, { categoriaId: 32, valorPrevisto: 60000 }] },
+    { id: 3002, repasseId: 302, itens: [{ categoriaId: 31, valorPrevisto: 10000 }, { categoriaId: 32, valorPrevisto: 13000 }] },
+    { id: 1002, repasseId: 102, itens: [], arquivos: [] },
+  ],
+  lancamentos: [
+    { id: 5001, conselhoId: 1, repasseId: 101, categoriaId: 11, data: "2026-03-05", valor: 1200, descricao: "Compra de material de limpeza", lancadoPor: "Carla Souza (presidente)", status: "registrado", historico: [] },
+    { id: 5002, conselhoId: 1, repasseId: 101, categoriaId: 12, data: "2026-03-20", valor: 3400, descricao: "Livros paradidáticos", lancadoPor: "João Pedro (tesoureiro)", status: "aguardando autorização", historico: [] },
+    { id: 5003, conselhoId: 3, repasseId: 301, categoriaId: 31, data: "2026-02-01", valor: 2500, descricao: "Gêneros alimentícios", lancadoPor: "Fernanda Alves (presidente)", status: "com pendência", historico: [{ data: "03/02/2026 10:12", campo: "valor", de: "R$ 2.000,00", para: "R$ 2.500,00" }] },
+  ],
+  remanejamentos: [
+    { id: 9001, conselhoId: 1, repasseId: 101, origemId: 12, destinoId: 13, valor: 2000, justificativa: "Sobra de recurso após aquisição concluída", status: "solicitado" },
+  ],
+  historicoGeral: [],
+  usuarios: [
+    { id: 1, nomeCompleto: "Carla Souza", cpf: "123.456.789-09", telefone: "(27) 99999-0001", cargo: "Presidente do Conselho", email: "carla.souza@escola.gov.br", nivelAcesso: "Presidente do conselho", conselhoId: 1, login: "CARLA.SOUZA", senha: "Car@1234", status: "ativo" },
+    { id: 2, nomeCompleto: "João Pedro", cpf: "234.567.891-73", telefone: "(27) 99999-0002", cargo: "Tesoureiro", email: "joao.pedro@escola.gov.br", nivelAcesso: "Assessor educacional administrativo financeiro", conselhoId: 1, login: "JOAO.PEDRO", senha: "Joa@5678", status: "ativo" },
+    { id: 3, nomeCompleto: "Ana Coordenadora", cpf: "345.678.912-28", telefone: "(27) 99999-0003", cargo: "Coordenadora de Prestação de Contas", email: "ana.coordenadora@seme.gov.br", nivelAcesso: "Coordenador", conselhoId: null, login: "ANA.COORDENADORA", senha: "Ana@2468", status: "ativo" },
+    { id: 4, nomeCompleto: "Roberto Almeida", cpf: "456.789.123-64", telefone: "(27) 99999-0004", cargo: "Secretário de Educação", email: "roberto.almeida@seme.gov.br", nivelAcesso: "Secretário", conselhoId: null, login: "ROBERTO.ALMEIDA", senha: "Rob@1357", status: "ativo" },
+    { id: 5, nomeCompleto: "Admin Master", cpf: "567.891.234-82", telefone: "(27) 99999-0005", cargo: "Administrador do Sistema", email: "admin.master@seme.gov.br", nivelAcesso: "Administrador Geral", conselhoId: null, login: "ADMIN.MASTER", senha: "Adm@9999", status: "ativo" },
+    { id: 6, nomeCompleto: "Rita Gomes", cpf: "678.912.345-82", telefone: "(27) 99999-0006", cargo: "Tesoureira", email: "rita.gomes@escola.gov.br", nivelAcesso: "Assessor educacional administrativo financeiro", conselhoId: 3, login: "RITA.GOMES", senha: "Rit@3344", status: "ativo" },
+    { id: 7, nomeCompleto: "Fernando Costa", cpf: "789.123.456-64", telefone: "(27) 99999-0007", cargo: "Secretário Escolar", email: "fernando.costa@escola.gov.br", nivelAcesso: "Assessor educacional administrativo financeiro", conselhoId: 2, login: "FERNANDO.COSTA", senha: "Fer@7788", status: "pendente" },
+  ],
+  prestacoesContas: [
+    {
+      id: 8001, conselhoId: 1, ano: 2026, periodo: "1º Trimestre", status: "aguardando avaliação", dataEnvio: "2026-04-05", enviadoPor: "Carla Souza", observacaoCoordenador: null,
+      lancamentosSnapshot: [
+        { categoria: "Material de limpeza", tipo: "Custeio", data: "2026-03-05", fornecedor: "PAPELARIA CENTRAL LTDA", numeroNF: "000451", valor: 1200, itens: [{ descricao: "MATERIAL DE LIMPEZA DIVERSOS", quantidade: 10, valorUnitario: 120 }], status: "registrado" },
+      ],
+    },
+  ],
+  rendimentos: [],
+};
+
+let nextId = 90000;
+const genId = () => ++nextId;
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    function checar() { setIsMobile(window.innerWidth < 768); }
+    checar();
+    window.addEventListener("resize", checar);
+    return () => window.removeEventListener("resize", checar);
+  }, []);
+  return isMobile;
+}
+
+function NavAbas({ tabs, tab, setTab, isMobile, menuAberto, setMenuAberto, topContent }) {
+  const [hoverId, setHoverId] = useState(null);
+
+  if (isMobile) {
+    return (
+      <>
+        {topContent}
+        {menuAberto && (
+          <div className="fixed inset-0 z-50 flex">
+            <div className="w-64 max-w-[80%] h-full bg-slate-900 text-white p-3 overflow-y-auto shrink-0">
+              <div className="flex flex-col gap-1">
+                {tabs.map((t) => (
+                  <button
+                    key={t.id}
+                    onClick={() => { setTab(t.id); setMenuAberto(false); }}
+                    className={`w-full flex items-center gap-2 px-3 py-2 rounded-md text-sm text-left whitespace-nowrap transition-colors ${tab === t.id ? "bg-teal-700 text-white" : "text-slate-300 hover:bg-slate-800"}`}
+                  >
+                    <t.icon size={15} /> {t.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="flex-1 bg-black bg-opacity-40" onClick={() => setMenuAberto(false)} />
+          </div>
+        )}
+      </>
+    );
+  }
+
+  return (
+    <nav className={menuAberto ? "w-56 shrink-0" : "w-12 shrink-0"}>
+      {menuAberto && topContent}
+      <div className="flex flex-col gap-1">
+        {tabs.map((t) => (
+          <button
+            key={t.id}
+            onClick={() => setTab(t.id)}
+            onMouseEnter={() => setHoverId(t.id)}
+            onMouseLeave={() => setHoverId(null)}
+            className={`relative w-full flex items-center py-2 rounded-md text-sm transition-colors ${menuAberto ? "gap-2 px-3 justify-start text-left" : "justify-center px-0"} ${tab === t.id ? "bg-teal-700 text-white" : "text-slate-600 hover:bg-slate-100"}`}
+          >
+            <t.icon size={15} className="shrink-0" />
+            {menuAberto && <span className="whitespace-nowrap">{t.label}</span>}
+            {!menuAberto && hoverId === t.id && (
+              <span className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap rounded-md bg-slate-900 text-white text-xs px-2.5 py-1.5 z-50 shadow-lg">
+                {t.label}
+              </span>
+            )}
+          </button>
+        ))}
+      </div>
+    </nav>
+  );
+}
+
+function useLookups(db) {
+  const conselhoById = Object.fromEntries(db.conselhos.map((c) => [c.id, c]));
+  const categoriaById = {};
+  Object.values(db.categoriasPorConselho).flat().forEach((c) => (categoriaById[c.id] = c));
+  return { conselhoById, categoriaById };
+}
+
+function apiChamar(payload) {
+  return fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload),
+  })
+    .then((res) => res.json())
+    .catch((err) => {
+      console.error("Falha ao gravar na planilha:", err);
+      return { erro: err.message };
+    });
+}
+function apiInserir(sheet, dados) { return apiChamar({ action: "inserir", sheet, dados }); }
+function apiAtualizar(sheet, id, dados) { return apiChamar({ action: "atualizar", sheet, id, dados }); }
+function apiExcluir(sheet, id) { return apiChamar({ action: "excluir", sheet, id }); }
+function apiExcluirEmCascata(sheet, campoFiltro, valorFiltro) { return apiChamar({ action: "excluirEmCascata", sheet, campoFiltro, valorFiltro }); }
+function apiUploadArquivo(base64, nomeArquivo, mimeType, conselhoNome) { return apiChamar({ action: "uploadArquivo", base64, nomeArquivo, mimeType, conselhoNome }); }
+function arquivoParaBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result).split(",")[1] || "");
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function registrarHistorico(setDb, entry) {
+  const novaEntrada = { id: genId(), dataHora: todayStr(), ...entry };
+  setDb((prev) => ({
+    ...prev,
+    historicoGeral: [...(prev.historicoGeral || []), novaEntrada],
+  }));
+  apiInserir("historicoGeral", {
+    dataHora: novaEntrada.dataHora,
+    perfil: novaEntrada.perfil || "",
+    usuario: novaEntrada.usuario || "",
+    conselhoId: novaEntrada.conselhoId || "",
+    conselhoNome: novaEntrada.conselhoNome || "",
+    acao: novaEntrada.acao || "",
+  });
+}
+
+function baixarCSV(nomeArquivo, header, linhas) {
+  const escapar = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  const conteudo = [header, ...linhas].map((linha) => linha.map(escapar).join(";")).join("\n");
+  const blob = new Blob(["\uFEFF" + conteudo], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = nomeArquivo;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function escapeHtml(s) {
+  return String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function emitirRelatorioPDF(titulo, header, linhas) {
+  const headerHtml = header.map((h) => `<th>${escapeHtml(h)}</th>`).join("");
+  const linhasHtml = linhas.map((linha) => `<tr>${linha.map((v) => `<td>${escapeHtml(v)}</td>`).join("")}</tr>`).join("");
+  const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${escapeHtml(titulo)}</title>
+<style>
+  body { font-family: Arial, Helvetica, sans-serif; padding: 24px; color: #1e293b; }
+  h1 { font-size: 16px; margin: 0 0 4px; }
+  .emitido { font-size: 11px; color: #64748b; margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th, td { border: 1px solid #cbd5e1; padding: 6px 8px; text-align: left; }
+  th { background: #f1f5f9; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  @media print { body { padding: 8px; } }
+</style></head>
+<body>
+  <h1>${escapeHtml(titulo)}</h1>
+  <div class="emitido">Emitido em ${todayStr()}</div>
+  <table><thead><tr>${headerHtml}</tr></thead><tbody>${linhasHtml}</tbody></table>
+  <script>window.onload = function () { setTimeout(function () { window.print(); }, 250); };<\/script>
+</body></html>`;
+  const win = window.open("", "_blank");
+  if (!win) { alert("Não foi possível abrir a janela de impressão. Verifique o bloqueador de pop-ups do navegador."); return; }
+  win.document.write(html);
+  win.document.close();
+}
+
+function imprimirComprovanteLancamento(l, conselhoNome, categoriaNome) {
+  const itensHtml = (l.itens || []).map((it) => `<tr><td>${escapeHtml(it.descricao)}</td><td>${it.quantidade}</td><td>${escapeHtml(brl(it.valorUnitario))}</td><td>${escapeHtml(brl(it.quantidade * it.valorUnitario))}</td></tr>`).join("");
+  const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Comprovante de lançamento</title>
+<style>
+  body { font-family: Arial, Helvetica, sans-serif; padding: 24px; color: #1e293b; }
+  h1 { font-size: 16px; margin: 0 0 4px; }
+  .emitido { font-size: 11px; color: #64748b; margin-bottom: 20px; }
+  .campos { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 20px; }
+  .campos td { border: 1px solid #cbd5e1; padding: 6px 8px; }
+  .campos td.label { background: #f1f5f9; font-weight: bold; width: 180px; }
+  table.itens { width: 100%; border-collapse: collapse; font-size: 12px; }
+  table.itens th, table.itens td { border: 1px solid #cbd5e1; padding: 6px 8px; text-align: left; }
+  table.itens th { background: #f1f5f9; }
+  .total { text-align: right; font-size: 14px; font-weight: bold; margin-top: 10px; }
+  @media print { body { padding: 8px; } }
+</style></head>
+<body>
+  <h1>Comprovante de lançamento</h1>
+  <div class="emitido">Emitido em ${todayStr()}</div>
+  <table class="campos">
+    <tr><td class="label">Conselho</td><td>${escapeHtml(conselhoNome)}</td></tr>
+    <tr><td class="label">Categoria</td><td>${escapeHtml(categoriaNome)}</td></tr>
+    <tr><td class="label">Data da despesa</td><td>${escapeHtml(displayDate(l.data))}</td></tr>
+    <tr><td class="label">Fornecedor</td><td>${escapeHtml(l.fornecedor || "-")}</td></tr>
+    <tr><td class="label">Número da NF</td><td>${escapeHtml(l.numeroNF || "-")}</td></tr>
+    <tr><td class="label">Lançado por</td><td>${escapeHtml(l.lancadoPor || "-")}</td></tr>
+    <tr><td class="label">Status</td><td>${escapeHtml(l.status)}</td></tr>
+  </table>
+  <table class="itens">
+    <thead><tr><th>Item adquirido</th><th>Qtd</th><th>Valor unitário</th><th>Subtotal</th></tr></thead>
+    <tbody>${itensHtml || `<tr><td colspan="4">${escapeHtml(l.descricao || "-")}</td></tr>`}</tbody>
+  </table>
+  <div class="total">Valor total: ${escapeHtml(brl(l.valor))}</div>
+  <script>window.onload = function () { setTimeout(function () { window.print(); }, 250); };<\/script>
+</body></html>`;
+  const win = window.open("", "_blank");
+  if (!win) { alert("Não foi possível abrir a janela de impressão. Verifique o bloqueador de pop-ups do navegador."); return; }
+  win.document.write(html);
+  win.document.close();
+}
+
+function emitirRelatorioConsolidadoPrestacao(p, conselhoNome) {
+  const snap = p.lancamentosSnapshot || [];
+  const porCategoria = {};
+  snap.forEach((l) => {
+    const chave = `${l.categoria} (${l.tipo})`;
+    porCategoria[chave] = (porCategoria[chave] || 0) + l.valor;
+  });
+  const totalGeral = snap.reduce((s, l) => s + l.valor, 0);
+
+  const linhasResumo = Object.entries(porCategoria).map(([cat, valor]) => `<tr><td>${escapeHtml(cat)}</td><td>${escapeHtml(brl(valor))}</td></tr>`).join("") || `<tr><td colspan="2">Nenhuma saída registrada neste período.</td></tr>`;
+
+  const linhasLancamentos = snap.map((l) => `<tr><td>${escapeHtml(displayDate(l.data))}</td><td>${escapeHtml(l.categoria)}</td><td>${escapeHtml(l.tipo)}</td><td>${escapeHtml(l.fornecedor || "-")}</td><td>${escapeHtml(l.numeroNF || "-")}</td><td>${escapeHtml(brl(l.valor))}</td></tr>`).join("") || `<tr><td colspan="6">Nenhum lançamento neste período.</td></tr>`;
+
+  const linhasItens = snap.flatMap((l) => (l.itens || []).map((it) => `<tr><td>${escapeHtml(l.numeroNF || "-")}</td><td>${escapeHtml(l.fornecedor || "-")}</td><td>${escapeHtml(it.descricao)}</td><td>${it.quantidade}</td><td>${escapeHtml(brl(it.valorUnitario))}</td><td>${escapeHtml(brl(it.quantidade * it.valorUnitario))}</td></tr>`)).join("") || `<tr><td colspan="6">Nenhum item registrado.</td></tr>`;
+
+  const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>Prestação de Contas - ${escapeHtml(p.periodo)} de ${p.ano}</title>
+<style>
+  body { font-family: Arial, Helvetica, sans-serif; padding: 24px; color: #1e293b; }
+  h1 { font-size: 17px; margin: 0 0 4px; }
+  h2 { font-size: 13px; margin: 24px 0 8px; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; }
+  .info { font-size: 12px; color: #475569; margin-bottom: 4px; }
+  .total-geral { font-size: 15px; font-weight: bold; margin-top: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 6px; }
+  th, td { border: 1px solid #cbd5e1; padding: 5px 7px; text-align: left; }
+  th { background: #f1f5f9; }
+  @media print { body { padding: 8px; } h2 { page-break-after: avoid; } }
+</style></head>
+<body>
+  <h1>Prestação de Contas — ${escapeHtml(p.periodo)} de ${p.ano}</h1>
+  <div class="info">Conselho: ${escapeHtml(conselhoNome)}</div>
+  <div class="info">Encaminhado por ${escapeHtml(p.enviadoPor)} em ${escapeHtml(displayDate(p.dataEnvio))}</div>
+  <div class="info">Status: ${escapeHtml(p.status)}</div>
+
+  <h2>Resumo por categoria (Custeio/Capital)</h2>
+  <table><thead><tr><th>Categoria</th><th>Total executado</th></tr></thead><tbody>${linhasResumo}</tbody></table>
+  <div class="total-geral">Total geral executado no período: ${escapeHtml(brl(totalGeral))}</div>
+
+  <h2>Lançamentos do período</h2>
+  <table><thead><tr><th>Data</th><th>Categoria</th><th>Tipo</th><th>Fornecedor</th><th>Nº NF</th><th>Valor</th></tr></thead><tbody>${linhasLancamentos}</tbody></table>
+
+  <h2>Itens adquiridos (todas as notas fiscais)</h2>
+  <table><thead><tr><th>Nº NF</th><th>Fornecedor</th><th>Item</th><th>Qtd</th><th>Valor unitário</th><th>Subtotal</th></tr></thead><tbody>${linhasItens}</tbody></table>
+
+  <script>window.onload = function () { setTimeout(function () { window.print(); }, 250); };<\/script>
+</body></html>`;
+  const win = window.open("", "_blank");
+  if (!win) { alert("Não foi possível abrir a janela de impressão. Verifique o bloqueador de pop-ups do navegador."); return; }
+  win.document.write(html);
+  win.document.close();
+}
+
+function ReportButtons({ titulo, header, linhas, nomeArquivo }) {
+  return (
+    <div className="flex gap-2">
+      <GhostButton onClick={() => baixarCSV(`${nomeArquivo}.csv`, header, linhas)}><FileDown size={12} /> CSV</GhostButton>
+      <GhostButton onClick={() => emitirRelatorioPDF(titulo, header, linhas)}><Printer size={12} /> PDF</GhostButton>
+    </div>
+  );
+}
+
+function RelatorioPersonalizado({ fontes }) {
+  const isMobile = useIsMobile();
+  const chavesFontes = Object.keys(fontes);
+  const [fonteSel, setFonteSel] = useState(chavesFontes[0]);
+  const fonte = fontes[fonteSel];
+  const [colunasSel, setColunasSel] = useState(fonte.colunas.map((c) => c.chave));
+  const [filtros, setFiltros] = useState([]);
+  const [tipoGrafico, setTipoGrafico] = useState("nenhum");
+  const [colGrupo, setColGrupo] = useState("");
+  const [colValor, setColValor] = useState("");
+  const [agregacao, setAgregacao] = useState("soma");
+
+  function trocarFonte(chave) {
+    setFonteSel(chave);
+    setColunasSel(fontes[chave].colunas.map((c) => c.chave));
+    setFiltros([]);
+    setTipoGrafico("nenhum");
+    setColGrupo("");
+    setColValor("");
+  }
+
+  function alternarColuna(chave) {
+    setColunasSel((prev) => (prev.includes(chave) ? prev.filter((c) => c !== chave) : [...prev, chave]));
+  }
+
+  function adicionarFiltro() {
+    const primeira = fonte.colunas[0];
+    setFiltros((prev) => [...prev, { coluna: primeira.chave, operador: primeira.tipo === "numero" ? "=" : "contém", valor: "" }]);
+  }
+  function atualizarFiltro(idx, campo, valor) {
+    setFiltros((prev) => prev.map((f, i) => {
+      if (i !== idx) return f;
+      if (campo === "coluna") {
+        const colDef = fonte.colunas.find((c) => c.chave === valor);
+        return { coluna: valor, operador: colDef?.tipo === "numero" ? "=" : "contém", valor: "" };
+      }
+      return { ...f, [campo]: valor };
+    }));
+  }
+  function removerFiltro(idx) {
+    setFiltros((prev) => prev.filter((_, i) => i !== idx));
+  }
+
+  const linhasFiltradas = fonte.linhas.filter((linha) => filtros.every((f) => {
+    if (f.valor === "" || f.valor === null || f.valor === undefined) return true;
+    const colDef = fonte.colunas.find((c) => c.chave === f.coluna);
+    const v = linha[f.coluna];
+    if (colDef?.tipo === "numero") {
+      const num = Number(v);
+      const alvo = Number(f.valor);
+      if (Number.isNaN(alvo)) return true;
+      switch (f.operador) {
+        case "=": return num === alvo;
+        case ">": return num > alvo;
+        case "<": return num < alvo;
+        case ">=": return num >= alvo;
+        case "<=": return num <= alvo;
+        default: return true;
+      }
+    }
+    return String(v ?? "").toLowerCase().includes(String(f.valor).toLowerCase());
+  }));
+
+  const colunasExibidas = fonte.colunas.filter((c) => colunasSel.includes(c.chave));
+  const colunasTexto = fonte.colunas.filter((c) => c.tipo === "texto");
+  const colunasNumero = fonte.colunas.filter((c) => c.tipo === "numero");
+  const formatarCelula = (colDef, valor) => (colDef.moeda ? brl(Number(valor) || 0) : String(valor ?? "-"));
+
+  const dadosGrafico = (() => {
+    if (tipoGrafico === "nenhum" || !colGrupo) return [];
+    const grupos = {};
+    linhasFiltradas.forEach((linha) => {
+      const chave = String(linha[colGrupo] ?? "—");
+      grupos[chave] = (grupos[chave] || 0) + (agregacao === "contagem" ? 1 : Number(linha[colValor]) || 0);
+    });
+    return Object.entries(grupos).map(([name, value]) => ({ name, value }));
+  })();
+  const PALETA_GRAFICO = ["#0f766e", "#c2410c", "#7c3aed", "#0369a1", "#b45309", "#be123c", "#15803d", "#4338ca"];
+  const graficoPronto = tipoGrafico !== "nenhum" && colGrupo && (agregacao === "contagem" || colValor) && dadosGrafico.length > 0;
+
+  return (
+    <Card>
+      <div className="text-sm font-medium text-slate-800 mb-1">Relatório personalizado</div>
+      <div className="text-xs text-slate-500 mb-3">Escolha a fonte de dados, as colunas, filtros opcionais e, se quiser, um gráfico.</div>
+
+      <Field label="Fonte de dados">
+        <select value={fonteSel} onChange={(e) => trocarFonte(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1 text-sm mb-3">
+          {chavesFontes.map((k) => <option key={k} value={k}>{fontes[k].label}</option>)}
+        </select>
+      </Field>
+
+      <div className="text-xs font-medium text-slate-500 mb-1.5">Colunas</div>
+      <div className="flex flex-wrap gap-2 mb-3">
+        {fonte.colunas.map((c) => (
+          <button key={c.chave} onClick={() => alternarColuna(c.chave)} className={`px-2 py-1 rounded-md text-xs border transition-colors ${colunasSel.includes(c.chave) ? "bg-teal-700 text-white border-teal-700" : "bg-white text-slate-600 border-slate-300"}`}>
+            {c.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="flex items-center justify-between mb-1.5">
+        <div className="text-xs font-medium text-slate-500">Filtros</div>
+        <GhostButton onClick={adicionarFiltro}><Plus size={12} /> Adicionar filtro</GhostButton>
+      </div>
+      <div className="space-y-2 mb-3">
+        {filtros.map((f, idx) => {
+          const colDef = fonte.colunas.find((c) => c.chave === f.coluna);
+          return (
+            <div key={idx} className="flex flex-wrap items-center gap-2">
+              <select value={f.coluna} onChange={(e) => atualizarFiltro(idx, "coluna", e.target.value)} className="border border-slate-300 rounded px-2 py-1 text-sm">
+                {fonte.colunas.map((c) => <option key={c.chave} value={c.chave}>{c.label}</option>)}
+              </select>
+              <select value={f.operador} onChange={(e) => atualizarFiltro(idx, "operador", e.target.value)} className="border border-slate-300 rounded px-2 py-1 text-sm">
+                {colDef?.tipo === "numero" ? (
+                  <>
+                    <option value="=">=</option>
+                    <option value=">">&gt;</option>
+                    <option value="<">&lt;</option>
+                    <option value=">=">&gt;=</option>
+                    <option value="<=">&lt;=</option>
+                  </>
+                ) : (
+                  <option value="contém">contém</option>
+                )}
+              </select>
+              <input value={f.valor} onChange={(e) => atualizarFiltro(idx, "valor", e.target.value)} placeholder="Valor" className="flex-1 border border-slate-300 rounded px-2 py-1 text-sm" />
+              <button onClick={() => removerFiltro(idx)} className="text-slate-400 hover:text-red-600"><Trash2 size={14} /></button>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="text-xs font-medium text-slate-500 mb-1.5">Gráfico (opcional)</div>
+      <div className={isMobile ? "grid grid-cols-1 gap-2 mb-3" : "grid grid-cols-4 gap-2 mb-3"}>
+        <select value={tipoGrafico} onChange={(e) => setTipoGrafico(e.target.value)} className="border border-slate-300 rounded px-2 py-1 text-sm">
+          <option value="nenhum">Sem gráfico</option>
+          <option value="barra">Barra</option>
+          <option value="pizza">Pizza</option>
+        </select>
+        <select value={colGrupo} onChange={(e) => setColGrupo(e.target.value)} disabled={tipoGrafico === "nenhum"} className="border border-slate-300 rounded px-2 py-1 text-sm disabled:opacity-40">
+          <option value="">Agrupar por...</option>
+          {colunasTexto.map((c) => <option key={c.chave} value={c.chave}>{c.label}</option>)}
+        </select>
+        <select value={agregacao} onChange={(e) => setAgregacao(e.target.value)} disabled={tipoGrafico === "nenhum"} className="border border-slate-300 rounded px-2 py-1 text-sm disabled:opacity-40">
+          <option value="soma">Somar</option>
+          <option value="contagem">Contar registros</option>
+        </select>
+        <select value={colValor} onChange={(e) => setColValor(e.target.value)} disabled={tipoGrafico === "nenhum" || agregacao === "contagem"} className="border border-slate-300 rounded px-2 py-1 text-sm disabled:opacity-40">
+          <option value="">Valor a somar...</option>
+          {colunasNumero.map((c) => <option key={c.chave} value={c.chave}>{c.label}</option>)}
+        </select>
+      </div>
+
+      {graficoPronto && (
+        <div className="mb-4">
+          <ResponsiveContainer width="100%" height={280}>
+            {tipoGrafico === "barra" ? (
+              <BarChart data={dadosGrafico}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                <XAxis dataKey="name" tick={{ fontSize: 11 }} angle={-30} textAnchor="end" interval={0} height={70} />
+                <YAxis tick={{ fontSize: 11 }} />
+                <Tooltip formatter={(v) => (agregacao === "contagem" ? v : brl(v))} />
+                <Bar dataKey="value" fill="#0f766e" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            ) : (
+              <PieChart>
+                <Pie data={dadosGrafico} dataKey="value" nameKey="name" innerRadius={50} outerRadius={85} paddingAngle={2}>
+                  {dadosGrafico.map((d, idx) => <Cell key={d.name} fill={PALETA_GRAFICO[idx % PALETA_GRAFICO.length]} />)}
+                </Pie>
+                <Tooltip formatter={(v) => (agregacao === "contagem" ? v : brl(v))} />
+              </PieChart>
+            )}
+          </ResponsiveContainer>
+          {tipoGrafico === "pizza" && <LegendaGrafico itens={dadosGrafico.map((d, idx) => ({ nome: d.name, cor: PALETA_GRAFICO[idx % PALETA_GRAFICO.length] }))} />}
+        </div>
+      )}
+
+      <div className="flex items-center justify-between mb-2">
+        <div className="text-xs text-slate-500">{linhasFiltradas.length} registro(s)</div>
+        <ReportButtons
+          titulo={`Relatório personalizado — ${fonte.label}`}
+          nomeArquivo={`relatorio_personalizado_${fonteSel}`}
+          header={colunasExibidas.map((c) => c.label)}
+          linhas={linhasFiltradas.map((linha) => colunasExibidas.map((c) => formatarCelula(c, linha[c.chave])))}
+        />
+      </div>
+
+      <div className="overflow-x-auto border border-slate-200 rounded-md">
+        <table className="w-full text-xs">
+          <thead>
+            <tr className="bg-slate-50 text-left text-slate-500">
+              {colunasExibidas.map((c) => <th key={c.chave} className="px-2 py-1.5 font-medium">{c.label}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {linhasFiltradas.slice(0, 50).map((linha, idx) => (
+              <tr key={idx} className="border-t border-slate-100">
+                {colunasExibidas.map((c) => <td key={c.chave} className="px-2 py-1.5 text-slate-700">{formatarCelula(c, linha[c.chave])}</td>)}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {linhasFiltradas.length > 50 && <div className="text-xs text-slate-400 px-2 py-1.5">Mostrando 50 de {linhasFiltradas.length} registros — exporte para ver todos.</div>}
+      </div>
+    </Card>
+  );
+}
+
+function computeSaldoRepasse(db, repasse, categoriaById) {
+  const plano = db.planos.find((p) => p.repasseId === repasse.id);
+  const previstoCusteio = plano ? plano.itens.filter((i) => categoriaById[i.categoriaId]?.tipo === "Custeio").reduce((s, i) => s + i.valorPrevisto, 0) : 0;
+  const previstoCapital = plano ? plano.itens.filter((i) => categoriaById[i.categoriaId]?.tipo === "Capital").reduce((s, i) => s + i.valorPrevisto, 0) : 0;
+  const executados = db.lancamentos.filter((l) => l.repasseId === repasse.id && l.status !== "aguardando autorização");
+  const execCusteio = executados.filter((l) => categoriaById[l.categoriaId]?.tipo === "Custeio").reduce((s, l) => s + l.valor, 0);
+  const execCapital = executados.filter((l) => categoriaById[l.categoriaId]?.tipo === "Capital").reduce((s, l) => s + l.valor, 0);
+  return { totalCusteio: repasse.custeio, totalCapital: repasse.capital, previstoCusteio, previstoCapital, execCusteio, execCapital, saldoCusteio: repasse.custeio - execCusteio, saldoCapital: repasse.capital - execCapital };
+}
+
+// disponível para alocar em categorias (não confundir com saldo de execução)
+function disponivelParaCategorias(plano, repasse, categoriaById, tipo, categoriaIdExcluida) {
+  const totalPrevisto = (plano?.itens || [])
+    .filter((i) => i.categoriaId !== categoriaIdExcluida && categoriaById[i.categoriaId]?.tipo === tipo)
+    .reduce((s, i) => s + i.valorPrevisto, 0);
+  const totalRepasse = tipo === "Custeio" ? repasse.custeio : repasse.capital;
+  return totalRepasse - totalPrevisto;
+}
+
+// ================= PRESIDENTE =================
+function PresidenteView({ db, setDb, conselhoId, setConselhoId, menuAberto, setMenuAberto, usuarioLogado }) {
+  const [tab, setTab] = useState("dashboard");
+  const [tipoExpandido, setTipoExpandido] = useState({});
+  const [filtroExercicioVisao, setFiltroExercicioVisao] = useState("Todos");
+  const [anoPrestacao, setAnoPrestacao] = useState(String(new Date().getFullYear()));
+  const [periodoPrestacao, setPeriodoPrestacao] = useState(PERIODOS_PRESTACAO[0]);
+  const isMobile = useIsMobile();
+  const { categoriaById, conselhoById } = useLookups(db);
+  const conselho = conselhoById[conselhoId];
+  const repasses = db.repasses.filter((r) => r.conselhoId === conselhoId);
+  const lancamentos = db.lancamentos.filter((l) => l.conselhoId === conselhoId);
+  const remanejamentos = db.remanejamentos.filter((r) => r.conselhoId === conselhoId);
+  const categorias = db.categoriasPorConselho[conselhoId] || [];
+
+  const [novoRemanejamento, setNovoRemanejamento] = useState({ repasseId: "", origemId: "", destinoId: "", valorCents: 0, justificativa: "" });
+  const [editando, setEditando] = useState(null);
+  const [confirmarExclusaoLancId, setConfirmarExclusaoLancId] = useState(null);
+  const [filtroCategoriaLanc, setFiltroCategoriaLanc] = useState("Todas");
+  const [filtroStatusLanc, setFiltroStatusLanc] = useState("Todos");
+  const [novaCategoriaDestino, setNovaCategoriaDestino] = useState(null);
+
+  function autorizarLancamento(id) {
+    const l = db.lancamentos.find((x) => x.id === id);
+    setDb((prev) => ({ ...prev, lancamentos: prev.lancamentos.map((l) => l.id === id ? { ...l, status: "registrado", historico: [...l.historico, { data: todayStr(), campo: "status", de: "aguardando autorização", para: "autorizado pelo presidente" }] } : l) }));
+    registrarHistorico(setDb, { perfil: "Presidente", usuario: usuarioLogado?.nomeCompleto || conselho.presidente, conselhoId, conselhoNome: conselho.nomeConselho, acao: `Autorizou o lançamento de ${brl(l?.valor || 0)} (${categoriaById[l?.categoriaId]?.nome || "categoria"})` });
+  }
+
+  function getInfoCategoria(repasseId, categoriaId) {
+    const plano = db.planos.find((p) => p.repasseId === repasseId);
+    const item = plano?.itens.find((i) => i.categoriaId === categoriaId);
+    const previsto = item?.valorPrevisto || 0;
+    const executado = db.lancamentos.filter((l) => l.repasseId === repasseId && l.categoriaId === categoriaId && l.status !== "aguardando autorização").reduce((s, l) => s + l.valor, 0);
+    return { previsto, executado, disponivel: previsto - executado };
+  }
+
+  async function salvarArquivosPlano(repasseId, arquivosComFile) {
+    const novos = [];
+    for (const a of arquivosComFile) {
+      const base64 = await arquivoParaBase64(a.file);
+      const resultado = await apiUploadArquivo(base64, a.nome, a.file.type || "application/pdf", conselho.nomeConselho);
+      const url = resultado?.url || "";
+      const id = genId();
+      novos.push({ id, nome: a.nome, url, status: "aguardando aprovação" });
+      apiInserir("arquivosPlano", { id, repasseId, nome: a.nome, url, status: "aguardando aprovação" });
+    }
+    setDb((prev) => ({ ...prev, planos: prev.planos.map((p) => (p.repasseId === repasseId ? { ...p, arquivos: [...(p.arquivos || []), ...novos] } : p)) }));
+    registrarHistorico(setDb, { perfil: "Presidente", usuario: usuarioLogado?.nomeCompleto || conselho.presidente, conselhoId, conselhoNome: conselho.nomeConselho, acao: `Anexou ${arquivosComFile.length} arquivo(s) ao Plano de Aplicação` });
+  }
+
+  function excluirArquivoPlano(repasseId, arquivoId) {
+    setDb((prev) => ({
+      ...prev,
+      planos: prev.planos.map((p) => {
+        if (p.repasseId !== repasseId) return p;
+        return { ...p, arquivos: (p.arquivos || []).filter((a) => a.id !== arquivoId) };
+      }),
+    }));
+    apiExcluir("arquivosPlano", arquivoId);
+    registrarHistorico(setDb, { perfil: "Presidente", usuario: usuarioLogado?.nomeCompleto || conselho.presidente, conselhoId, conselhoNome: conselho.nomeConselho, acao: "Excluiu um arquivo do Plano de Aplicação" });
+  }
+
+  async function adicionarLancamento(payload) {
+    if (dataEstaTravada(db, conselhoId, payload.dataNF)) {
+      alert("Este período já foi encaminhado para a prestação de contas e está travado. Solicite o desbloqueio ao Coordenador para lançar despesas nesta data.");
+      return;
+    }
+    const nomeUsuario = usuarioLogado?.nomeCompleto || conselho.presidente;
+    const papel = souAssessor ? "assessor" : "presidente";
+    const statusInicial = souAssessor ? "aguardando autorização" : "registrado";
+    const novoId = genId();
+
+    const arquivosNFFinal = [];
+    for (const a of payload.arquivosNF || []) {
+      const base64 = await arquivoParaBase64(a.file);
+      const resultado = await apiUploadArquivo(base64, a.nome, a.file.type || "application/pdf", conselho.nomeConselho);
+      arquivosNFFinal.push({ id: genId(), nome: a.nome, url: resultado?.url || "" });
+    }
+    const orcamentosFinal = [];
+    for (const a of payload.orcamentos || []) {
+      const base64 = await arquivoParaBase64(a.file);
+      const resultado = await apiUploadArquivo(base64, a.nome, a.file.type || "application/pdf", conselho.nomeConselho);
+      orcamentosFinal.push({ id: genId(), nome: a.nome, url: resultado?.url || "" });
+    }
+
+    const novoLancamento = {
+      id: novoId, conselhoId, repasseId: Number(payload.repasseId), categoriaId: Number(payload.categoriaId),
+      data: payload.dataNF, fornecedor: payload.fornecedor, numeroNF: payload.numeroNF,
+      valor: payload.valorTotal, descricao: payload.itens.map((i) => i.descricao).join("; "),
+      itens: payload.itens, arquivosNF: arquivosNFFinal, orcamentos: orcamentosFinal, lancadoPor: `${nomeUsuario} (${papel})`, status: statusInicial, historico: [],
+    };
+    setDb((prev) => ({ ...prev, lancamentos: [...prev.lancamentos, novoLancamento] }));
+    apiInserir("lancamentos", { id: novoId, conselhoId, repasseId: novoLancamento.repasseId, categoriaId: novoLancamento.categoriaId, data: novoLancamento.data, fornecedor: novoLancamento.fornecedor, numeroNF: novoLancamento.numeroNF, valor: novoLancamento.valor, descricao: novoLancamento.descricao, lancadoPor: novoLancamento.lancadoPor, status: novoLancamento.status });
+    payload.itens.forEach((it) => apiInserir("lancamentoItens", { lancamentoId: novoId, descricao: it.descricao, quantidade: it.quantidade, valorUnitario: it.valorUnitario }));
+    arquivosNFFinal.forEach((a) => apiInserir("arquivosNF", { id: a.id, lancamentoId: novoId, nome: a.nome, url: a.url }));
+    orcamentosFinal.forEach((a) => apiInserir("lancamentoOrcamentos", { id: a.id, lancamentoId: novoId, nome: a.nome, url: a.url }));
+    registrarHistorico(setDb, { perfil: souAssessor ? "Assessor" : "Presidente", usuario: nomeUsuario, conselhoId, conselhoNome: conselho.nomeConselho, acao: `Lançou despesa de ${brl(payload.valorTotal)} (NF ${payload.numeroNF}, fornecedor ${payload.fornecedor})` });
+  }
+
+  function excluirLancamento(id) {
+    const l = db.lancamentos.find((x) => x.id === id);
+    if (l && dataEstaTravada(db, conselhoId, l.data)) {
+      alert("Este lançamento está travado por já fazer parte de uma prestação de contas encaminhada. Solicite o desbloqueio ao Coordenador.");
+      setConfirmarExclusaoLancId(null);
+      return;
+    }
+    setDb((prev) => ({ ...prev, lancamentos: prev.lancamentos.filter((l) => l.id !== id) }));
+    setConfirmarExclusaoLancId(null);
+    apiExcluir("lancamentos", id);
+    apiExcluirEmCascata("lancamentoItens", "lancamentoId", id);
+    apiExcluirEmCascata("arquivosNF", "lancamentoId", id);
+    apiExcluirEmCascata("lancamentoOrcamentos", "lancamentoId", id);
+    registrarHistorico(setDb, { perfil: "Presidente", usuario: usuarioLogado?.nomeCompleto || conselho.presidente, conselhoId, conselhoNome: conselho.nomeConselho, acao: `Excluiu o lançamento de ${brl(l?.valor || 0)} (${categoriaById[l?.categoriaId]?.nome || "categoria"})` });
+  }
+
+  function salvarEdicaoLancamento(id, novoValorReais, novaDescricao) {
+    const lAtual = db.lancamentos.find((x) => x.id === id);
+    if (lAtual && dataEstaTravada(db, conselhoId, lAtual.data)) {
+      alert("Este lançamento está travado por já fazer parte de uma prestação de contas encaminhada. Solicite o desbloqueio ao Coordenador.");
+      setEditando(null);
+      return;
+    }
+    setDb((prev) => ({
+      ...prev,
+      lancamentos: prev.lancamentos.map((l) => {
+        if (l.id !== id) return l;
+        const hist = [...l.historico];
+        if (Number(novoValorReais) !== l.valor) hist.push({ data: todayStr(), campo: "valor", de: brl(l.valor), para: brl(Number(novoValorReais)) });
+        if (novaDescricao !== l.descricao) hist.push({ data: todayStr(), campo: "descrição", de: l.descricao, para: novaDescricao });
+        return { ...l, valor: Number(novoValorReais), descricao: novaDescricao, historico: hist };
+      }),
+    }));
+    setEditando(null);
+    apiAtualizar("lancamentos", id, { valor: Number(novoValorReais), descricao: novaDescricao });
+    registrarHistorico(setDb, { perfil: "Presidente", usuario: usuarioLogado?.nomeCompleto || conselho.presidente, conselhoId, conselhoNome: conselho.nomeConselho, acao: `Editou um lançamento (novo valor: ${brl(Number(novoValorReais))})` });
+  }
+
+  function solicitarRemanejamento() {
+    if (!novoRemanejamento.repasseId || !novoRemanejamento.origemId || !novoRemanejamento.destinoId || !novoRemanejamento.valorCents) return;
+    const novoId = genId();
+    const registro = { id: novoId, conselhoId, repasseId: Number(novoRemanejamento.repasseId), origemId: Number(novoRemanejamento.origemId), destinoId: Number(novoRemanejamento.destinoId), valor: centsToReais(novoRemanejamento.valorCents), justificativa: novoRemanejamento.justificativa, status: "solicitado" };
+    setDb((prev) => ({ ...prev, remanejamentos: [...prev.remanejamentos, registro] }));
+    apiInserir("remanejamentos", registro);
+    registrarHistorico(setDb, { perfil: "Presidente", usuario: usuarioLogado?.nomeCompleto || conselho.presidente, conselhoId, conselhoNome: conselho.nomeConselho, acao: `Solicitou remanejamento de ${brl(centsToReais(novoRemanejamento.valorCents))} (${categoriaById[Number(novoRemanejamento.origemId)]?.nome} → ${categoriaById[Number(novoRemanejamento.destinoId)]?.nome})` });
+    setNovoRemanejamento({ repasseId: "", origemId: "", destinoId: "", valorCents: 0, justificativa: "" });
+  }
+
+  async function enviarRendimento(payload) {
+    const nomeUsuario = usuarioLogado?.nomeCompleto || conselho.presidente;
+    const base64 = await arquivoParaBase64(payload.arquivoExtrato.file);
+    const resultado = await apiUploadArquivo(base64, payload.arquivoExtrato.nome, payload.arquivoExtrato.file.type || "application/pdf", conselho.nomeConselho);
+    const url = resultado?.url || "";
+    const id = genId();
+    const registro = {
+      id, conselhoId, repasseId: Number(payload.repasseId),
+      valorInformado: payload.valor, valor: payload.valor,
+      extratoNome: payload.arquivoExtrato.nome, extratoUrl: url,
+      alocacoes: payload.alocacoes, status: "aguardando avaliação",
+      dataEnvio: todayISO(), enviadoPor: nomeUsuario, observacaoCoordenador: null,
+    };
+    setDb((prev) => ({ ...prev, rendimentos: [...(prev.rendimentos || []), registro] }));
+    apiInserir("rendimentos", { id, conselhoId, repasseId: registro.repasseId, valorInformado: registro.valorInformado, valor: registro.valor, extratoNome: registro.extratoNome, extratoUrl: url, status: "aguardando avaliação", dataEnvio: registro.dataEnvio, enviadoPor: nomeUsuario, observacaoCoordenador: "" });
+    payload.alocacoes.forEach((a) => apiInserir("rendimentoAlocacoes", { rendimentoId: id, categoriaId: a.categoriaId, valor: a.valor }));
+    registrarHistorico(setDb, { perfil: "Presidente", usuario: nomeUsuario, conselhoId, conselhoNome: conselho.nomeConselho, acao: `Informou rendimento de ${brl(payload.valor)} da conta` });
+  }
+
+  function fecharPrestacaoContas(ano, periodo) {
+    const nomeUsuario = usuarioLogado?.nomeCompleto || conselho.presidente;
+    const existente = (db.prestacoesContas || []).find((p) => p.conselhoId === conselhoId && p.ano === ano && p.periodo === periodo);
+    if (existente && (existente.status === "aguardando avaliação" || existente.status === "aprovada")) return;
+
+    const [inicio, fim] = intervaloDoPeriodo(ano, periodo);
+    const lancamentosPeriodo = db.lancamentos.filter((l) => l.conselhoId === conselhoId && l.data >= inicio && l.data <= fim && l.status !== "aguardando autorização");
+    const snapshot = lancamentosPeriodo.map((l) => ({
+      categoria: categoriaById[l.categoriaId]?.nome || "-",
+      tipo: categoriaById[l.categoriaId]?.tipo || "-",
+      data: l.data,
+      fornecedor: l.fornecedor,
+      numeroNF: l.numeroNF,
+      valor: l.valor,
+      itens: l.itens || [],
+      status: l.status,
+    }));
+
+    let registro;
+    if (existente) {
+      registro = { ...existente, status: "aguardando avaliação", dataEnvio: todayISO(), enviadoPor: nomeUsuario, observacaoCoordenador: null, lancamentosSnapshot: snapshot };
+      setDb((prev) => ({ ...prev, prestacoesContas: prev.prestacoesContas.map((p) => (p.id === existente.id ? registro : p)) }));
+      apiAtualizar("prestacoesContas", existente.id, { status: "aguardando avaliação", dataEnvio: registro.dataEnvio, enviadoPor: nomeUsuario, observacaoCoordenador: "" });
+      apiExcluirEmCascata("prestacaoSnapshot", "prestacaoId", existente.id);
+    } else {
+      registro = { id: genId(), conselhoId, ano, periodo, status: "aguardando avaliação", dataEnvio: todayISO(), enviadoPor: nomeUsuario, observacaoCoordenador: null, lancamentosSnapshot: snapshot };
+      setDb((prev) => ({ ...prev, prestacoesContas: [...(prev.prestacoesContas || []), registro] }));
+      apiInserir("prestacoesContas", { id: registro.id, conselhoId, ano, periodo, status: "aguardando avaliação", dataEnvio: registro.dataEnvio, enviadoPor: nomeUsuario, observacaoCoordenador: "" });
+    }
+    snapshot.forEach((s) => apiInserir("prestacaoSnapshot", { prestacaoId: registro.id, categoria: s.categoria, tipo: s.tipo, data: s.data, fornecedor: s.fornecedor, numeroNF: s.numeroNF, valor: s.valor, status: s.status }));
+    registrarHistorico(setDb, { perfil: "Presidente", usuario: nomeUsuario, conselhoId, conselhoNome: conselho.nomeConselho, acao: `Fechou e encaminhou a prestação de contas do período "${periodo} de ${ano}" para avaliação do Coordenador` });
+    emitirRelatorioConsolidadoPrestacao(registro, conselho.nomeConselho);
+  }
+
+  const pendentesAutorizacao = lancamentos.filter((l) => l.status === "aguardando autorização");
+  const souAssessor = usuarioLogado?.nivelAcesso === "Assessor educacional administrativo financeiro";
+
+  const tabsCompletas = [
+    { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { id: "visao", label: "Visão geral", icon: Wallet },
+    { id: "plano", label: "Plano de aplicação", icon: FileText },
+    { id: "lancamentos", label: "Lançamentos", icon: ClipboardCheck },
+    { id: "autorizacoes", label: `Autorizações${pendentesAutorizacao.length ? ` (${pendentesAutorizacao.length})` : ""}`, icon: CheckCircle2 },
+    { id: "remanejamento", label: "Remanejamento", icon: ArrowLeftRight },
+    { id: "rendimentos", label: "Rendimentos", icon: TrendingUp },
+    { id: "prestacao", label: "Prestação de Contas", icon: Lock },
+    { id: "relatorios", label: "Relatórios", icon: BarChart3 },
+    { id: "historico", label: "Histórico", icon: History },
+  ];
+  const tabs = souAssessor ? tabsCompletas.filter((t) => t.id !== "autorizacoes" && t.id !== "remanejamento" && t.id !== "prestacao" && t.id !== "rendimentos") : tabsCompletas;
+
+  return (
+    <div className={isMobile ? "flex flex-col gap-4" : "flex flex-row gap-6"}>
+      <NavAbas
+        tabs={tabs}
+        tab={tab}
+        setTab={setTab}
+        isMobile={isMobile}
+        menuAberto={menuAberto}
+        setMenuAberto={setMenuAberto}
+        topContent={<div className="text-xs font-medium text-slate-500 mb-3 px-1">{conselho.nomeConselho}</div>}
+      />
+
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 mb-4 text-xs text-slate-500">
+          <School size={13} /> {conselho.escolas.join(", ")}
+          <VencimentoBadge vencimento={conselho.vencimento} />
+        </div>
+
+        {tab === "dashboard" && (() => {
+          const totalRepassado = repasses.reduce((s, r) => s + r.custeio + r.capital, 0);
+          const totalExecutado = lancamentos.filter((l) => l.status !== "aguardando autorização").reduce((s, l) => s + l.valor, 0);
+          const dadosPorCategoria = categorias.map((c) => {
+            const previsto = db.planos.filter((p) => repasses.some((r) => r.id === p.repasseId)).flatMap((p) => p.itens).filter((i) => i.categoriaId === c.id).reduce((s, i) => s + i.valorPrevisto, 0);
+            const executado = lancamentos.filter((l) => l.categoriaId === c.id && l.status !== "aguardando autorização").reduce((s, l) => s + l.valor, 0);
+            return { nome: c.nome.length > 14 ? c.nome.slice(0, 12) + "…" : c.nome, nomeCompleto: c.nome, tipo: c.tipo, Previsto: previsto, Executado: executado };
+          });
+          const dadosPizza = dadosPorCategoria.filter((d) => d.Executado > 0).map((d) => ({ name: d.nome, value: d.Executado }));
+          const PALETA = ["#0f766e", "#c2410c", "#7c3aed", "#0369a1", "#b45309", "#be123c", "#15803d", "#4338ca"];
+          const dadosPorRepasse = repasses.map((r) => {
+            const s = computeSaldoRepasse(db, r, categoriaById);
+            return { nome: r.descricao, "Saldo Custeio": s.saldoCusteio, "Saldo Capital": s.saldoCapital };
+          });
+          const totalCusteioConselho = repasses.reduce((s, r) => s + r.custeio, 0);
+          const totalCapitalConselho = repasses.reduce((s, r) => s + r.capital, 0);
+          const dadosTipoConselho = [{ name: "Custeio", value: totalCusteioConselho }, { name: "Capital", value: totalCapitalConselho }];
+          const CORES_TIPO_CONSELHO = ["#0f766e", "#c2410c"];
+          return (
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <SectionTitle icon={LayoutDashboard}>Dashboard — {conselho.nomeConselho}</SectionTitle>
+                <ReportButtons
+                  titulo={`Relatório do conselho — ${conselho.nomeConselho}`}
+                  nomeArquivo={`relatorio_${conselho.nomeConselho}`}
+                  header={["Categoria", "Tipo", "Previsto", "Executado"]}
+                  linhas={dadosPorCategoria.map((d) => [d.nomeCompleto, d.tipo, brl(d.Previsto), brl(d.Executado)])}
+                />
+              </div>
+              <div className={isMobile ? "grid grid-cols-1 gap-3 mb-6" : "grid grid-cols-3 gap-3 mb-6"}>
+                <Card className="bg-teal-50 border-teal-100"><div className="text-xs text-teal-700">Total repassado</div><div className="text-lg font-semibold text-teal-800">{brl(totalRepassado)}</div></Card>
+                <Card className="bg-orange-50 border-orange-100"><div className="text-xs text-orange-700">Total executado</div><div className="text-lg font-semibold text-orange-800">{brl(totalExecutado)}</div></Card>
+                <Card className="bg-purple-50 border-purple-100"><div className="text-xs text-purple-700">Saldo consolidado</div><div className="text-lg font-semibold text-purple-800">{brl(totalRepassado - totalExecutado)}</div></Card>
+              </div>
+              <div className={isMobile ? "grid grid-cols-1 gap-4 mb-4" : "grid grid-cols-2 gap-4 mb-4"}>
+                <Card>
+                  <div className="text-xs font-medium text-slate-500 mb-2">Previsto x executado por categoria</div>
+                  <ResponsiveContainer width="100%" height={260}>
+                    <BarChart data={dadosPorCategoria}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                      <XAxis dataKey="nome" tick={{ fontSize: 11 }} angle={-30} textAnchor="end" interval={0} height={70} />
+                      <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `${v / 1000}k`} />
+                      <Tooltip formatter={(v) => brl(v)} />
+                      <Legend wrapperStyle={{ fontSize: "11px" }} />
+                      <Bar dataKey="Previsto" fill="#0369a1" radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="Executado" fill="#c2410c" radius={[4, 4, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </Card>
+                <Card>
+                  <div className="text-xs font-medium text-slate-500 mb-2">Distribuição do valor executado por categoria</div>
+                  {dadosPizza.length === 0 ? <div className="text-sm text-slate-500 py-10 text-center">Nenhuma despesa lançada ainda.</div> : (
+                    <>
+                      <ResponsiveContainer width="100%" height={220}>
+                        <PieChart>
+                          <Pie data={dadosPizza} dataKey="value" nameKey="name" innerRadius={45} outerRadius={80} paddingAngle={2}>
+                            {dadosPizza.map((entry, idx) => <Cell key={entry.name} fill={PALETA[idx % PALETA.length]} />)}
+                          </Pie>
+                          <Tooltip formatter={(v) => brl(v)} />
+                        </PieChart>
+                      </ResponsiveContainer>
+                      <LegendaGrafico itens={dadosPizza.map((d, idx) => ({ nome: d.name, cor: PALETA[idx % PALETA.length] }))} />
+                    </>
+                  )}
+                </Card>
+              </div>
+              <div className={isMobile ? "grid grid-cols-1 gap-4" : "grid grid-cols-2 gap-4"}>
+                <Card>
+                  <div className="text-xs font-medium text-slate-500 mb-2">Saldo por repasse (Custeio x Capital)</div>
+                  <ResponsiveContainer width="100%" height={260}>
+                    <BarChart data={dadosPorRepasse}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                      <XAxis dataKey="nome" tick={{ fontSize: 11 }} angle={-30} textAnchor="end" interval={0} height={70} />
+                      <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `${v / 1000}k`} />
+                      <Tooltip formatter={(v) => brl(v)} />
+                      <Legend wrapperStyle={{ fontSize: "11px" }} />
+                      <Bar dataKey="Saldo Custeio" fill="#15803d" radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="Saldo Capital" fill="#7c3aed" radius={[4, 4, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </Card>
+                <Card>
+                  <div className="text-xs font-medium text-slate-500 mb-2">Distribuição Custeio x Capital (total repassado)</div>
+                  <ResponsiveContainer width="100%" height={220}>
+                    <PieChart>
+                      <Pie data={dadosTipoConselho} dataKey="value" nameKey="name" innerRadius={45} outerRadius={80} paddingAngle={2}>
+                        {dadosTipoConselho.map((entry, idx) => <Cell key={entry.name} fill={CORES_TIPO_CONSELHO[idx]} />)}
+                      </Pie>
+                      <Tooltip formatter={(v) => brl(v)} />
+                    </PieChart>
+                  </ResponsiveContainer>
+                  <LegendaGrafico itens={dadosTipoConselho.map((d, idx) => ({ nome: d.name, cor: CORES_TIPO_CONSELHO[idx] }))} />
+                </Card>
+              </div>
+              <Card className="mt-4">
+                <div className="text-xs font-medium text-slate-500 mb-2">Execução ao longo do tempo</div>
+                {(() => {
+                  const dadosMes = agruparLancamentosPorMes(lancamentos);
+                  return dadosMes.length === 0 ? <div className="text-sm text-slate-500 py-10 text-center">Nenhuma despesa lançada ainda.</div> : (
+                    <ResponsiveContainer width="100%" height={220}>
+                      <LineChart data={dadosMes}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                        <XAxis dataKey="mes" tick={{ fontSize: 11 }} />
+                        <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `${v / 1000}k`} />
+                        <Tooltip formatter={(v) => brl(v)} />
+                        <Line type="monotone" dataKey="Executado" stroke="#0f766e" strokeWidth={2} dot={{ r: 3 }} />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  );
+                })()}
+              </Card>
+            </div>
+          );
+        })()}
+
+        {tab === "visao" && (
+          <div>
+            <SectionTitle icon={Wallet}>Saldo por repasse — {conselho.nomeConselho}</SectionTitle>
+            {(() => {
+              const anosDisponiveis = Array.from(new Set(repasses.map((r) => anoExercicio(r.data)))).filter(Boolean).sort().reverse();
+              return anosDisponiveis.length > 1 && (
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-xs text-slate-500">Exercício:</span>
+                  <select value={filtroExercicioVisao} onChange={(e) => setFiltroExercicioVisao(e.target.value)} className="border border-slate-300 rounded px-2 py-1 text-sm">
+                    <option>Todos</option>
+                    {anosDisponiveis.map((a) => <option key={a} value={a}>{a}</option>)}
+                  </select>
+                </div>
+              );
+            })()}
+            <div className="space-y-3">
+              {repasses.filter((r) => filtroExercicioVisao === "Todos" || anoExercicio(r.data) === filtroExercicioVisao).map((r) => {
+                const s = computeSaldoRepasse(db, r, categoriaById);
+                const plano = db.planos.find((p) => p.repasseId === r.id);
+                const tipoAberto = tipoExpandido[r.id] || null;
+                const categoriasDoTipo = tipoAberto ? categorias.filter((c) => c.tipo === tipoAberto) : [];
+                function alternarTipo(tipo) {
+                  setTipoExpandido((prev) => ({ ...prev, [r.id]: prev[r.id] === tipo ? null : tipo }));
+                }
+                return (
+                  <Card key={r.id}>
+                    <div className="text-sm font-medium text-slate-800 mb-2">{r.descricao} · {displayDate(r.data)}{r.saldoAnterior > 0 && <span className="text-slate-500 font-normal"> · inclui {brl(r.saldoAnterior)} de saldo remanescente</span>}</div>
+                    {!r.valoresDefinidos ? (
+                      <div className="bg-amber-50 border border-amber-200 rounded-md px-3 py-2.5 text-sm text-amber-800 flex items-center gap-2">
+                        <Clock size={15} className="shrink-0" /> Plano de Aplicação encaminhado para análise
+                      </div>
+                    ) : (
+                      <>
+                        <div className={isMobile ? "grid grid-cols-1 gap-4" : "grid grid-cols-2 gap-4"}>
+                          <button onClick={() => alternarTipo("Custeio")} className={`text-left text-sm rounded-md p-3 border transition-colors ${tipoAberto === "Custeio" ? "bg-teal-100 border-teal-300" : "bg-teal-50 border-teal-100 hover:bg-teal-100"}`}>
+                            <div className="text-teal-700 text-xs mb-0.5 font-medium">Custeio</div>
+                            <div className="font-medium text-teal-900">{brl(s.saldoCusteio)} <span className="text-teal-600 font-normal">disponível de {brl(s.totalCusteio)}</span></div>
+                          </button>
+                          <button onClick={() => alternarTipo("Capital")} className={`text-left text-sm rounded-md p-3 border transition-colors ${tipoAberto === "Capital" ? "bg-orange-100 border-orange-300" : "bg-orange-50 border-orange-100 hover:bg-orange-100"}`}>
+                            <div className="text-orange-700 text-xs mb-0.5 font-medium">Capital</div>
+                            <div className="font-medium text-orange-900">{brl(s.saldoCapital)} <span className="text-orange-600 font-normal">disponível de {brl(s.totalCapital)}</span></div>
+                          </button>
+                        </div>
+                        {tipoAberto && (
+                          <div className="mt-3 pt-3 border-t border-slate-100">
+                            <div className="text-xs font-medium text-slate-500 mb-2">Mini resumo de utilização — {tipoAberto}</div>
+                            {categoriasDoTipo.length === 0 ? (
+                              <div className="text-xs text-slate-400">Nenhuma categoria de {tipoAberto} cadastrada.</div>
+                            ) : (
+                              <div className="space-y-1.5">
+                                {categoriasDoTipo.map((c) => {
+                                  const item = plano?.itens.find((i) => i.categoriaId === c.id);
+                                  const previsto = item?.valorPrevisto || 0;
+                                  const executado = lancamentos.filter((l) => l.repasseId === r.id && l.categoriaId === c.id && l.status !== "aguardando autorização").reduce((s2, l) => s2 + l.valor, 0);
+                                  return (
+                                    <div key={c.id} className="flex items-center justify-between text-xs bg-slate-50 border border-slate-200 rounded-md px-3 py-1.5">
+                                      <span className="text-slate-700">{c.nome}</span>
+                                      <span className="text-slate-500">Previsto {brl(previsto)} · Usado {brl(executado)} · Saldo {brl(previsto - executado)}</span>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {tab === "plano" && (
+          <div>
+            <SectionTitle icon={FileText}>Plano de aplicação</SectionTitle>
+            <div className="text-xs text-slate-500 mb-3">Os valores por categoria são definidos pela Secretaria. Aqui você acompanha o que foi destinado a cada uma.</div>
+
+            <UploadArquivosPlano repasses={repasses} onSalvar={salvarArquivosPlano} />
+
+            <div className="space-y-4">
+              {repasses.map((r) => {
+                const plano = db.planos.find((p) => p.repasseId === r.id);
+                if (!plano) return null;
+                const totalCusteio = plano.itens.filter((i) => categoriaById[i.categoriaId]?.tipo === "Custeio").reduce((s, i) => s + i.valorPrevisto, 0);
+                const totalCapital = plano.itens.filter((i) => categoriaById[i.categoriaId]?.tipo === "Capital").reduce((s, i) => s + i.valorPrevisto, 0);
+                return (
+                  <Card key={r.id}>
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="text-sm font-medium text-slate-800">{r.descricao} · {displayDate(r.data)}</div>
+                      {r.valoresDefinidos && (
+                        <ReportButtons
+                          titulo={`Plano de Aplicação — ${r.descricao}`}
+                          nomeArquivo={`plano_aplicacao_${r.descricao}`}
+                          header={["Categoria", "Tipo", "Valor previsto"]}
+                          linhas={plano.itens.map((i) => [categoriaById[i.categoriaId]?.nome, categoriaById[i.categoriaId]?.tipo, brl(i.valorPrevisto)])}
+                        />
+                      )}
+                    </div>
+
+                    {!r.valoresDefinidos ? (
+                      <div className="bg-amber-50 border border-amber-200 rounded-md px-3 py-3 text-sm text-amber-800 mb-4 flex items-center gap-2">
+                        <Clock size={16} className="shrink-0" /> Plano de Aplicação encaminhado para análise
+                      </div>
+                    ) : (
+                      <>
+                        <div className={isMobile ? "grid grid-cols-1 gap-3 mb-4" : "grid grid-cols-3 gap-3 mb-4"}>
+                          <div className="bg-teal-50 border border-teal-100 rounded-md px-3 py-2.5"><div className="text-xs text-teal-700 mb-0.5">Total Custeio</div><div className="text-lg font-semibold text-teal-800">{brl(totalCusteio)}</div></div>
+                          <div className="bg-orange-50 border border-orange-100 rounded-md px-3 py-2.5"><div className="text-xs text-orange-700 mb-0.5">Total Capital</div><div className="text-lg font-semibold text-orange-800">{brl(totalCapital)}</div></div>
+                          <div className="bg-indigo-50 border border-indigo-100 rounded-md px-3 py-2.5"><div className="text-xs text-indigo-700 mb-0.5">Total geral</div><div className="text-lg font-semibold text-indigo-800">{brl(totalCusteio + totalCapital)}</div></div>
+                        </div>
+                        <div className="overflow-x-auto">
+                        <table className="w-full text-sm">
+                          <thead><tr className="text-left text-slate-500 text-xs border-b border-slate-100"><th className="pb-1.5 font-normal">Categoria</th><th className="pb-1.5 font-normal">Tipo</th><th className="pb-1.5 font-normal">Valor previsto</th></tr></thead>
+                          <tbody>
+                            {plano.itens.map((i) => {
+                              const cat = categoriaById[i.categoriaId];
+                              return (
+                                <tr key={i.categoriaId} className="border-b border-slate-50 last:border-0">
+                                  <td className="py-1.5">{cat?.nome}</td>
+                                  <td className="py-1.5 text-slate-500">{cat?.tipo}{cat?.subtipo && ` · ${cat.subtipo}`}</td>
+                                  <td className="py-1.5">{brl(i.valorPrevisto)}</td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                        </div>
+                      </>
+                    )}
+
+                    <div className="border-t border-slate-100 pt-3 mt-4">
+                      <div className="text-xs font-semibold text-slate-600 mb-2 flex items-center gap-1.5"><Receipt size={13} /> Arquivos anexados (PDF)</div>
+                      {(plano.arquivos || []).length === 0 ? (
+                        <div className="text-xs text-slate-400">Nenhum arquivo anexado ainda para este repasse.</div>
+                      ) : (
+                        <div className="space-y-1.5">
+                          {plano.arquivos.map((a) => (
+                            <div key={a.id} className="flex flex-wrap items-center justify-between gap-2 bg-slate-50 border border-slate-200 rounded-md px-3 py-2 text-sm">
+                              <a href={a.url} target="_blank" rel="noreferrer" download={a.nome} className="text-teal-700 underline">{a.nome}</a>
+                              <div className="flex items-center gap-2">
+                                <Badge status={a.status} />
+                                <GhostButton tone="red" onClick={() => excluirArquivoPlano(r.id, a.id)}><Trash2 size={12} /> Excluir</GhostButton>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {tab === "lancamentos" && (
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <SectionTitle icon={ClipboardCheck}>Lançamentos — {conselho.nomeConselho}</SectionTitle>
+              <ReportButtons
+                titulo={`Lançamentos — ${conselho.nomeConselho}`}
+                nomeArquivo={`lancamentos_${conselho.nomeConselho}`}
+                header={["Categoria", "Data", "Fornecedor", "Nº NF", "Valor", "Status"]}
+                linhas={lancamentos
+                  .filter((l) => filtroCategoriaLanc === "Todas" || categoriaById[l.categoriaId]?.nome === filtroCategoriaLanc)
+                  .filter((l) => filtroStatusLanc === "Todos" || l.status === filtroStatusLanc)
+                  .map((l) => [categoriaById[l.categoriaId]?.nome, displayDate(l.data), l.fornecedor || "-", l.numeroNF || "-", brl(l.valor), l.status])}
+              />
+            </div>
+
+            <NovoLancamentoForm
+              repasses={repasses.filter((r) => r.valoresDefinidos)}
+              categorias={categorias}
+              defaultRepasseId={(() => { const def = repasses.filter((r) => r.valoresDefinidos); return def.length ? String(def[def.length - 1].id) : ""; })()}
+              getInfoCategoria={getInfoCategoria}
+              onCriar={adicionarLancamento}
+            />
+
+            <div className="flex gap-2 mb-3">
+              <select value={filtroCategoriaLanc} onChange={(e) => setFiltroCategoriaLanc(e.target.value)} className="border border-slate-300 rounded px-2 py-1 text-sm">
+                <option>Todas</option>
+                {categorias.map((c) => <option key={c.id} value={c.nome}>{c.nome}</option>)}
+              </select>
+              <select value={filtroStatusLanc} onChange={(e) => setFiltroStatusLanc(e.target.value)} className="border border-slate-300 rounded px-2 py-1 text-sm">
+                <option>Todos</option>
+                <option value="registrado">Registrado</option>
+                <option value="aguardando autorização">Aguardando autorização</option>
+                <option value="com pendência">Com pendência</option>
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              {lancamentos
+                .filter((l) => filtroCategoriaLanc === "Todas" || categoriaById[l.categoriaId]?.nome === filtroCategoriaLanc)
+                .filter((l) => filtroStatusLanc === "Todos" || l.status === filtroStatusLanc)
+                .slice()
+                .sort((a, b) => (a.data < b.data ? 1 : a.data > b.data ? -1 : b.id - a.id))
+                .map((l) => {
+                  const travado = dataEstaTravada(db, conselhoId, l.data);
+                  return (
+                  <Card key={l.id}>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-sm font-medium text-slate-800">{categoriaById[l.categoriaId]?.nome} · {brl(l.valor)}</div>
+                        <div className="text-xs text-slate-500">
+                          {displayDate(l.data)}{l.fornecedor && ` · Fornecedor: ${l.fornecedor}`}{l.numeroNF && ` · NF ${l.numeroNF}`} · lançado por {l.lancadoPor}
+                        </div>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <Badge status={l.status} />
+                        {travado && <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium border bg-slate-100 text-slate-600 border-slate-200"><Lock size={11} /> Travado</span>}
+                        <GhostButton onClick={() => imprimirComprovanteLancamento(l, conselho.nomeConselho, categoriaById[l.categoriaId]?.nome || "-")}><Printer size={12} /> Imprimir</GhostButton>
+                        {!travado && (editando === l.id ? null : <GhostButton onClick={() => setEditando(l.id)}><Pencil size={12} /> Editar</GhostButton>)}
+                        {!travado && (confirmarExclusaoLancId === l.id ? (
+                          <>
+                            <GhostButton tone="red" onClick={() => excluirLancamento(l.id)}>Confirmar</GhostButton>
+                            <GhostButton onClick={() => setConfirmarExclusaoLancId(null)}>Cancelar</GhostButton>
+                          </>
+                        ) : (
+                          <GhostButton tone="red" onClick={() => setConfirmarExclusaoLancId(l.id)}><Trash2 size={12} /> Excluir</GhostButton>
+                        ))}
+                      </div>
+                    </div>
+                    {l.itens && l.itens.length > 0 && (
+                      <div className="mt-2 pt-2 border-t border-slate-100 text-xs text-slate-500 space-y-0.5">
+                        {l.itens.map((it, idx) => <div key={idx}>{it.descricao} — {it.quantidade} x {brl(it.valorUnitario)} = {brl(it.quantidade * it.valorUnitario)}</div>)}
+                      </div>
+                    )}
+                    {l.arquivosNF && l.arquivosNF.length > 0 && (
+                      <div className="mt-2 pt-2 border-t border-slate-100 flex flex-wrap items-center gap-2">
+                        {l.arquivosNF.map((a, idx) => (
+                          <a key={idx} href={a.url} target="_blank" rel="noreferrer" download={a.nome} className="text-xs text-teal-700 underline flex items-center gap-1"><Receipt size={11} /> {a.nome}</a>
+                        ))}
+                      </div>
+                    )}
+                    {l.orcamentos && l.orcamentos.length > 0 && (
+                      <div className="mt-2 pt-2 border-t border-slate-100 flex flex-wrap items-center gap-2">
+                        <span className="text-xs text-slate-400">Orçamentos:</span>
+                        {l.orcamentos.map((a, idx) => (
+                          <a key={idx} href={a.url} target="_blank" rel="noreferrer" download={a.nome} className="text-xs text-teal-700 underline flex items-center gap-1"><FileText size={11} /> {a.nome}</a>
+                        ))}
+                      </div>
+                    )}
+                    {editando === l.id && <EditLancamentoForm lanc={l} onSave={salvarEdicaoLancamento} onCancel={() => setEditando(null)} />}
+                    {l.historico.length > 0 && (
+                      <div className="mt-2 pt-2 border-t border-slate-100 text-xs text-slate-500 space-y-0.5">
+                        {l.historico.map((h, idx) => <div key={idx}>{h.data} — {h.campo}: {h.de} → {h.para}</div>)}
+                      </div>
+                    )}
+                  </Card>
+                  );
+                })}
+            </div>
+          </div>
+        )}
+
+        {tab === "autorizacoes" && (
+          <div>
+            <SectionTitle icon={CheckCircle2}>Autorizações pendentes</SectionTitle>
+            {pendentesAutorizacao.length === 0 ? <div className="text-sm text-slate-500">Nenhum lançamento aguardando autorização.</div> : (
+              <div className="space-y-2">
+                {pendentesAutorizacao.map((l) => (
+                  <Card key={l.id}>
+                    <div className="flex items-center justify-between">
+                      <div><div className="text-sm font-medium text-slate-800">{categoriaById[l.categoriaId]?.nome} · {brl(l.valor)}</div><div className="text-xs text-slate-500">{displayDate(l.data)} · {l.descricao} · lançado por {l.lancadoPor}</div></div>
+                      <PrimaryButton onClick={() => autorizarLancamento(l.id)}><CheckCircle2 size={14} /> Autorizar</PrimaryButton>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {tab === "remanejamento" && (
+          <div>
+            <SectionTitle icon={ArrowLeftRight}>Solicitação de remanejamento</SectionTitle>
+            <Card className="mb-4">
+              <div className={isMobile ? "grid grid-cols-1 gap-2 mb-2" : "grid grid-cols-4 gap-2 mb-2"}>
+                <select value={novoRemanejamento.repasseId} onChange={(e) => setNovoRemanejamento({ ...novoRemanejamento, repasseId: e.target.value })} className="border border-slate-300 rounded px-2 py-1 text-sm">
+                  <option value="">Repasse</option>
+                  {repasses.map((r) => <option key={r.id} value={r.id}>{r.descricao}</option>)}
+                </select>
+                <select value={novoRemanejamento.origemId} onChange={(e) => setNovoRemanejamento({ ...novoRemanejamento, origemId: e.target.value })} className="border border-slate-300 rounded px-2 py-1 text-sm">
+                  <option value="">De (origem)</option>
+                  {categorias.map((c) => <option key={c.id} value={c.id}>{c.nome}</option>)}
+                </select>
+                <select value={novoRemanejamento.destinoId} onChange={(e) => {
+                  if (e.target.value === "__nova__") { setNovaCategoriaDestino({ nome: "", tipo: "Custeio", subtipo: "Consumo" }); setNovoRemanejamento({ ...novoRemanejamento, destinoId: "" }); }
+                  else { setNovaCategoriaDestino(null); setNovoRemanejamento({ ...novoRemanejamento, destinoId: e.target.value }); }
+                }} className="border border-slate-300 rounded px-2 py-1 text-sm">
+                  <option value="">Para (destino)</option>
+                  {categorias.map((c) => <option key={c.id} value={c.id}>{c.nome}</option>)}
+                  <option value="__nova__">+ Cadastrar nova categoria</option>
+                </select>
+                <CurrencyInput cents={novoRemanejamento.valorCents} onChangeCents={(c) => setNovoRemanejamento({ ...novoRemanejamento, valorCents: c })} />
+              </div>
+
+              {novaCategoriaDestino && (
+                <div className="bg-slate-50 border border-slate-200 rounded-md p-3 mb-2">
+                  <div className="text-xs font-medium text-slate-500 mb-2">Nova categoria de destino</div>
+                  <div className={isMobile ? "grid grid-cols-1 gap-2 mb-2" : "grid grid-cols-3 gap-2 mb-2"}>
+                    <input placeholder="Nome da categoria" value={novaCategoriaDestino.nome} onChange={(e) => setNovaCategoriaDestino({ ...novaCategoriaDestino, nome: e.target.value.toUpperCase() })} className={isMobile ? "border border-slate-300 rounded px-2 py-1 text-sm" : "border border-slate-300 rounded px-2 py-1 text-sm col-span-2"} />
+                    <select value={novaCategoriaDestino.tipo} onChange={(e) => setNovaCategoriaDestino({ ...novaCategoriaDestino, tipo: e.target.value })} className="border border-slate-300 rounded px-2 py-1 text-sm">
+                      <option>Custeio</option>
+                      <option>Capital</option>
+                    </select>
+                  </div>
+                  {novaCategoriaDestino.tipo === "Custeio" && (
+                    <select value={novaCategoriaDestino.subtipo} onChange={(e) => setNovaCategoriaDestino({ ...novaCategoriaDestino, subtipo: e.target.value })} className="border border-slate-300 rounded px-2 py-1 text-sm mb-2">
+                      <option>Consumo</option>
+                      <option>Serviço</option>
+                    </select>
+                  )}
+                  <div className="flex gap-2">
+                    <GhostButton tone="green" onClick={() => {
+                      if (!novaCategoriaDestino.nome) return;
+                      const id = genId();
+                      const cat = { id, nome: novaCategoriaDestino.nome, tipo: novaCategoriaDestino.tipo, ...(novaCategoriaDestino.tipo === "Custeio" ? { subtipo: novaCategoriaDestino.subtipo } : {}) };
+                      setDb((prev) => ({ ...prev, categoriasPorConselho: { ...prev.categoriasPorConselho, [conselhoId]: [...(prev.categoriasPorConselho[conselhoId] || []), cat] } }));
+                      setNovoRemanejamento((prev) => ({ ...prev, destinoId: String(id) }));
+                      setNovaCategoriaDestino(null);
+                    }}><CheckCircle2 size={12} /> Criar categoria</GhostButton>
+                    <GhostButton onClick={() => setNovaCategoriaDestino(null)}>Cancelar</GhostButton>
+                  </div>
+                </div>
+              )}
+              <textarea placeholder="Justificativa" value={novoRemanejamento.justificativa} onChange={(e) => setNovoRemanejamento({ ...novoRemanejamento, justificativa: e.target.value.toUpperCase() })} className="w-full border border-slate-300 rounded px-2 py-1 text-sm mb-2" rows={2} />
+              <PrimaryButton onClick={solicitarRemanejamento}><Send size={14} /> Solicitar remanejamento</PrimaryButton>
+            </Card>
+            <div className="space-y-2">
+              {remanejamentos.map((r) => (
+                <Card key={r.id}>
+                  <div className="flex items-center justify-between">
+                    <div className="text-sm text-slate-800">{categoriaById[r.origemId]?.nome} → {categoriaById[r.destinoId]?.nome} · {brl(r.valor)}</div>
+                    <Badge status={r.status} />
+                  </div>
+                  <div className="text-xs text-slate-500 mt-1">{r.justificativa}</div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {tab === "rendimentos" && (
+          <div>
+            <SectionTitle icon={TrendingUp}>Rendimentos da conta</SectionTitle>
+            <div className="text-xs text-slate-500 mb-3">Quando o dinheiro na conta render (juros bancários), informe aqui o valor, anexe o extrato e indique para quais categorias o Coordenador deve alocar esse valor.</div>
+            <NovoRendimentoForm
+              repasses={repasses}
+              categorias={categorias}
+              defaultRepasseId={(() => { const def = repasses.filter((r) => r.valoresDefinidos); return def.length ? String(def[def.length - 1].id) : ""; })()}
+              onCriar={enviarRendimento}
+            />
+            <div className="text-xs font-medium text-slate-500 mb-2">Rendimentos informados</div>
+            {(db.rendimentos || []).filter((r) => r.conselhoId === conselhoId).length === 0 ? (
+              <div className="text-sm text-slate-500">Nenhum rendimento informado ainda.</div>
+            ) : (
+              <div className="space-y-2">
+                {(db.rendimentos || []).filter((r) => r.conselhoId === conselhoId).slice().sort((a, b) => b.id - a.id).map((r) => (
+                  <Card key={r.id}>
+                    <div className="flex items-center justify-between flex-wrap gap-2">
+                      <div>
+                        <div className="text-sm text-slate-800">{brl(r.valor)} — repasse: {repasses.find((x) => x.id === r.repasseId)?.descricao || "-"}</div>
+                        <div className="text-xs text-slate-500">Enviado em {displayDate(r.dataEnvio)} · <a href={r.extratoUrl} target="_blank" rel="noreferrer" download={r.extratoNome} className="text-teal-700 underline">Ver extrato</a></div>
+                      </div>
+                      <Badge status={r.status} />
+                    </div>
+                    <div className="text-xs text-slate-500 mt-2 space-y-0.5">
+                      {(r.alocacoes || []).map((a, idx) => <div key={idx}>{categoriaById[a.categoriaId]?.nome}: {brl(a.valor)}</div>)}
+                    </div>
+                    {r.status === "reprovado" && r.observacaoCoordenador && (
+                      <div className="text-xs text-red-600 mt-1">Motivo da reprovação: {r.observacaoCoordenador}</div>
+                    )}
+                  </Card>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {tab === "prestacao" && (() => {
+          const anoAtual = new Date().getFullYear();
+          const minhasPrestacoes = (db.prestacoesContas || []).filter((p) => p.conselhoId === conselhoId).slice().sort((a, b) => (a.dataEnvio < b.dataEnvio ? 1 : -1));
+          const existenteAtual = minhasPrestacoes.find((p) => p.ano === Number(anoPrestacao) && p.periodo === periodoPrestacao);
+          const jaTravado = existenteAtual && (existenteAtual.status === "aguardando avaliação" || existenteAtual.status === "aprovada");
+          const [inicio, fim] = intervaloDoPeriodo(Number(anoPrestacao), periodoPrestacao);
+          const lancamentosPeriodo = lancamentos.filter((l) => l.data >= inicio && l.data <= fim && l.status !== "aguardando autorização");
+          const totalPeriodo = lancamentosPeriodo.reduce((s, l) => s + l.valor, 0);
+          return (
+            <div>
+              <SectionTitle icon={Lock}>Prestação de Contas</SectionTitle>
+              <div className="text-xs text-slate-500 mb-3">Ao fechar e encaminhar, todas as movimentações do período ficam travadas para edição até a avaliação do Coordenador (ou até um novo desbloqueio).</div>
+              <Card className="mb-4">
+                <div className={isMobile ? "grid grid-cols-1 gap-3 mb-3" : "grid grid-cols-2 gap-3 mb-3"}>
+                  <Field label="Ano">
+                    <select value={anoPrestacao} onChange={(e) => setAnoPrestacao(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1 text-sm">
+                      {[anoAtual - 1, anoAtual, anoAtual + 1].map((a) => <option key={a} value={a}>{a}</option>)}
+                    </select>
+                  </Field>
+                  <Field label="Período">
+                    <select value={periodoPrestacao} onChange={(e) => setPeriodoPrestacao(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1 text-sm">
+                      {PERIODOS_PRESTACAO.map((p) => <option key={p} value={p}>{p}</option>)}
+                    </select>
+                  </Field>
+                </div>
+                <div className="text-xs text-slate-600 bg-slate-50 border border-slate-200 rounded-md px-3 py-2 mb-3">
+                  Neste período: <span className="font-medium">{lancamentosPeriodo.length}</span> lançamento(s), totalizando <span className="font-medium">{brl(totalPeriodo)}</span>.
+                </div>
+                {jaTravado ? (
+                  <div className="text-xs text-slate-500">Esta prestação de contas já foi encaminhada (status: <Badge status={existenteAtual.status} />).</div>
+                ) : (
+                  <PrimaryButton onClick={() => fecharPrestacaoContas(Number(anoPrestacao), periodoPrestacao)}><Lock size={14} /> Fechar e encaminhar prestação de contas</PrimaryButton>
+                )}
+              </Card>
+
+              <div className="text-xs font-medium text-slate-500 mb-2">Prestações de contas enviadas</div>
+              {minhasPrestacoes.length === 0 ? (
+                <div className="text-sm text-slate-500">Nenhuma prestação de contas enviada ainda.</div>
+              ) : (
+                <div className="space-y-2">
+                  {minhasPrestacoes.map((p) => (
+                    <Card key={p.id}>
+                      <div className="flex items-center justify-between flex-wrap gap-2">
+                        <div className="text-sm text-slate-800">{p.periodo} de {p.ano}</div>
+                        <div className="flex items-center gap-2">
+                          <Badge status={p.status} />
+                          <GhostButton onClick={() => emitirRelatorioConsolidadoPrestacao(p, conselho.nomeConselho)}><Printer size={12} /> Relatório consolidado</GhostButton>
+                        </div>
+                      </div>
+                      <div className="text-xs text-slate-500 mt-1">Enviado por {p.enviadoPor} em {displayDate(p.dataEnvio)} · {(p.lancamentosSnapshot || []).length} lançamento(s)</div>
+                      {p.status === "reprovada" && p.observacaoCoordenador && (
+                        <div className="text-xs text-red-600 mt-1">Motivo da reprovação: {p.observacaoCoordenador}</div>
+                      )}
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })()}
+
+        {tab === "relatorios" && (() => {
+          const totalRepassadoConselho = repasses.reduce((s, r) => s + r.custeio + r.capital, 0);
+          const totalExecutadoConselho = lancamentos.filter((l) => l.status !== "aguardando autorização").reduce((s, l) => s + l.valor, 0);
+          const previstoExecutadoPorCategoria = categorias.map((c) => {
+            const previsto = db.planos.filter((p) => repasses.some((r) => r.id === p.repasseId)).flatMap((p) => p.itens).filter((i) => i.categoriaId === c.id).reduce((s, i) => s + i.valorPrevisto, 0);
+            const executado = lancamentos.filter((l) => l.categoriaId === c.id && l.status !== "aguardando autorização").reduce((s, l) => s + l.valor, 0);
+            return [c.nome, c.tipo, brl(previsto), brl(executado), brl(previsto - executado)];
+          });
+
+          const fontesPersonalizado = {
+            repasses: {
+              label: "Repasses",
+              colunas: [
+                { chave: "descricao", label: "Repasse", tipo: "texto" },
+                { chave: "data", label: "Data", tipo: "texto" },
+                { chave: "custeio", label: "Custeio", tipo: "numero", moeda: true },
+                { chave: "capital", label: "Capital", tipo: "numero", moeda: true },
+                { chave: "total", label: "Total", tipo: "numero", moeda: true },
+              ],
+              linhas: repasses.map((r) => ({ descricao: r.descricao, data: displayDate(r.data), custeio: r.custeio, capital: r.capital, total: r.custeio + r.capital })),
+            },
+            categorias: {
+              label: "Categorias (previsto x executado)",
+              colunas: [
+                { chave: "nome", label: "Categoria", tipo: "texto" },
+                { chave: "tipo", label: "Tipo", tipo: "texto" },
+                { chave: "subtipo", label: "Subcategoria", tipo: "texto" },
+                { chave: "previsto", label: "Previsto", tipo: "numero", moeda: true },
+                { chave: "executado", label: "Executado", tipo: "numero", moeda: true },
+                { chave: "saldo", label: "Saldo", tipo: "numero", moeda: true },
+              ],
+              linhas: categorias.map((c) => {
+                const previsto = db.planos.filter((p) => repasses.some((r) => r.id === p.repasseId)).flatMap((p) => p.itens).filter((i) => i.categoriaId === c.id).reduce((s, i) => s + i.valorPrevisto, 0);
+                const executado = lancamentos.filter((l) => l.categoriaId === c.id && l.status !== "aguardando autorização").reduce((s, l) => s + l.valor, 0);
+                return { nome: c.nome, tipo: c.tipo, subtipo: c.subtipo || "-", previsto, executado, saldo: previsto - executado };
+              }),
+            },
+            lancamentos: {
+              label: "Lançamentos",
+              colunas: [
+                { chave: "data", label: "Data", tipo: "texto" },
+                { chave: "categoria", label: "Categoria", tipo: "texto" },
+                { chave: "fornecedor", label: "Fornecedor", tipo: "texto" },
+                { chave: "numeroNF", label: "Nº NF", tipo: "texto" },
+                { chave: "valor", label: "Valor", tipo: "numero", moeda: true },
+                { chave: "status", label: "Status", tipo: "texto" },
+              ],
+              linhas: lancamentos.map((l) => ({ data: displayDate(l.data), categoria: categoriaById[l.categoriaId]?.nome, fornecedor: l.fornecedor || "-", numeroNF: l.numeroNF || "-", valor: l.valor, status: l.status })),
+            },
+            remanejamentos: {
+              label: "Remanejamentos",
+              colunas: [
+                { chave: "origem", label: "De", tipo: "texto" },
+                { chave: "destino", label: "Para", tipo: "texto" },
+                { chave: "valor", label: "Valor", tipo: "numero", moeda: true },
+                { chave: "status", label: "Status", tipo: "texto" },
+                { chave: "justificativa", label: "Justificativa", tipo: "texto" },
+              ],
+              linhas: remanejamentos.map((r) => ({ origem: categoriaById[r.origemId]?.nome, destino: categoriaById[r.destinoId]?.nome, valor: r.valor, status: r.status, justificativa: r.justificativa })),
+            },
+            historico: {
+              label: "Histórico",
+              colunas: [
+                { chave: "dataHora", label: "Data/Hora", tipo: "texto" },
+                { chave: "perfil", label: "Perfil", tipo: "texto" },
+                { chave: "acao", label: "Ação", tipo: "texto" },
+              ],
+              linhas: (db.historicoGeral || []).filter((h) => h.conselhoId === conselhoId).map((h) => ({ dataHora: h.dataHora, perfil: h.perfil, acao: h.acao })),
+            },
+          };
+
+          return (
+            <div className="space-y-4">
+              <SectionTitle icon={BarChart3}>Relatórios — {conselho.nomeConselho}</SectionTitle>
+
+              <Card>
+                <div className="flex items-center justify-between mb-1">
+                  <div className="text-sm font-medium text-slate-800">Saldo por repasse</div>
+                  <ReportButtons
+                    titulo={`Saldo por repasse — ${conselho.nomeConselho}`}
+                    nomeArquivo={`saldo_por_repasse_${conselho.nomeConselho}`}
+                    header={["Repasse", "Data", "Custeio total", "Custeio saldo", "Capital total", "Capital saldo"]}
+                    linhas={repasses.map((r) => {
+                      const s = computeSaldoRepasse(db, r, categoriaById);
+                      return [r.descricao, displayDate(r.data), brl(s.totalCusteio), brl(s.saldoCusteio), brl(s.totalCapital), brl(s.saldoCapital)];
+                    })}
+                  />
+                </div>
+                <div className="text-xs text-slate-500">Valor total e saldo disponível de Custeio e Capital de cada repasse recebido.</div>
+              </Card>
+
+              <Card>
+                <div className="flex items-center justify-between mb-1">
+                  <div className="text-sm font-medium text-slate-800">Plano de aplicação consolidado</div>
+                  <ReportButtons
+                    titulo={`Plano de aplicação consolidado — ${conselho.nomeConselho}`}
+                    nomeArquivo={`plano_consolidado_${conselho.nomeConselho}`}
+                    header={["Categoria", "Tipo", "Previsto", "Executado", "Saldo"]}
+                    linhas={previstoExecutadoPorCategoria}
+                  />
+                </div>
+                <div className="text-xs text-slate-500">Valor previsto x executado de cada categoria, somando todos os repasses.</div>
+              </Card>
+
+              <Card>
+                <div className="flex items-center justify-between mb-1">
+                  <div className="text-sm font-medium text-slate-800">Lançamentos detalhados</div>
+                  <ReportButtons
+                    titulo={`Lançamentos detalhados — ${conselho.nomeConselho}`}
+                    nomeArquivo={`lancamentos_detalhados_${conselho.nomeConselho}`}
+                    header={["Data", "Categoria", "Fornecedor", "Nº NF", "Valor", "Status"]}
+                    linhas={lancamentos.slice().sort((a, b) => (a.data < b.data ? 1 : a.data > b.data ? -1 : 0)).map((l) => [displayDate(l.data), categoriaById[l.categoriaId]?.nome, l.fornecedor || "-", l.numeroNF || "-", brl(l.valor), l.status])}
+                  />
+                </div>
+                <div className="text-xs text-slate-500">Todas as despesas lançadas, do mais recente para o mais antigo.</div>
+              </Card>
+
+              <Card>
+                <div className="flex items-center justify-between mb-1">
+                  <div className="text-sm font-medium text-slate-800">Resumo para prestação de contas</div>
+                  <ReportButtons
+                    titulo={`Resumo para prestação de contas — ${conselho.nomeConselho}`}
+                    nomeArquivo={`resumo_prestacao_contas_${conselho.nomeConselho}`}
+                    header={["Indicador", "Valor"]}
+                    linhas={[
+                      ["Total repassado", brl(totalRepassadoConselho)],
+                      ["Total executado", brl(totalExecutadoConselho)],
+                      ["Saldo consolidado", brl(totalRepassadoConselho - totalExecutadoConselho)],
+                      ["Nº de lançamentos", String(lancamentos.length)],
+                      ["Nº de repasses recebidos", String(repasses.length)],
+                    ]}
+                  />
+                </div>
+                <div className="text-xs text-slate-500">Totais gerais do conselho, prontos para anexar à prestação de contas.</div>
+              </Card>
+
+              <RelatorioPersonalizado fontes={fontesPersonalizado} />
+            </div>
+          );
+        })()}
+
+        {tab === "historico" && (() => {
+          const entradas = (db.historicoGeral || []).filter((h) => h.conselhoId === conselhoId).slice().reverse();
+          return (
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <SectionTitle icon={History}>Histórico de modificações — {conselho.nomeConselho}</SectionTitle>
+                <ReportButtons
+                  titulo={`Histórico de modificações — ${conselho.nomeConselho}`}
+                  nomeArquivo={`historico_${conselho.nomeConselho}`}
+                  header={["Data/Hora", "Perfil", "Usuário", "Ação"]}
+                  linhas={entradas.map((h) => [h.dataHora, h.perfil, h.usuario, h.acao])}
+                />
+              </div>
+              {entradas.length === 0 ? <div className="text-sm text-slate-500">Nenhuma modificação registrada ainda.</div> : (
+                <div className="space-y-1.5">
+                  {entradas.map((h) => (
+                    <div key={h.id} className="bg-white border border-slate-200 rounded-md px-3 py-2 text-sm">
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-800">{h.acao}</span>
+                        <span className="text-xs text-slate-400">{h.dataHora}</span>
+                      </div>
+                      <div className="text-xs text-slate-500">{h.perfil}{h.usuario ? ` · ${h.usuario}` : ""}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })()}
+      </div>
+    </div>
+  );
+}
+
+function UploadArquivosPlano({ repasses, onSalvar }) {
+  const isMobile = useIsMobile();
+  const [repasseId, setRepasseId] = useState(repasses.length ? String(repasses[repasses.length - 1].id) : "");
+  const [arquivosSelecionados, setArquivosSelecionados] = useState([]);
+  const inputRef = useRef(null);
+
+  function handleFiles(e) {
+    const files = Array.from(e.target.files || []);
+    const validos = files.filter((f) => f.type === "application/pdf");
+    if (validos.length !== files.length) alert("Apenas arquivos em PDF são aceitos.");
+    const novos = validos.map((f) => ({ nome: f.name, file: f }));
+    setArquivosSelecionados((prev) => [...prev, ...novos]);
+    if (inputRef.current) inputRef.current.value = "";
+  }
+  function removerSelecionado(idx) {
+    setArquivosSelecionados((prev) => prev.filter((_, i) => i !== idx));
+  }
+  const [enviando, setEnviando] = useState(false);
+  async function salvar() {
+    if (!repasseId || arquivosSelecionados.length === 0) return;
+    setEnviando(true);
+    await onSalvar(Number(repasseId), arquivosSelecionados);
+    setEnviando(false);
+    setArquivosSelecionados([]);
+  }
+
+  return (
+    <Card className="mb-4">
+      <div className="text-sm font-medium text-slate-800 mb-3">Anexar arquivos do Plano de Aplicação</div>
+      <div className={isMobile ? "grid grid-cols-1 gap-3 mb-3" : "grid grid-cols-2 gap-3 mb-3"}>
+        <Field label="Repasse">
+          <select value={repasseId} onChange={(e) => setRepasseId(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1 text-sm">
+            <option value="">Selecione</option>
+            {repasses.map((r) => <option key={r.id} value={r.id}>{r.descricao}</option>)}
+          </select>
+        </Field>
+        <Field label="Arquivos (PDF, pode selecionar mais de um)">
+          <input ref={inputRef} type="file" accept="application/pdf" multiple onChange={handleFiles} className="w-full text-sm" />
+        </Field>
+      </div>
+      {arquivosSelecionados.length > 0 && (
+        <div className="space-y-1.5 mb-3">
+          {arquivosSelecionados.map((a, idx) => (
+            <div key={idx} className="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-md px-3 py-1.5 text-sm">
+              <span className="truncate">{a.nome}</span>
+              <button onClick={() => removerSelecionado(idx)} className="text-slate-400 hover:text-red-600 shrink-0"><Trash2 size={14} /></button>
+            </div>
+          ))}
+        </div>
+      )}
+      <PrimaryButton onClick={salvar} disabled={!repasseId || arquivosSelecionados.length === 0 || enviando}><Save size={14} /> {enviando ? "Enviando..." : "Salvar"}</PrimaryButton>
+      <div className="text-xs text-slate-400 mt-2">Os arquivos ficam com status "aguardando aprovação" até o Coordenador aprovar.</div>
+    </Card>
+  );
+}
+
+function NovoRendimentoForm({ repasses, categorias, defaultRepasseId, onCriar }) {
+  const isMobile = useIsMobile();
+  const [repasseId, setRepasseId] = useState(defaultRepasseId || "");
+  const [valorCents, setValorCents] = useState(0);
+  const [arquivoExtrato, setArquivoExtrato] = useState(null);
+  const inputExtratoRef = useRef(null);
+  const idRef = useRef(1);
+  const [alocacoes, setAlocacoes] = useState([{ id: 1, categoriaId: "", valorCents: 0 }]);
+  const [erro, setErro] = useState(null);
+  const [enviando, setEnviando] = useState(false);
+
+  useEffect(() => { setRepasseId(defaultRepasseId || ""); }, [defaultRepasseId]);
+
+  function handleExtrato(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.type !== "application/pdf") { alert("Envie um arquivo em PDF."); return; }
+    setArquivoExtrato({ nome: file.name, file });
+    if (inputExtratoRef.current) inputExtratoRef.current.value = "";
+  }
+
+  function adicionarAlocacao() {
+    idRef.current += 1;
+    setAlocacoes((prev) => [...prev, { id: idRef.current, categoriaId: "", valorCents: 0 }]);
+  }
+  function atualizarAlocacao(id, campo, valor) {
+    setAlocacoes((prev) => prev.map((a) => (a.id === id ? { ...a, [campo]: valor } : a)));
+  }
+  function removerAlocacao(id) {
+    setAlocacoes((prev) => prev.filter((a) => a.id !== id));
+  }
+
+  const somaAlocacoesCents = alocacoes.reduce((s, a) => s + (a.valorCents || 0), 0);
+  const somaBate = somaAlocacoesCents === valorCents;
+
+  function limpar() {
+    setValorCents(0); setArquivoExtrato(null); idRef.current = 1;
+    setAlocacoes([{ id: 1, categoriaId: "", valorCents: 0 }]); setErro(null);
+  }
+
+  async function handleEnviar() {
+    if (!repasseId || !valorCents) { setErro("Selecione o repasse e informe o valor do rendimento."); return; }
+    if (!arquivoExtrato) { setErro("Anexe o extrato bancário."); return; }
+    const alocacoesValidas = alocacoes.filter((a) => a.categoriaId && a.valorCents > 0);
+    if (alocacoesValidas.length === 0) { setErro("Indique ao menos uma categoria para alocar o rendimento."); return; }
+    if (!somaBate) { setErro(`A soma das alocações (${brl(centsToReais(somaAlocacoesCents))}) precisa ser igual ao valor do rendimento (${brl(centsToReais(valorCents))}).`); return; }
+    setErro(null);
+    setEnviando(true);
+    await onCriar({
+      repasseId, valor: centsToReais(valorCents), arquivoExtrato,
+      alocacoes: alocacoesValidas.map((a) => ({ categoriaId: Number(a.categoriaId), valor: centsToReais(a.valorCents) })),
+    });
+    setEnviando(false);
+    limpar();
+  }
+
+  return (
+    <Card className="mb-4">
+      <div className="text-sm font-medium text-slate-800 mb-3">Informar rendimento da conta</div>
+      <div className={isMobile ? "grid grid-cols-1 gap-3 mb-3" : "grid grid-cols-2 gap-3 mb-3"}>
+        <Field label="Repasse">
+          <select value={repasseId} onChange={(e) => setRepasseId(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1 text-sm">
+            <option value="">Selecione</option>
+            {repasses.filter((r) => r.valoresDefinidos).map((r) => <option key={r.id} value={r.id}>{r.descricao}</option>)}
+          </select>
+        </Field>
+        <Field label="Valor do rendimento"><CurrencyInput cents={valorCents} onChangeCents={setValorCents} /></Field>
+      </div>
+      <div className="mb-3">
+        <div className="text-xs text-slate-500 mb-1">Anexar extrato bancário (PDF)</div>
+        {arquivoExtrato ? (
+          <div className="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-md px-3 py-1.5 text-sm">
+            <span className="truncate">{arquivoExtrato.nome}</span>
+            <button onClick={() => setArquivoExtrato(null)} className="text-slate-400 hover:text-red-600 shrink-0"><Trash2 size={14} /></button>
+          </div>
+        ) : (
+          <input ref={inputExtratoRef} type="file" accept="application/pdf" onChange={handleExtrato} className="text-sm" />
+        )}
+      </div>
+      <div className="text-xs font-medium text-slate-500 mb-2">Para onde alocar (categorias de Custeio/Capital)</div>
+      <div className="space-y-2 mb-2">
+        {alocacoes.map((a) => (
+          <div key={a.id} className="flex flex-wrap items-center gap-2 bg-slate-50 border border-slate-200 rounded-md p-2">
+            <select value={a.categoriaId} onChange={(e) => atualizarAlocacao(a.id, "categoriaId", e.target.value)} className="flex-1 min-w-[160px] border border-slate-300 rounded px-2 py-1 text-sm bg-white">
+              <option value="">Selecione a categoria</option>
+              {categorias.map((c) => <option key={c.id} value={c.id}>{c.nome} ({c.tipo})</option>)}
+            </select>
+            <div className="w-28 shrink-0"><CurrencyInput cents={a.valorCents} onChangeCents={(v) => atualizarAlocacao(a.id, "valorCents", v)} /></div>
+            {alocacoes.length > 1 && <button onClick={() => removerAlocacao(a.id)} className="text-slate-400 hover:text-red-600 shrink-0"><Trash2 size={14} /></button>}
+          </div>
+        ))}
+      </div>
+      <GhostButton onClick={adicionarAlocacao} className="mb-3"><Plus size={12} /> Adicionar categoria</GhostButton>
+      <div className={`text-xs mb-3 ${somaBate ? "text-slate-500" : "text-red-600"}`}>Soma das alocações: {brl(centsToReais(somaAlocacoesCents))} de {brl(centsToReais(valorCents))}</div>
+      {erro && <div className="text-xs text-red-600 mb-3">{erro}</div>}
+      <PrimaryButton onClick={handleEnviar} disabled={enviando}>{enviando ? "Enviando..." : (<><Send size={14} /> Enviar solicitação de rendimento</>)}</PrimaryButton>
+    </Card>
+  );
+}
+
+function NovoLancamentoForm({ repasses, categorias, defaultRepasseId, getInfoCategoria, onCriar }) {
+  const isMobile = useIsMobile();
+  const [repasseId, setRepasseId] = useState(defaultRepasseId || "");
+  const [categoriaId, setCategoriaId] = useState("");
+  const [fornecedor, setFornecedor] = useState("");
+  const [numeroNF, setNumeroNF] = useState("");
+  const [dataNF, setDataNF] = useState(todayISO());
+  const [valorTotalCents, setValorTotalCents] = useState(0);
+  const [arquivosNF, setArquivosNF] = useState([]);
+  const inputNFRef = useRef(null);
+  const [orcamentos, setOrcamentos] = useState([]);
+  const inputOrcamentosRef = useRef(null);
+  const [enviando, setEnviando] = useState(false);
+  const idRef = useRef(1);
+  const [itens, setItens] = useState([{ id: 1, descricao: "", quantidade: "", valorUnitarioCents: 0 }]);
+  const [erro, setErro] = useState(null);
+
+  useEffect(() => { setRepasseId(defaultRepasseId || ""); }, [defaultRepasseId]);
+
+  function adicionarItem() {
+    idRef.current += 1;
+    setItens((prev) => [...prev, { id: idRef.current, descricao: "", quantidade: "", valorUnitarioCents: 0 }]);
+  }
+  function removerItem(id) {
+    setItens((prev) => (prev.length > 1 ? prev.filter((i) => i.id !== id) : prev));
+  }
+  function atualizarItem(id, campo, valor) {
+    setItens((prev) => prev.map((i) => (i.id === id ? { ...i, [campo]: valor } : i)));
+  }
+
+  const somaItensReais = itens.reduce((s, i) => s + (Number(i.quantidade) || 0) * centsToReais(i.valorUnitarioCents), 0);
+  const valorTotalReais = centsToReais(valorTotalCents);
+  const somaBate = Math.abs(reaisToCents(somaItensReais) - valorTotalCents) < 1;
+  const info = repasseId && categoriaId ? getInfoCategoria(Number(repasseId), Number(categoriaId)) : null;
+
+  function handleArquivosNF(e) {
+    const files = Array.from(e.target.files || []);
+    const validos = files.filter((f) => f.type === "application/pdf");
+    if (validos.length !== files.length) alert("Apenas arquivos em PDF são aceitos.");
+    const novos = validos.map((f) => ({ nome: f.name, file: f }));
+    setArquivosNF((prev) => [...prev, ...novos]);
+    if (inputNFRef.current) inputNFRef.current.value = "";
+  }
+  function removerArquivoNF(idx) {
+    setArquivosNF((prev) => prev.filter((_, i) => i !== idx));
+  }
+
+  function handleOrcamentos(e) {
+    const files = Array.from(e.target.files || []);
+    const validos = files.filter((f) => f.type === "application/pdf");
+    if (validos.length !== files.length) alert("Apenas arquivos em PDF são aceitos.");
+    const novos = validos.map((f) => ({ nome: f.name, file: f }));
+    setOrcamentos((prev) => [...prev, ...novos]);
+    if (inputOrcamentosRef.current) inputOrcamentosRef.current.value = "";
+  }
+  function removerOrcamento(idx) {
+    setOrcamentos((prev) => prev.filter((_, i) => i !== idx));
+  }
+
+  function limpar() {
+    setCategoriaId(""); setFornecedor(""); setNumeroNF(""); setDataNF(todayISO()); setValorTotalCents(0);
+    idRef.current = 1; setItens([{ id: 1, descricao: "", quantidade: "", valorUnitarioCents: 0 }]); setErro(null); setArquivosNF([]); setOrcamentos([]);
+  }
+
+  async function handleLancar() {
+    if (!repasseId || !categoriaId || !fornecedor || !numeroNF || !dataNF || !valorTotalCents) { setErro("Preencha todos os campos da nota fiscal."); return; }
+    const itensValidos = itens.filter((i) => i.descricao && Number(i.quantidade) > 0 && i.valorUnitarioCents > 0);
+    if (itensValidos.length === 0) { setErro("Adicione pelo menos um item da nota fiscal."); return; }
+    if (!somaBate) { setErro(`A soma dos itens (${brl(somaItensReais)}) precisa ser igual ao valor total da NF (${brl(valorTotalReais)}).`); return; }
+    if (info && valorTotalReais > info.disponivel) { setErro(`Valor maior que o disponível para esta categoria: ${brl(info.disponivel)}.`); return; }
+    setErro(null);
+    setEnviando(true);
+    await onCriar({
+      repasseId, categoriaId, fornecedor, numeroNF, dataNF, valorTotal: valorTotalReais,
+      itens: itensValidos.map((i) => ({ descricao: i.descricao, quantidade: Number(i.quantidade), valorUnitario: centsToReais(i.valorUnitarioCents) })),
+      arquivosNF, orcamentos,
+    });
+    setEnviando(false);
+    limpar();
+  }
+
+  return (
+    <Card className="mb-4">
+      <div className="text-xs font-medium text-slate-500 mb-3">Novo lançamento</div>
+
+      <div className={isMobile ? "grid grid-cols-1 gap-3 mb-3" : "grid grid-cols-2 gap-3 mb-3"}>
+        <Field label="Repasse">
+          <select value={repasseId} onChange={(e) => { setRepasseId(e.target.value); setErro(null); }} className="w-full border border-slate-300 rounded px-2 py-1 text-sm">
+            <option value="">Selecione</option>
+            {repasses.map((r) => <option key={r.id} value={r.id}>{r.descricao}</option>)}
+          </select>
+        </Field>
+        <Field label="Categoria">
+          <select value={categoriaId} onChange={(e) => { setCategoriaId(e.target.value); setErro(null); }} className="w-full border border-slate-300 rounded px-2 py-1 text-sm">
+            <option value="">Selecione</option>
+            {categorias.map((c) => <option key={c.id} value={c.id}>{c.nome}</option>)}
+          </select>
+        </Field>
+      </div>
+
+      {info && (
+        <div className="text-xs text-slate-600 bg-slate-50 border border-slate-200 rounded-md px-3 py-2 mb-4">
+          Valor previsto para esta categoria: <span className="font-medium">{brl(info.previsto)}</span> · Já lançado: <span className="font-medium">{brl(info.executado)}</span> · Disponível: <span className="font-medium">{brl(info.disponivel)}</span>
+        </div>
+      )}
+
+      <div className="border-t border-slate-100 pt-3 mb-4">
+        <div className="text-xs font-semibold text-slate-600 mb-2 flex items-center gap-1.5"><Receipt size={13} /> Dados da nota fiscal</div>
+        <div className={isMobile ? "grid grid-cols-1 gap-3" : "grid grid-cols-2 gap-3"}>
+          <Field label="Nome do fornecedor">
+            <input placeholder="Ex: papelaria central ltda" value={fornecedor} onChange={(e) => setFornecedor(e.target.value.toUpperCase())} className="w-full border border-slate-300 rounded px-2 py-1 text-sm" />
+          </Field>
+          <Field label="Número da NF">
+            <input placeholder="Ex: 000123" inputMode="numeric" value={numeroNF} onChange={(e) => setNumeroNF(e.target.value.replace(/\D/g, ""))} className="w-full border border-slate-300 rounded px-2 py-1 text-sm" />
+          </Field>
+          <Field label="Data da NF"><DateInput value={dataNF} onChange={setDataNF} /></Field>
+          <Field label="Valor total da NF"><CurrencyInput cents={valorTotalCents} onChangeCents={(c) => { setValorTotalCents(c); setErro(null); }} /></Field>
+        </div>
+        <div className="mt-3">
+          <div className="text-xs text-slate-500 mb-1">Anexar arquivo da NF (PDF)</div>
+          <input ref={inputNFRef} type="file" accept="application/pdf" multiple onChange={handleArquivosNF} className="text-sm" />
+          {arquivosNF.length > 0 && (
+            <div className="space-y-1.5 mt-2">
+              {arquivosNF.map((a, idx) => (
+                <div key={idx} className="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-md px-3 py-1.5 text-sm">
+                  <span className="truncate">{a.nome}</span>
+                  <button onClick={() => removerArquivoNF(idx)} className="text-slate-400 hover:text-red-600 shrink-0"><Trash2 size={14} /></button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="mt-3">
+          <div className="text-xs text-slate-500 mb-1">Anexar orçamentos usados para essa compra (PDF)</div>
+          <input ref={inputOrcamentosRef} type="file" accept="application/pdf" multiple onChange={handleOrcamentos} className="text-sm" />
+          {orcamentos.length > 0 && (
+            <div className="space-y-1.5 mt-2">
+              {orcamentos.map((a, idx) => (
+                <div key={idx} className="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-md px-3 py-1.5 text-sm">
+                  <span className="truncate">{a.nome}</span>
+                  <button onClick={() => removerOrcamento(idx)} className="text-slate-400 hover:text-red-600 shrink-0"><Trash2 size={14} /></button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="border-t border-slate-100 pt-3 mb-3">
+        <div className="flex items-center justify-between mb-2">
+          <div className="text-xs font-semibold text-slate-600 flex items-center gap-1.5"><Package size={13} /> Itens adquiridos</div>
+          <GhostButton onClick={adicionarItem}><Plus size={12} /> Adicionar item</GhostButton>
+        </div>
+        <div className="space-y-2">
+          {itens.map((item) => {
+            const subtotal = (Number(item.quantidade) || 0) * centsToReais(item.valorUnitarioCents);
+            return (
+              <div key={item.id} className="flex flex-wrap items-center gap-2 bg-slate-50 border border-slate-200 rounded-md p-2">
+                <input placeholder="Descrição do item" value={item.descricao} onChange={(e) => atualizarItem(item.id, "descricao", e.target.value.toUpperCase())} className="flex-1 min-w-[140px] border border-slate-300 rounded px-2 py-1 text-sm bg-white" />
+                <input placeholder="Qtd" type="number" min="0" value={item.quantidade} onChange={(e) => atualizarItem(item.id, "quantidade", e.target.value)} className="w-16 shrink-0 border border-slate-300 rounded px-2 py-1 text-sm bg-white" />
+                <div className="w-28 shrink-0"><CurrencyInput cents={item.valorUnitarioCents} onChangeCents={(c) => atualizarItem(item.id, "valorUnitarioCents", c)} /></div>
+                <div className="w-28 shrink-0 text-sm text-slate-600 text-right">{brl(subtotal)}</div>
+                {itens.length > 1 && <button onClick={() => removerItem(item.id)} className="text-slate-400 hover:text-red-600 shrink-0"><Trash2 size={14} /></button>}
+              </div>
+            );
+          })}
+        </div>
+        <div className={`mt-2 flex items-center justify-between text-sm px-3 py-2 rounded-md border ${somaBate ? "bg-emerald-50 border-emerald-200 text-emerald-700" : "bg-red-50 border-red-200 text-red-700"}`}>
+          <span className="flex items-center gap-1.5">{somaBate ? <CheckCircle2 size={14} /> : <AlertCircle size={14} />} Soma dos itens: {brl(somaItensReais)}</span>
+          <span>Valor total da NF: {brl(valorTotalReais)}</span>
+        </div>
+      </div>
+
+      {erro && <div className="text-xs text-red-600 mb-3">{erro}</div>}
+      <PrimaryButton onClick={handleLancar} disabled={enviando}>{enviando ? "Enviando..." : (<><Plus size={14} /> Lançar despesa</>)}</PrimaryButton>
+    </Card>
+  );
+}
+
+function EditLancamentoForm({ lanc, onSave, onCancel }) {
+  const [cents, setCents] = useState(reaisToCents(lanc.valor));
+  const [descricao, setDescricao] = useState(lanc.descricao);
+  return (
+    <div className="mt-2 pt-2 border-t border-slate-100 flex items-center gap-2">
+      <div className="w-32"><CurrencyInput cents={cents} onChangeCents={setCents} /></div>
+      <input value={descricao} onChange={(e) => setDescricao(e.target.value.toUpperCase())} className="flex-1 border border-slate-300 rounded px-2 py-1 text-sm" />
+      <GhostButton tone="green" onClick={() => onSave(lanc.id, centsToReais(cents), descricao)}>Salvar</GhostButton>
+      <GhostButton onClick={onCancel}>Cancelar</GhostButton>
+    </div>
+  );
+}
+
+// ---------- Conselho create/edit form ----------
+function ConselhoForm({ inicial, onSalvar, onCancelar }) {
+  const isMobile = useIsMobile();
+  const [nomeConselho, setNomeConselho] = useState(inicial?.nomeConselho || "");
+  const [escolas, setEscolas] = useState(inicial?.escolas?.length ? [...inicial.escolas] : [""]);
+  const [cnpj, setCnpj] = useState(inicial?.cnpj || "");
+  const [presidente, setPresidente] = useState(inicial?.presidente || "");
+  const [tesoureiro, setTesoureiro] = useState(inicial?.tesoureiro || "");
+  const [vencimento, setVencimento] = useState(inicial?.vencimento || "");
+  const [erro, setErro] = useState(null);
+
+  function atualizarEscola(idx, valor) { setEscolas((prev) => prev.map((e, i) => (i === idx ? valor : e))); }
+  function removerEscola(idx) { setEscolas((prev) => prev.filter((_, i) => i !== idx)); }
+
+  function salvar() {
+    const escolasLimpas = escolas.map((e) => e.trim()).filter(Boolean);
+    if (!nomeConselho || !cnpj || escolasLimpas.length === 0) { setErro("Preencha nome, CNPJ e ao menos uma escola."); return; }
+    setErro(null);
+    onSalvar({ nomeConselho, escolas: escolasLimpas, cnpj, presidente, tesoureiro: tesoureiro || null, vencimento });
+  }
+
+  return (
+    <Card className="mb-4">
+      <div className="text-xs font-medium text-slate-500 mb-2">{inicial ? "Editar conselho" : "Novo conselho"}</div>
+      <div className={isMobile ? "grid grid-cols-1 gap-2 mb-2" : "grid grid-cols-2 gap-2 mb-2"}>
+        <input placeholder="Nome do conselho" value={nomeConselho} onChange={(e) => setNomeConselho(e.target.value.toUpperCase())} className="border border-slate-300 rounded px-2 py-1 text-sm" />
+        <input placeholder="CNPJ do conselho" inputMode="numeric" value={cnpj} onChange={(e) => setCnpj(formatarCNPJ(e.target.value))} className="border border-slate-300 rounded px-2 py-1 text-sm" />
+        <input placeholder="Presidente" value={presidente} onChange={(e) => setPresidente(e.target.value.toUpperCase())} className="border border-slate-300 rounded px-2 py-1 text-sm" />
+        <input placeholder="Tesoureiro (opcional)" value={tesoureiro} onChange={(e) => setTesoureiro(e.target.value.toUpperCase())} className="border border-slate-300 rounded px-2 py-1 text-sm" />
+        <Field label="Vencimento do conselho deliberativo">
+          <DateInput value={vencimento} onChange={setVencimento} />
+        </Field>
+      </div>
+      <div className="text-xs font-medium text-slate-500 mb-1.5">Escolas que compõem este conselho</div>
+      <div className="space-y-1.5 mb-2">
+        {escolas.map((e, idx) => (
+          <div key={idx} className="flex flex-wrap items-center gap-2">
+            <input value={e} onChange={(ev) => atualizarEscola(idx, ev.target.value.toUpperCase())} placeholder="Nome da escola" className="flex-1 border border-slate-300 rounded px-2 py-1 text-sm" />
+            {escolas.length > 1 && <button onClick={() => removerEscola(idx)} className="text-slate-400 hover:text-red-600"><Trash2 size={14} /></button>}
+          </div>
+        ))}
+      </div>
+      <GhostButton onClick={() => setEscolas((prev) => [...prev, ""])} className="mb-3"><Plus size={12} /> Adicionar escola</GhostButton>
+      {erro && <div className="text-xs text-red-600 mb-2">{erro}</div>}
+      <div className="flex gap-2">
+        <PrimaryButton onClick={salvar}><CheckCircle2 size={14} /> Salvar</PrimaryButton>
+        <GhostButton onClick={onCancelar}>Cancelar</GhostButton>
+      </div>
+    </Card>
+  );
+}
+
+function RepasseForm({ inicial, onSalvar, onCancelar }) {
+  const isMobile = useIsMobile();
+  const [descricao, setDescricao] = useState(inicial?.descricao || "");
+  const [data, setData] = useState(inicial?.data || todayISO());
+  const [custeioCents, setCusteioCents] = useState(reaisToCents(inicial?.custeio || 0));
+  const [capitalCents, setCapitalCents] = useState(reaisToCents(inicial?.capital || 0));
+
+  function salvar() {
+    if (!custeioCents && !capitalCents) return;
+    onSalvar({ descricao: descricao || "Repasse", data, custeio: centsToReais(custeioCents), capital: centsToReais(capitalCents) });
+  }
+
+  return (
+    <Card className="mb-2">
+      <div className="text-xs font-medium text-slate-500 mb-2">Editar repasse</div>
+      <div className={isMobile ? "grid grid-cols-1 gap-3 mb-2" : "grid grid-cols-2 gap-3 mb-2"}>
+        <Field label="Descrição do repasse">
+          <input value={descricao} onChange={(e) => setDescricao(e.target.value.toUpperCase())} className="w-full border border-slate-300 rounded px-2 py-1 text-sm" />
+        </Field>
+        <Field label="Data do repasse"><DateInput value={data} onChange={setData} /></Field>
+        <Field label="Valor de Custeio"><CurrencyInput cents={custeioCents} onChangeCents={setCusteioCents} /></Field>
+        <Field label="Valor de Capital"><CurrencyInput cents={capitalCents} onChangeCents={setCapitalCents} /></Field>
+      </div>
+      <div className="text-sm text-slate-600 mb-2">Total do repasse: <span className="font-medium text-slate-800">{brl(centsToReais(custeioCents) + centsToReais(capitalCents))}</span></div>
+      <div className="flex gap-2">
+        <PrimaryButton onClick={salvar}><CheckCircle2 size={14} /> Salvar</PrimaryButton>
+        <GhostButton onClick={onCancelar}>Cancelar</GhostButton>
+      </div>
+    </Card>
+  );
+}
+
+function DefinirValoresForm({ saldoAnterior, onSalvar }) {
+  const isMobile = useIsMobile();
+  const [custeioCents, setCusteioCents] = useState(0);
+  const [capitalCents, setCapitalCents] = useState(0);
+
+  return (
+    <div className="bg-violet-50 border border-violet-200 rounded-md p-3 mt-3">
+      <div className="text-xs font-semibold text-violet-800 mb-2">Definir valores de Custeio e Capital</div>
+      <div className={isMobile ? "grid grid-cols-1 gap-2 mb-2" : "grid grid-cols-2 gap-2 mb-2"}>
+        <Field label="Valor de Custeio"><CurrencyInput cents={custeioCents} onChangeCents={setCusteioCents} /></Field>
+        <Field label="Valor de Capital"><CurrencyInput cents={capitalCents} onChangeCents={setCapitalCents} /></Field>
+      </div>
+      {saldoAnterior > 0 && <div className="text-xs text-violet-700 mb-2">Saldo remanescente do repasse anterior: {brl(saldoAnterior)}.</div>}
+      <PrimaryButton onClick={() => onSalvar(custeioCents, capitalCents)} disabled={!custeioCents && !capitalCents}><Save size={14} /> Salvar valores</PrimaryButton>
+    </div>
+  );
+}
+
+function CategoriaEditForm({ categoria, onSalvar, onCancelar }) {
+  const isMobile = useIsMobile();
+  const [nome, setNome] = useState(categoria.nome);
+  const [tipo, setTipo] = useState(categoria.tipo);
+  const [subtipo, setSubtipo] = useState(categoria.subtipo || "Consumo");
+
+  function salvar() {
+    if (!nome) return;
+    onSalvar({ nome, tipo, ...(tipo === "Custeio" ? { subtipo } : {}) });
+  }
+
+  return (
+    <div className="bg-white border border-slate-200 rounded-md px-3 py-2">
+      <div className={isMobile ? "grid grid-cols-1 gap-2 mb-2" : "grid grid-cols-3 gap-2 mb-2"}>
+        <input value={nome} onChange={(e) => setNome(e.target.value.toUpperCase())} className={isMobile ? "border border-slate-300 rounded px-2 py-1 text-sm" : "border border-slate-300 rounded px-2 py-1 text-sm col-span-2"} />
+        <select value={tipo} onChange={(e) => setTipo(e.target.value)} className="border border-slate-300 rounded px-2 py-1 text-sm">
+          <option>Custeio</option>
+          <option>Capital</option>
+        </select>
+      </div>
+      {tipo === "Custeio" && (
+        <select value={subtipo} onChange={(e) => setSubtipo(e.target.value)} className="border border-slate-300 rounded px-2 py-1 text-sm mb-2">
+          <option>Consumo</option>
+          <option>Serviço</option>
+        </select>
+      )}
+      <div className="flex gap-2">
+        <GhostButton tone="green" onClick={salvar}><CheckCircle2 size={12} /> Salvar</GhostButton>
+        <GhostButton onClick={onCancelar}>Cancelar</GhostButton>
+      </div>
+    </div>
+  );
+}
+
+// ================= COORDENADOR =================
+function RendimentoCard({ r, conselhoNome, categorias, categoriaById, onDecidir }) {
+  const isMobile = useIsMobile();
+  const [valorCents, setValorCents] = useState(reaisToCents(r.valor));
+  const idRef = useRef(r.alocacoes.length);
+  const [alocacoes, setAlocacoes] = useState(r.alocacoes.map((a, idx) => ({ id: idx + 1, categoriaId: String(a.categoriaId), valorCents: reaisToCents(a.valor) })));
+  const [observacao, setObservacao] = useState("");
+  const [mostrarReprovar, setMostrarReprovar] = useState(false);
+
+  function adicionarAlocacao() {
+    idRef.current += 1;
+    setAlocacoes((prev) => [...prev, { id: idRef.current, categoriaId: "", valorCents: 0 }]);
+  }
+  function atualizarAlocacao(id, campo, valor) {
+    setAlocacoes((prev) => prev.map((a) => (a.id === id ? { ...a, [campo]: valor } : a)));
+  }
+  function removerAlocacao(id) {
+    setAlocacoes((prev) => prev.filter((a) => a.id !== id));
+  }
+
+  const somaCents = alocacoes.reduce((s, a) => s + (a.valorCents || 0), 0);
+  const somaBate = somaCents === valorCents;
+
+  function aprovar() {
+    if (!somaBate) { alert("A soma das alocações precisa ser igual ao valor do rendimento."); return; }
+    const alocacoesFinais = alocacoes.filter((a) => a.categoriaId && a.valorCents > 0).map((a) => ({ categoriaId: Number(a.categoriaId), valor: centsToReais(a.valorCents) }));
+    if (alocacoesFinais.length === 0) { alert("Indique ao menos uma categoria."); return; }
+    onDecidir(r, true, centsToReais(valorCents), alocacoesFinais, null);
+  }
+  function reprovar() {
+    onDecidir(r, false, r.valor, r.alocacoes, observacao);
+    setMostrarReprovar(false);
+  }
+
+  return (
+    <Card>
+      <div className="flex items-center justify-between flex-wrap gap-2">
+        <div>
+          <div className="text-sm font-medium text-slate-800">{conselhoNome} — {brl(r.valorInformado)} informado</div>
+          <div className="text-xs text-slate-500">Enviado por {r.enviadoPor} em {displayDate(r.dataEnvio)} · <a href={r.extratoUrl} target="_blank" rel="noreferrer" download={r.extratoNome} className="text-teal-700 underline">Ver extrato</a></div>
+        </div>
+        <Badge status={r.status} />
+      </div>
+      {r.status === "aguardando avaliação" ? (
+        <div className="mt-3 pt-3 border-t border-slate-100">
+          <div className={isMobile ? "grid grid-cols-1 gap-2 mb-3" : "grid grid-cols-2 gap-2 mb-3"}>
+            <Field label="Valor do rendimento (pode corrigir se estiver errado)"><CurrencyInput cents={valorCents} onChangeCents={setValorCents} /></Field>
+          </div>
+          <div className="text-xs font-medium text-slate-500 mb-2">Alocação por categoria (pode editar)</div>
+          <div className="space-y-2 mb-2">
+            {alocacoes.map((a) => (
+              <div key={a.id} className="flex flex-wrap items-center gap-2 bg-slate-50 border border-slate-200 rounded-md p-2">
+                <select value={a.categoriaId} onChange={(e) => atualizarAlocacao(a.id, "categoriaId", e.target.value)} className="flex-1 min-w-[160px] border border-slate-300 rounded px-2 py-1 text-sm bg-white">
+                  <option value="">Selecione a categoria</option>
+                  {categorias.map((c) => <option key={c.id} value={c.id}>{c.nome} ({c.tipo})</option>)}
+                </select>
+                <div className="w-28 shrink-0"><CurrencyInput cents={a.valorCents} onChangeCents={(v) => atualizarAlocacao(a.id, "valorCents", v)} /></div>
+                {alocacoes.length > 1 && <button onClick={() => removerAlocacao(a.id)} className="text-slate-400 hover:text-red-600 shrink-0"><Trash2 size={14} /></button>}
+              </div>
+            ))}
+          </div>
+          <GhostButton onClick={adicionarAlocacao} className="mb-2"><Plus size={12} /> Adicionar categoria</GhostButton>
+          <div className={`text-xs mb-2 ${somaBate ? "text-slate-500" : "text-red-600"}`}>Soma: {brl(centsToReais(somaCents))} de {brl(centsToReais(valorCents))}</div>
+          {!mostrarReprovar ? (
+            <div className="flex gap-2">
+              <GhostButton tone="green" onClick={aprovar}><CheckCircle2 size={13} /> Aprovar</GhostButton>
+              <GhostButton tone="red" onClick={() => setMostrarReprovar(true)}><XCircle size={13} /> Reprovar</GhostButton>
+            </div>
+          ) : (
+            <div>
+              <textarea placeholder="Motivo da reprovação (opcional)" value={observacao} onChange={(e) => setObservacao(e.target.value.toUpperCase())} className="w-full border border-slate-300 rounded px-2 py-1 text-sm mb-2" rows={2} />
+              <div className="flex gap-2">
+                <GhostButton tone="red" onClick={reprovar}>Confirmar reprovação</GhostButton>
+                <GhostButton onClick={() => setMostrarReprovar(false)}>Cancelar</GhostButton>
+              </div>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="text-xs text-slate-500 mt-2 space-y-0.5">
+          {r.status === "aprovado" && <div className="font-medium text-slate-700">Valor aprovado: {brl(r.valor)}</div>}
+          {(r.alocacoes || []).map((a, idx) => <div key={idx}>{categoriaById[a.categoriaId]?.nome}: {brl(a.valor)}</div>)}
+          {r.status === "reprovado" && r.observacaoCoordenador && <div className="text-red-600 mt-1">Motivo: {r.observacaoCoordenador}</div>}
+        </div>
+      )}
+    </Card>
+  );
+}
+
+function PrestacaoContasCard({ p, conselhoNome, onDecidir, onReabrir }) {
+  const [observacao, setObservacao] = useState("");
+  const [mostrarReprovar, setMostrarReprovar] = useState(false);
+
+  return (
+    <Card>
+      <div className="flex items-center justify-between flex-wrap gap-2">
+        <div>
+          <div className="text-sm font-medium text-slate-800">{conselhoNome} — {p.periodo} de {p.ano}</div>
+          <div className="text-xs text-slate-500">Enviado por {p.enviadoPor} em {displayDate(p.dataEnvio)}</div>
+        </div>
+        <div className="flex items-center gap-2">
+          <Badge status={p.status} />
+          <GhostButton onClick={() => emitirRelatorioConsolidadoPrestacao(p, conselhoNome)}><Printer size={12} /> Relatório consolidado</GhostButton>
+          {p.status === "aguardando avaliação" && !mostrarReprovar && (
+            <>
+              <GhostButton tone="green" onClick={() => onDecidir(p.id, true)}><CheckCircle2 size={13} /> Aprovar</GhostButton>
+              <GhostButton tone="red" onClick={() => setMostrarReprovar(true)}><XCircle size={13} /> Reprovar</GhostButton>
+            </>
+          )}
+          {p.status === "aprovada" && (
+            <GhostButton onClick={() => onReabrir(p.id)}><Lock size={13} /> Reabrir período</GhostButton>
+          )}
+        </div>
+      </div>
+      {mostrarReprovar && (
+        <div className="mt-2 pt-2 border-t border-slate-100">
+          <textarea placeholder="Motivo da reprovação (opcional)" value={observacao} onChange={(e) => setObservacao(e.target.value.toUpperCase())} className="w-full border border-slate-300 rounded px-2 py-1 text-sm mb-2" rows={2} />
+          <div className="flex gap-2">
+            <GhostButton tone="red" onClick={() => { onDecidir(p.id, false, observacao); setMostrarReprovar(false); setObservacao(""); }}>Confirmar reprovação</GhostButton>
+            <GhostButton onClick={() => setMostrarReprovar(false)}>Cancelar</GhostButton>
+          </div>
+        </div>
+      )}
+      {p.status === "reprovada" && p.observacaoCoordenador && (
+        <div className="text-xs text-red-600 mt-1">Motivo: {p.observacaoCoordenador}</div>
+      )}
+    </Card>
+  );
+}
+
+function CoordenadorView({ db, setDb, menuAberto, setMenuAberto, usuarioLogado }) {
+  const [tab, setTab] = useState("dashboard");
+  const isMobile = useIsMobile();
+  const { conselhoById, categoriaById } = useLookups(db);
+
+  const [mostrarNovoConselho, setMostrarNovoConselho] = useState(false);
+  const [editandoConselhoId, setEditandoConselhoId] = useState(null);
+  const [confirmarExclusaoId, setConfirmarExclusaoId] = useState(null);
+
+  const [conselhoRepasseSel, setConselhoRepasseSel] = useState(db.conselhos[0]?.id);
+  const [novoRepasse, setNovoRepasse] = useState({ data: todayISO(), descricao: "" });
+  const [filtroExercicioRepasse, setFiltroExercicioRepasse] = useState("Todos");
+  const [editandoRepasseId, setEditandoRepasseId] = useState(null);
+  const [confirmarExclusaoRepasseId, setConfirmarExclusaoRepasseId] = useState(null);
+
+  const [conselhoCatSel, setConselhoCatSel] = useState(db.conselhos[0]?.id);
+  const [repasseCatSel, setRepasseCatSel] = useState(null);
+  const [novaCategoria, setNovaCategoria] = useState({ nome: "", tipo: "Custeio", subtipo: "Consumo", valorCents: 0 });
+  const [editandoCategoriaId, setEditandoCategoriaId] = useState(null);
+  const [editandoLancId, setEditandoLancId] = useState(null);
+  const [filtroConselhoLanc, setFiltroConselhoLanc] = useState("Todos");
+  const [filtroStatusLanc, setFiltroStatusLanc] = useState("Todos");
+  const [erroValorCategoria, setErroValorCategoria] = useState(null);
+  const [valoresEditados, setValoresEditados] = useState({});
+  const [filtroTipoCategoria, setFiltroTipoCategoria] = useState("Todos");
+  const [filtroConselhoHistorico, setFiltroConselhoHistorico] = useState("Todos");
+  const [filtroNomeCategoria, setFiltroNomeCategoria] = useState("");
+
+  function cadastrarConselho(dados) {
+    const id = genId();
+    setDb((prev) => ({ ...prev, conselhos: [...prev.conselhos, { id, ...dados }], categoriasPorConselho: { ...prev.categoriasPorConselho, [id]: [] } }));
+    setMostrarNovoConselho(false);
+    apiInserir("conselhos", { id, nomeConselho: dados.nomeConselho, escolas: (dados.escolas || []).join(";"), cnpj: dados.cnpj, presidente: dados.presidente, tesoureiro: dados.tesoureiro || "", vencimento: dados.vencimento });
+    registrarHistorico(setDb, { perfil: "Coordenador", usuario: usuarioLogado?.nomeCompleto || "Coordenador", conselhoId: id, conselhoNome: dados.nomeConselho, acao: `Cadastrou o conselho ${dados.nomeConselho}` });
+  }
+  function salvarEdicaoConselho(id, dados) {
+    setDb((prev) => ({ ...prev, conselhos: prev.conselhos.map((c) => (c.id === id ? { ...c, ...dados } : c)) }));
+    setEditandoConselhoId(null);
+    apiAtualizar("conselhos", id, { nomeConselho: dados.nomeConselho, escolas: (dados.escolas || []).join(";"), cnpj: dados.cnpj, presidente: dados.presidente, tesoureiro: dados.tesoureiro || "", vencimento: dados.vencimento });
+    registrarHistorico(setDb, { perfil: "Coordenador", usuario: usuarioLogado?.nomeCompleto || "Coordenador", conselhoId: id, conselhoNome: dados.nomeConselho, acao: `Editou o cadastro do conselho ${dados.nomeConselho}` });
+  }
+  function excluirConselho(id) {
+    const conselho = db.conselhos.find((c) => c.id === id);
+    const repasseIds = db.repasses.filter((r) => r.conselhoId === id).map((r) => r.id);
+    setDb((prev) => {
+      const { [id]: _, ...restoCategorias } = prev.categoriasPorConselho;
+      return {
+        ...prev,
+        conselhos: prev.conselhos.filter((c) => c.id !== id),
+        categoriasPorConselho: restoCategorias,
+        repasses: prev.repasses.filter((r) => r.conselhoId !== id),
+        planos: prev.planos.filter((p) => !repasseIds.includes(p.repasseId)),
+        lancamentos: prev.lancamentos.filter((l) => l.conselhoId !== id),
+        remanejamentos: prev.remanejamentos.filter((r) => r.conselhoId !== id),
+      };
+    });
+    setConfirmarExclusaoId(null);
+    apiExcluir("conselhos", id);
+    apiExcluirEmCascata("categorias", "conselhoId", id);
+    apiExcluirEmCascata("repasses", "conselhoId", id);
+    apiExcluirEmCascata("lancamentos", "conselhoId", id);
+    apiExcluirEmCascata("remanejamentos", "conselhoId", id);
+    repasseIds.forEach((rid) => {
+      apiExcluirEmCascata("planoItens", "repasseId", rid);
+      apiExcluirEmCascata("arquivosPlano", "repasseId", rid);
+    });
+    registrarHistorico(setDb, { perfil: "Coordenador", usuario: usuarioLogado?.nomeCompleto || "Coordenador", conselhoId: null, conselhoNome: null, acao: `Excluiu o conselho ${conselho?.nomeConselho || ""}` });
+  }
+
+  function saldoRemanescenteSugerido(conselhoId) {
+    const reps = db.repasses.filter((r) => r.conselhoId === conselhoId);
+    if (reps.length === 0) return 0;
+    const ultimo = reps[reps.length - 1];
+    const s = computeSaldoRepasse(db, ultimo, categoriaById);
+    return Math.max(s.saldoCusteio + s.saldoCapital, 0);
+  }
+
+  function registrarRepasse() {
+    if (!novoRepasse.descricao) return;
+    const id = genId();
+    const dataRepasse = novoRepasse.data || todayISO();
+    setDb((prev) => ({
+      ...prev,
+      repasses: [...prev.repasses, { id, conselhoId: conselhoRepasseSel, descricao: novoRepasse.descricao, data: dataRepasse, custeio: 0, capital: 0, saldoAnterior: 0, valoresDefinidos: false }],
+      planos: [...prev.planos, { id: genId(), repasseId: id, itens: [], arquivos: [] }],
+    }));
+    apiInserir("repasses", { id, conselhoId: conselhoRepasseSel, descricao: novoRepasse.descricao, data: dataRepasse, custeio: 0, capital: 0, saldoAnterior: 0, valoresDefinidos: "FALSE" });
+    registrarHistorico(setDb, { perfil: "Coordenador", usuario: usuarioLogado?.nomeCompleto || "Coordenador", conselhoId: conselhoRepasseSel, conselhoNome: conselhoById[conselhoRepasseSel]?.nomeConselho, acao: `Registrou o repasse "${novoRepasse.descricao}" — aguardando o conselho enviar o Plano de Aplicação` });
+    setNovoRepasse({ data: todayISO(), descricao: "" });
+  }
+
+  function definirValoresRepasse(repasseId, custeioCents, capitalCents) {
+    const repasse = db.repasses.find((r) => r.id === repasseId);
+    if (!repasse) return;
+    const doConselho = db.repasses.filter((r) => r.conselhoId === repasse.conselhoId);
+    const idx = doConselho.findIndex((r) => r.id === repasseId);
+    let saldoAnterior = 0;
+    if (idx > 0) {
+      const s = computeSaldoRepasse(db, doConselho[idx - 1], categoriaById);
+      saldoAnterior = Math.max(s.saldoCusteio + s.saldoCapital, 0);
+    }
+    const custeioFinal = centsToReais(custeioCents);
+    const capitalFinal = centsToReais(capitalCents);
+    setDb((prev) => ({
+      ...prev,
+      repasses: prev.repasses.map((r) => (r.id === repasseId ? { ...r, custeio: custeioFinal, capital: capitalFinal, saldoAnterior, valoresDefinidos: true } : r)),
+    }));
+    apiAtualizar("repasses", repasseId, { custeio: custeioFinal, capital: capitalFinal, saldoAnterior, valoresDefinidos: "TRUE" });
+    registrarHistorico(setDb, { perfil: "Coordenador", usuario: usuarioLogado?.nomeCompleto || "Coordenador", conselhoId: repasse.conselhoId, conselhoNome: conselhoById[repasse.conselhoId]?.nomeConselho, acao: `Definiu os valores do repasse "${repasse.descricao}" (Custeio ${brl(custeioFinal)} / Capital ${brl(capitalFinal)})` });
+  }
+
+  function excluirRepasse(repasseId) {
+    const repasse = db.repasses.find((r) => r.id === repasseId);
+    setDb((prev) => ({
+      ...prev,
+      repasses: prev.repasses.filter((r) => r.id !== repasseId),
+      planos: prev.planos.filter((p) => p.repasseId !== repasseId),
+      lancamentos: prev.lancamentos.filter((l) => l.repasseId !== repasseId),
+      remanejamentos: prev.remanejamentos.filter((r) => r.repasseId !== repasseId),
+    }));
+    setConfirmarExclusaoRepasseId(null);
+    apiExcluir("repasses", repasseId);
+    apiExcluirEmCascata("planoItens", "repasseId", repasseId);
+    apiExcluirEmCascata("arquivosPlano", "repasseId", repasseId);
+    apiExcluirEmCascata("lancamentos", "repasseId", repasseId);
+    apiExcluirEmCascata("remanejamentos", "repasseId", repasseId);
+    registrarHistorico(setDb, { perfil: "Coordenador", usuario: usuarioLogado?.nomeCompleto || "Coordenador", conselhoId: repasse?.conselhoId, conselhoNome: conselhoById[repasse?.conselhoId]?.nomeConselho, acao: `Excluiu o repasse "${repasse?.descricao}"` });
+  }
+
+  function salvarEdicaoRepasse(id, dados) {
+    const repasse = db.repasses.find((r) => r.id === id);
+    setDb((prev) => ({ ...prev, repasses: prev.repasses.map((r) => (r.id === id ? { ...r, ...dados } : r)) }));
+    setEditandoRepasseId(null);
+    apiAtualizar("repasses", id, dados);
+    registrarHistorico(setDb, { perfil: "Coordenador", usuario: usuarioLogado?.nomeCompleto || "Coordenador", conselhoId: repasse?.conselhoId, conselhoNome: conselhoById[repasse?.conselhoId]?.nomeConselho, acao: `Editou o repasse "${dados.descricao}"` });
+  }
+
+  function cadastrarCategoria() {
+    if (!novaCategoria.nome) return;
+    const id = genId();
+    const cat = { id, nome: novaCategoria.nome, tipo: novaCategoria.tipo, ...(novaCategoria.tipo === "Custeio" ? { subtipo: novaCategoria.subtipo } : {}) };
+
+    setDb((prev) => ({ ...prev, categoriasPorConselho: { ...prev.categoriasPorConselho, [conselhoCatSel]: [...(prev.categoriasPorConselho[conselhoCatSel] || []), cat] } }));
+    apiInserir("categorias", { id, conselhoId: conselhoCatSel, nome: cat.nome, tipo: cat.tipo, subtipo: cat.subtipo || "" });
+
+    if (repasseCatSel && novaCategoria.valorCents > 0) {
+      setValoresEditados((prev) => ({ ...prev, [id]: novaCategoria.valorCents }));
+    }
+    registrarHistorico(setDb, { perfil: "Coordenador", usuario: usuarioLogado?.nomeCompleto || "Coordenador", conselhoId: conselhoCatSel, conselhoNome: conselhoById[conselhoCatSel]?.nomeConselho, acao: `Cadastrou a categoria "${novaCategoria.nome}" (${novaCategoria.tipo})` });
+    setNovaCategoria({ nome: "", tipo: "Custeio", subtipo: "Consumo", valorCents: 0 });
+  }
+
+  function salvarEdicaoCategoria(categoriaId, dados) {
+    setDb((prev) => ({
+      ...prev,
+      categoriasPorConselho: {
+        ...prev.categoriasPorConselho,
+        [conselhoCatSel]: (prev.categoriasPorConselho[conselhoCatSel] || []).map((c) => (c.id === categoriaId ? { id: c.id, ...dados } : c)),
+      },
+    }));
+    setEditandoCategoriaId(null);
+    apiAtualizar("categorias", categoriaId, { nome: dados.nome, tipo: dados.tipo, subtipo: dados.subtipo || "" });
+    registrarHistorico(setDb, { perfil: "Coordenador", usuario: usuarioLogado?.nomeCompleto || "Coordenador", conselhoId: conselhoCatSel, conselhoNome: conselhoById[conselhoCatSel]?.nomeConselho, acao: `Editou a categoria "${dados.nome}"` });
+  }
+
+  function estagiarValorCategoria(categoriaId, cents) {
+    setValoresEditados((prev) => ({ ...prev, [categoriaId]: cents }));
+  }
+
+  function salvarValoresCategorias(repasseId) {
+    const repasse = db.repasses.find((r) => r.id === repasseId);
+    const plano = db.planos.find((p) => p.repasseId === repasseId);
+    if (!repasse || !plano) return;
+
+    const categoriasConselho = db.categoriasPorConselho[conselhoCatSel] || [];
+    const valorFinal = (categoriaId) => {
+      if (Object.prototype.hasOwnProperty.call(valoresEditados, categoriaId)) return centsToReais(valoresEditados[categoriaId]);
+      const item = plano.itens.find((i) => i.categoriaId === categoriaId);
+      return item?.valorPrevisto || 0;
+    };
+
+    for (const tipo of ["Custeio", "Capital"]) {
+      const totalTipo = categoriasConselho.filter((c) => c.tipo === tipo).reduce((s, c) => s + valorFinal(c.id), 0);
+      const totalRepasse = tipo === "Custeio" ? repasse.custeio : repasse.capital;
+      if (totalTipo > totalRepasse) {
+        setErroValorCategoria(`Total em ${tipo} (${brl(totalTipo)}) ultrapassa o valor repassado (${brl(totalRepasse)}).`);
+        return;
+      }
+    }
+
+    setErroValorCategoria(null);
+    setDb((prev) => ({
+      ...prev,
+      planos: prev.planos.map((p) => {
+        if (p.repasseId !== repasseId) return p;
+        let itens = [...p.itens];
+        Object.entries(valoresEditados).forEach(([categoriaIdStr, cents]) => {
+          const categoriaId = Number(categoriaIdStr);
+          const valor = centsToReais(cents);
+          const existe = itens.some((i) => i.categoriaId === categoriaId);
+          itens = existe ? itens.map((i) => (i.categoriaId === categoriaId ? { ...i, valorPrevisto: valor } : i)) : [...itens, { categoriaId, valorPrevisto: valor }];
+        });
+        return { ...p, itens };
+      }),
+    }));
+    Object.entries(valoresEditados).forEach(([categoriaIdStr, cents]) => {
+      const categoriaId = Number(categoriaIdStr);
+      const valor = centsToReais(cents);
+      const itemExiste = plano.itens.some((i) => i.categoriaId === categoriaId);
+      if (itemExiste) {
+        apiChamar({ action: "atualizarPorFiltro", sheet: "planoItens", filtros: { repasseId, categoriaId }, dados: { valorPrevisto: valor } });
+      } else {
+        apiInserir("planoItens", { repasseId, categoriaId, valorPrevisto: valor });
+      }
+    });
+    registrarHistorico(setDb, { perfil: "Coordenador", usuario: usuarioLogado?.nomeCompleto || "Coordenador", conselhoId: conselhoCatSel, conselhoNome: conselhoById[conselhoCatSel]?.nomeConselho, acao: `Salvou os valores das categorias do repasse "${repasse.descricao}"` });
+    setValoresEditados({});
+  }
+
+  function decidirArquivoPlano(repasseId, arquivoId, aprovado) {
+    setDb((prev) => ({
+      ...prev,
+      planos: prev.planos.map((p) => (p.repasseId === repasseId ? { ...p, arquivos: (p.arquivos || []).map((a) => (a.id === arquivoId ? { ...a, status: aprovado ? "aprovado" : "reprovado" } : a)) } : p)),
+    }));
+    apiAtualizar("arquivosPlano", arquivoId, { status: aprovado ? "aprovado" : "reprovado" });
+    const repasse = db.repasses.find((r) => r.id === repasseId);
+    registrarHistorico(setDb, { perfil: "Coordenador", usuario: usuarioLogado?.nomeCompleto || "Coordenador", conselhoId: repasse?.conselhoId, conselhoNome: conselhoById[repasse?.conselhoId]?.nomeConselho, acao: `${aprovado ? "Aprovou" : "Reprovou"} um arquivo do Plano de Aplicação (repasse ${repasse?.descricao})` });
+  }
+
+  function decidirRemanejamento(rem, aprovado) {
+    setDb((prev) => {
+      let planos = prev.planos;
+      if (aprovado) {
+        planos = prev.planos.map((p) => {
+          if (p.repasseId !== rem.repasseId) return p;
+          let itens = [...p.itens];
+          itens = itens.some((i) => i.categoriaId === rem.origemId)
+            ? itens.map((i) => (i.categoriaId === rem.origemId ? { ...i, valorPrevisto: i.valorPrevisto - rem.valor } : i))
+            : [...itens, { categoriaId: rem.origemId, valorPrevisto: -rem.valor }];
+          itens = itens.some((i) => i.categoriaId === rem.destinoId)
+            ? itens.map((i) => (i.categoriaId === rem.destinoId ? { ...i, valorPrevisto: i.valorPrevisto + rem.valor } : i))
+            : [...itens, { categoriaId: rem.destinoId, valorPrevisto: rem.valor }];
+          return { ...p, itens };
+        });
+      }
+      return { ...prev, planos, remanejamentos: prev.remanejamentos.map((r) => (r.id === rem.id ? { ...r, status: aprovado ? "aprovado" : "reprovado" } : r)) };
+    });
+    apiAtualizar("remanejamentos", rem.id, { status: aprovado ? "aprovado" : "reprovado" });
+    if (aprovado) {
+      const plano = db.planos.find((p) => p.repasseId === rem.repasseId);
+      const itemOrigem = plano?.itens.find((i) => i.categoriaId === rem.origemId);
+      const itemDestino = plano?.itens.find((i) => i.categoriaId === rem.destinoId);
+      const novoValorOrigem = (itemOrigem?.valorPrevisto || 0) - rem.valor;
+      const novoValorDestino = (itemDestino?.valorPrevisto || 0) + rem.valor;
+      if (itemOrigem) apiChamar({ action: "atualizarPorFiltro", sheet: "planoItens", filtros: { repasseId: rem.repasseId, categoriaId: rem.origemId }, dados: { valorPrevisto: novoValorOrigem } });
+      else apiInserir("planoItens", { repasseId: rem.repasseId, categoriaId: rem.origemId, valorPrevisto: novoValorOrigem });
+      if (itemDestino) apiChamar({ action: "atualizarPorFiltro", sheet: "planoItens", filtros: { repasseId: rem.repasseId, categoriaId: rem.destinoId }, dados: { valorPrevisto: novoValorDestino } });
+      else apiInserir("planoItens", { repasseId: rem.repasseId, categoriaId: rem.destinoId, valorPrevisto: novoValorDestino });
+    }
+    registrarHistorico(setDb, { perfil: "Coordenador", usuario: usuarioLogado?.nomeCompleto || "Coordenador", conselhoId: rem.conselhoId, conselhoNome: conselhoById[rem.conselhoId]?.nomeConselho, acao: `${aprovado ? "Aprovou" : "Reprovou"} o remanejamento de ${brl(rem.valor)} (${categoriaById[rem.origemId]?.nome} → ${categoriaById[rem.destinoId]?.nome})` });
+  }
+
+  function alternarPendenciaLancamento(id) {
+    const l = db.lancamentos.find((x) => x.id === id);
+    const novoStatus = l?.status === "com pendência" ? "registrado" : "com pendência";
+    setDb((prev) => ({ ...prev, lancamentos: prev.lancamentos.map((l) => l.id === id ? { ...l, status: l.status === "com pendência" ? "registrado" : "com pendência" } : l) }));
+    apiAtualizar("lancamentos", id, { status: novoStatus });
+    registrarHistorico(setDb, { perfil: "Coordenador", usuario: usuarioLogado?.nomeCompleto || "Coordenador", conselhoId: l?.conselhoId, conselhoNome: conselhoById[l?.conselhoId]?.nomeConselho, acao: `${novoStatus === "com pendência" ? "Sinalizou pendência em" : "Removeu a sinalização de pendência de"} um lançamento de ${brl(l?.valor || 0)}` });
+  }
+
+  function decidirPrestacaoContas(id, aprovado, observacao) {
+    const prestacao = db.prestacoesContas.find((p) => p.id === id);
+    setDb((prev) => ({ ...prev, prestacoesContas: prev.prestacoesContas.map((p) => (p.id === id ? { ...p, status: aprovado ? "aprovada" : "reprovada", observacaoCoordenador: aprovado ? null : (observacao || "Sem observação informada.") } : p)) }));
+    apiAtualizar("prestacoesContas", id, { status: aprovado ? "aprovada" : "reprovada", observacaoCoordenador: aprovado ? "" : (observacao || "Sem observação informada.") });
+    registrarHistorico(setDb, { perfil: "Coordenador", usuario: usuarioLogado?.nomeCompleto || "Coordenador", conselhoId: prestacao?.conselhoId, conselhoNome: conselhoById[prestacao?.conselhoId]?.nomeConselho, acao: `${aprovado ? "Aprovou" : "Reprovou"} a prestação de contas do período "${prestacao?.periodo} de ${prestacao?.ano}"` });
+  }
+
+  function decidirRendimento(rendimento, aprovado, valorFinalReais, alocacoesFinais, observacao) {
+    setDb((prev) => {
+      let repasses = prev.repasses;
+      let planos = prev.planos;
+      if (aprovado) {
+        let addCusteio = 0, addCapital = 0;
+        alocacoesFinais.forEach((a) => {
+          const cat = (prev.categoriasPorConselho[rendimento.conselhoId] || []).find((c) => c.id === a.categoriaId);
+          if (cat?.tipo === "Custeio") addCusteio += a.valor; else addCapital += a.valor;
+        });
+        repasses = prev.repasses.map((r) => (r.id === rendimento.repasseId ? { ...r, custeio: r.custeio + addCusteio, capital: r.capital + addCapital } : r));
+        planos = prev.planos.map((p) => {
+          if (p.repasseId !== rendimento.repasseId) return p;
+          let itens = [...p.itens];
+          alocacoesFinais.forEach((a) => {
+            const existe = itens.some((i) => i.categoriaId === a.categoriaId);
+            itens = existe ? itens.map((i) => (i.categoriaId === a.categoriaId ? { ...i, valorPrevisto: i.valorPrevisto + a.valor } : i)) : [...itens, { categoriaId: a.categoriaId, valorPrevisto: a.valor }];
+          });
+          return { ...p, itens };
+        });
+      }
+      return {
+        ...prev, repasses, planos,
+        rendimentos: prev.rendimentos.map((r) => (r.id === rendimento.id ? { ...r, valor: valorFinalReais, alocacoes: alocacoesFinais, status: aprovado ? "aprovado" : "reprovado", observacaoCoordenador: aprovado ? null : (observacao || "Sem observação informada.") } : r)),
+      };
+    });
+
+    if (aprovado) {
+      const repasse = db.repasses.find((r) => r.id === rendimento.repasseId);
+      const idx = db.repasses.filter((r) => r.conselhoId === rendimento.conselhoId).findIndex((r) => r.id === rendimento.repasseId);
+      let addCusteio = 0, addCapital = 0;
+      alocacoesFinais.forEach((a) => {
+        const cat = categoriaById[a.categoriaId];
+        if (cat?.tipo === "Custeio") addCusteio += a.valor; else addCapital += a.valor;
+      });
+      apiAtualizar("repasses", rendimento.repasseId, { custeio: (repasse?.custeio || 0) + addCusteio, capital: (repasse?.capital || 0) + addCapital });
+      const plano = db.planos.find((p) => p.repasseId === rendimento.repasseId);
+      alocacoesFinais.forEach((a) => {
+        const item = plano?.itens.find((i) => i.categoriaId === a.categoriaId);
+        if (item) {
+          apiChamar({ action: "atualizarPorFiltro", sheet: "planoItens", filtros: { repasseId: rendimento.repasseId, categoriaId: a.categoriaId }, dados: { valorPrevisto: item.valorPrevisto + a.valor } });
+        } else {
+          apiInserir("planoItens", { repasseId: rendimento.repasseId, categoriaId: a.categoriaId, valorPrevisto: a.valor });
+        }
+      });
+    }
+    apiAtualizar("rendimentos", rendimento.id, { valor: valorFinalReais, status: aprovado ? "aprovado" : "reprovado", observacaoCoordenador: aprovado ? "" : (observacao || "Sem observação informada.") });
+    if (aprovado) {
+      apiExcluirEmCascata("rendimentoAlocacoes", "rendimentoId", rendimento.id);
+      alocacoesFinais.forEach((a) => apiInserir("rendimentoAlocacoes", { rendimentoId: rendimento.id, categoriaId: a.categoriaId, valor: a.valor }));
+    }
+    registrarHistorico(setDb, { perfil: "Coordenador", usuario: usuarioLogado?.nomeCompleto || "Coordenador", conselhoId: rendimento.conselhoId, conselhoNome: conselhoById[rendimento.conselhoId]?.nomeConselho, acao: `${aprovado ? "Aprovou" : "Reprovou"} o rendimento de ${brl(valorFinalReais)} informado pelo conselho` });
+  }
+
+
+  function reabrirPrestacaoContas(id) {
+    const prestacao = db.prestacoesContas.find((p) => p.id === id);
+    setDb((prev) => ({ ...prev, prestacoesContas: prev.prestacoesContas.map((p) => (p.id === id ? { ...p, status: "reaberta" } : p)) }));
+    apiAtualizar("prestacoesContas", id, { status: "reaberta" });
+    registrarHistorico(setDb, { perfil: "Coordenador", usuario: usuarioLogado?.nomeCompleto || "Coordenador", conselhoId: prestacao?.conselhoId, conselhoNome: conselhoById[prestacao?.conselhoId]?.nomeConselho, acao: `Reabriu o período "${prestacao?.periodo} de ${prestacao?.ano}" para correções` });
+  }
+
+  function salvarEdicaoLancamentoCoord(id, novoValorReais, novaDescricao) {
+    const lAntes = db.lancamentos.find((x) => x.id === id);
+    setDb((prev) => ({
+      ...prev,
+      lancamentos: prev.lancamentos.map((l) => {
+        if (l.id !== id) return l;
+        const hist = [...l.historico];
+        if (Number(novoValorReais) !== l.valor) hist.push({ data: todayStr(), campo: "valor", de: brl(l.valor), para: brl(Number(novoValorReais)) });
+        if (novaDescricao !== l.descricao) hist.push({ data: todayStr(), campo: "descrição", de: l.descricao, para: novaDescricao });
+        return { ...l, valor: Number(novoValorReais), descricao: novaDescricao, historico: hist };
+      }),
+    }));
+    setEditandoLancId(null);
+    apiAtualizar("lancamentos", id, { valor: Number(novoValorReais), descricao: novaDescricao });
+    registrarHistorico(setDb, { perfil: "Coordenador", usuario: usuarioLogado?.nomeCompleto || "Coordenador", conselhoId: lAntes?.conselhoId, conselhoNome: conselhoById[lAntes?.conselhoId]?.nomeConselho, acao: `Editou um lançamento (novo valor: ${brl(Number(novoValorReais))})` });
+  }
+
+  const tabs = [
+    { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { id: "conselhos", label: "Conselhos", icon: Landmark },
+    { id: "repasses", label: "Repasses", icon: Wallet },
+    { id: "categorias", label: "Categorias", icon: FileText },
+    { id: "remanejamentos", label: "Remanejamentos", icon: ArrowLeftRight },
+    { id: "rendimentos", label: `Rendimentos${(db.rendimentos || []).filter((r) => r.status === "aguardando avaliação").length ? ` (${(db.rendimentos || []).filter((r) => r.status === "aguardando avaliação").length})` : ""}`, icon: TrendingUp },
+    { id: "lancamentos", label: "Lançamentos", icon: Receipt },
+    { id: "conferencia", label: "Conferência", icon: ClipboardCheck },
+    { id: "prestacao", label: `Prestação de Contas${(db.prestacoesContas || []).filter((p) => p.status === "aguardando avaliação").length ? ` (${(db.prestacoesContas || []).filter((p) => p.status === "aguardando avaliação").length})` : ""}`, icon: Lock },
+    { id: "relatorios", label: "Relatórios", icon: BarChart3 },
+    { id: "historico", label: "Histórico", icon: History },
+  ];
+
+  const remSolicitados = db.remanejamentos.filter((r) => r.status === "solicitado");
+  const totalRepassado = db.repasses.reduce((s, r) => s + r.custeio + r.capital, 0);
+  const totalExecutado = db.lancamentos.filter((l) => l.status !== "aguardando autorização").reduce((s, l) => s + l.valor, 0);
+  const totalCusteioGeral = db.repasses.reduce((s, r) => s + r.custeio, 0);
+  const totalCapitalGeral = db.repasses.reduce((s, r) => s + r.capital, 0);
+  const aguardandoAutorizacao = db.lancamentos.filter((l) => l.status === "aguardando autorização").length;
+  const comPendencia = db.lancamentos.filter((l) => l.status === "com pendência").length;
+  const conselhosVencendo = db.conselhos.map((c) => ({ ...c, dias: diasRestantes(c.vencimento) })).filter((c) => c.dias !== null && c.dias <= 30).sort((a, b) => a.dias - b.dias);
+
+  const dadosPorConselho = db.conselhos.map((c) => {
+    const reps = db.repasses.filter((r) => r.conselhoId === c.id);
+    const repassado = reps.reduce((s, r) => s + r.custeio + r.capital, 0);
+    const executado = db.lancamentos.filter((l) => l.conselhoId === c.id && l.status !== "aguardando autorização").reduce((s, l) => s + l.valor, 0);
+    const nomeCurto = c.nomeConselho.length > 16 ? c.nomeConselho.slice(0, 14) + "…" : c.nomeConselho;
+    return { nome: nomeCurto, Repassado: repassado, Executado: executado };
+  });
+  const dadosTipo = [{ name: "Custeio", value: totalCusteioGeral }, { name: "Capital", value: totalCapitalGeral }];
+  const CORES_TIPO = ["#0f766e", "#c2410c"];
+
+  const repassesDoConselhoCat = db.repasses.filter((r) => r.conselhoId === conselhoCatSel && r.valoresDefinidos);
+  const repasseSelecionadoCat = repasseCatSel ? db.repasses.find((r) => r.id === Number(repasseCatSel)) : null;
+  const planoSelecionado = repasseCatSel ? db.planos.find((p) => p.repasseId === Number(repasseCatSel)) : null;
+  const categoriasDoConselhoCat = db.categoriasPorConselho[conselhoCatSel] || [];
+  const valorFinalCategoria = (categoriaId) => {
+    if (Object.prototype.hasOwnProperty.call(valoresEditados, categoriaId)) return centsToReais(valoresEditados[categoriaId]);
+    const item = planoSelecionado?.itens.find((i) => i.categoriaId === categoriaId);
+    return item?.valorPrevisto || 0;
+  };
+  const disponivelCusteio = repasseSelecionadoCat ? repasseSelecionadoCat.custeio - categoriasDoConselhoCat.filter((c) => c.tipo === "Custeio").reduce((s, c) => s + valorFinalCategoria(c.id), 0) : null;
+  const disponivelCapital = repasseSelecionadoCat ? repasseSelecionadoCat.capital - categoriasDoConselhoCat.filter((c) => c.tipo === "Capital").reduce((s, c) => s + valorFinalCategoria(c.id), 0) : null;
+  const temEdicoesPendentes = Object.keys(valoresEditados).length > 0;
+
+  return (
+    <div className={isMobile ? "flex flex-col gap-4" : "flex flex-row gap-6"}>
+      <NavAbas tabs={tabs} tab={tab} setTab={setTab} isMobile={isMobile} menuAberto={menuAberto} setMenuAberto={setMenuAberto} />
+
+      <div className="flex-1 min-w-0">
+        {tab === "dashboard" && (
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <SectionTitle icon={LayoutDashboard}>Dashboard</SectionTitle>
+              <ReportButtons
+                titulo="Relatório geral por conselho"
+                nomeArquivo="relatorio_geral_conselhos"
+                header={["Conselho", "Repassado", "Executado", "Saldo"]}
+                linhas={db.conselhos.map((c) => {
+                  const reps = db.repasses.filter((r) => r.conselhoId === c.id);
+                  const repassado = reps.reduce((s, r) => s + r.custeio + r.capital, 0);
+                  const executado = db.lancamentos.filter((l) => l.conselhoId === c.id && l.status !== "aguardando autorização").reduce((s, l) => s + l.valor, 0);
+                  return [c.nomeConselho, brl(repassado), brl(executado), brl(repassado - executado)];
+                })}
+              />
+            </div>
+            <div className={isMobile ? "grid grid-cols-1 gap-3 mb-4" : "grid grid-cols-3 gap-3 mb-4"}>
+              <Card><div className="text-xs text-slate-500">Total repassado</div><div className="text-lg font-medium text-slate-800">{brl(totalRepassado)}</div></Card>
+              <Card><div className="text-xs text-slate-500">Total executado</div><div className="text-lg font-medium text-slate-800">{brl(totalExecutado)}</div></Card>
+              <Card><div className="text-xs text-slate-500">Saldo consolidado</div><div className="text-lg font-medium text-slate-800">{brl(totalRepassado - totalExecutado)}</div></Card>
+            </div>
+            <div className={isMobile ? "grid grid-cols-1 gap-3 mb-6" : "grid grid-cols-3 gap-3 mb-6"}>
+              <Card><div className="text-xs text-slate-500">Remanejamentos pendentes</div><div className="text-lg font-medium text-slate-800">{remSolicitados.length}</div></Card>
+              <Card><div className="text-xs text-slate-500">Aguardando autorização do presidente</div><div className="text-lg font-medium text-slate-800">{aguardandoAutorizacao}</div></Card>
+              <Card><div className="text-xs text-slate-500">Lançamentos com pendência</div><div className="text-lg font-medium text-slate-800">{comPendencia}</div></Card>
+            </div>
+
+            <div className={isMobile ? "grid grid-cols-1 gap-4 mb-6" : "grid grid-cols-2 gap-4 mb-6"}>
+              <Card>
+                <div className="text-xs font-medium text-slate-500 mb-2">Repassado x executado por conselho</div>
+                <ResponsiveContainer width="100%" height={260}>
+                  <BarChart data={dadosPorConselho}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                    <XAxis dataKey="nome" tick={{ fontSize: 11 }} angle={-30} textAnchor="end" interval={0} height={70} />
+                    <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `${v / 1000}k`} />
+                    <Tooltip formatter={(v) => brl(v)} />
+                    <Legend wrapperStyle={{ fontSize: "11px" }} />
+                    <Bar dataKey="Repassado" fill="#0f766e" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="Executado" fill="#d97706" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </Card>
+              <Card>
+                <div className="text-xs font-medium text-slate-500 mb-2">Distribuição Custeio x Capital (total repassado)</div>
+                <ResponsiveContainer width="100%" height={220}>
+                  <PieChart>
+                    <Pie data={dadosTipo} dataKey="value" nameKey="name" innerRadius={50} outerRadius={80} paddingAngle={2}>
+                      {dadosTipo.map((entry, idx) => <Cell key={entry.name} fill={CORES_TIPO[idx]} />)}
+                    </Pie>
+                    <Tooltip formatter={(v) => brl(v)} />
+                  </PieChart>
+                </ResponsiveContainer>
+                <LegendaGrafico itens={dadosTipo.map((d, idx) => ({ nome: d.name, cor: CORES_TIPO[idx] }))} />
+              </Card>
+            </div>
+
+            <Card className="mb-6">
+              <div className="text-xs font-medium text-slate-500 mb-2">Execução ao longo do tempo (todos os conselhos)</div>
+              {(() => {
+                const dadosMes = agruparLancamentosPorMes(db.lancamentos);
+                return dadosMes.length === 0 ? <div className="text-sm text-slate-500 py-10 text-center">Nenhuma despesa lançada ainda.</div> : (
+                  <ResponsiveContainer width="100%" height={220}>
+                    <LineChart data={dadosMes}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                      <XAxis dataKey="mes" tick={{ fontSize: 11 }} />
+                      <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `${v / 1000}k`} />
+                      <Tooltip formatter={(v) => brl(v)} />
+                      <Line type="monotone" dataKey="Executado" stroke="#0f766e" strokeWidth={2} dot={{ r: 3 }} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                );
+              })()}
+            </Card>
+
+            <SectionTitle icon={CalendarClock}>Conselhos com vencimento próximo</SectionTitle>
+            {conselhosVencendo.length === 0 ? <div className="text-sm text-slate-500">Nenhum conselho vencendo nos próximos 30 dias.</div> : (
+              <div className="space-y-2">
+                {conselhosVencendo.map((c) => (
+                  <Card key={c.id}>
+                    <div className="flex items-center justify-between">
+                      <div className="text-sm text-slate-800">{c.nomeConselho}</div>
+                      <VencimentoBadge vencimento={c.vencimento} />
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {tab === "conselhos" && (
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <SectionTitle icon={Landmark}>Conselhos escolares</SectionTitle>
+              <ReportButtons
+                titulo="Relatório de conselhos escolares"
+                nomeArquivo="relatorio_conselhos"
+                header={["Conselho", "Escolas", "CNPJ", "Presidente", "Tesoureiro", "Vencimento do conselho"]}
+                linhas={db.conselhos.map((c) => [c.nomeConselho, c.escolas.join(", "), c.cnpj, c.presidente, c.tesoureiro || "-", displayDate(c.vencimento)])}
+              />
+            </div>
+            {mostrarNovoConselho ? (
+              <ConselhoForm onSalvar={cadastrarConselho} onCancelar={() => setMostrarNovoConselho(false)} />
+            ) : (
+              <div className="mb-4"><PrimaryButton onClick={() => setMostrarNovoConselho(true)}><Plus size={14} /> Novo conselho</PrimaryButton></div>
+            )}
+            <div className="space-y-2">
+              {db.conselhos.map((c) => (
+                editandoConselhoId === c.id ? (
+                  <ConselhoForm key={c.id} inicial={c} onSalvar={(dados) => salvarEdicaoConselho(c.id, dados)} onCancelar={() => setEditandoConselhoId(null)} />
+                ) : (
+                  <Card key={c.id}>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-sm font-medium text-slate-800">{c.nomeConselho}</div>
+                        <div className="text-xs text-slate-500 flex items-center gap-1 mt-0.5"><School size={12} /> {c.escolas.join(", ")}</div>
+                        <div className="text-xs text-slate-500 mt-0.5">CNPJ {c.cnpj} · Presidente: {c.presidente}{c.tesoureiro && ` · Tesoureiro: ${c.tesoureiro}`}</div>
+                      </div>
+                      <div className="flex flex-col items-end gap-2">
+                        <VencimentoBadge vencimento={c.vencimento} />
+                        <div className="flex gap-2">
+                          <GhostButton onClick={() => setEditandoConselhoId(c.id)}><Pencil size={12} /> Editar</GhostButton>
+                          {confirmarExclusaoId === c.id ? (
+                            <>
+                              <GhostButton tone="red" onClick={() => excluirConselho(c.id)}>Confirmar exclusão</GhostButton>
+                              <GhostButton onClick={() => setConfirmarExclusaoId(null)}>Cancelar</GhostButton>
+                            </>
+                          ) : (
+                            <GhostButton tone="red" onClick={() => setConfirmarExclusaoId(c.id)}><Trash2 size={12} /> Excluir</GhostButton>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                )
+              ))}
+            </div>
+          </div>
+        )}
+
+        {tab === "repasses" && (
+          <div>
+            <SectionTitle icon={Wallet}>Repasses</SectionTitle>
+            <Card className="mb-4">
+              <div className="text-xs font-medium text-slate-500 mb-2">Novo repasse — o conselho enviará o Plano de Aplicação depois, com os valores definidos após a análise</div>
+              <select value={conselhoRepasseSel} onChange={(e) => setConselhoRepasseSel(Number(e.target.value))} className="border border-slate-300 rounded px-2 py-1 text-sm mb-3">
+                {db.conselhos.map((c) => <option key={c.id} value={c.id}>{c.nomeConselho}</option>)}
+              </select>
+              <div className={isMobile ? "grid grid-cols-1 gap-3 mb-2" : "grid grid-cols-2 gap-3 mb-2"}>
+                <Field label="Descrição do repasse (ex: 1º Repasse)">
+                  <input value={novoRepasse.descricao} onChange={(e) => setNovoRepasse({ ...novoRepasse, descricao: e.target.value.toUpperCase() })} placeholder="1º Repasse" className="w-full border border-slate-300 rounded px-2 py-1 text-sm" />
+                </Field>
+                <Field label="Data do repasse">
+                  <DateInput value={novoRepasse.data} onChange={(v) => setNovoRepasse({ ...novoRepasse, data: v })} />
+                </Field>
+              </div>
+              <PrimaryButton onClick={registrarRepasse}><Plus size={14} /> Registrar repasse</PrimaryButton>
+            </Card>
+            {(() => {
+              const anosDisponiveis = Array.from(new Set(db.repasses.map((r) => anoExercicio(r.data)))).filter(Boolean).sort().reverse();
+              return anosDisponiveis.length > 0 && (
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-xs text-slate-500">Exercício:</span>
+                  <select value={filtroExercicioRepasse} onChange={(e) => setFiltroExercicioRepasse(e.target.value)} className="border border-slate-300 rounded px-2 py-1 text-sm">
+                    <option>Todos</option>
+                    {anosDisponiveis.map((a) => <option key={a} value={a}>{a}</option>)}
+                  </select>
+                </div>
+              );
+            })()}
+            <div className="space-y-2">
+              {db.repasses.filter((r) => filtroExercicioRepasse === "Todos" || anoExercicio(r.data) === filtroExercicioRepasse).map((r) => {
+                if (editandoRepasseId === r.id) {
+                  return <RepasseForm key={r.id} inicial={r} onSalvar={(dados) => salvarEdicaoRepasse(r.id, dados)} onCancelar={() => setEditandoRepasseId(null)} />;
+                }
+                const plano = db.planos.find((p) => p.repasseId === r.id);
+                const arquivos = plano?.arquivos || [];
+                const arquivosPendentes = arquivos.filter((a) => a.status === "aguardando aprovação");
+                const temAprovado = arquivos.some((a) => a.status === "aprovado");
+                const doConselho = db.repasses.filter((x) => x.conselhoId === r.conselhoId);
+                const idx = doConselho.findIndex((x) => x.id === r.id);
+                let saldoAnteriorPreview = 0;
+                if (idx > 0) {
+                  const s = computeSaldoRepasse(db, doConselho[idx - 1], categoriaById);
+                  saldoAnteriorPreview = Math.max(s.saldoCusteio + s.saldoCapital, 0);
+                }
+                return (
+                  <Card key={r.id}>
+                    <div className="flex items-center justify-between flex-wrap gap-2">
+                      <div className="text-sm text-slate-800">{conselhoById[r.conselhoId]?.nomeConselho} — {r.descricao} · {displayDate(r.data)}</div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        {r.valoresDefinidos ? (
+                          <div className="text-xs text-slate-500">Custeio {brl(r.custeio)} · Capital {brl(r.capital)} · Total {brl(r.custeio + r.capital)}{r.saldoAnterior > 0 && ` · inclui ${brl(r.saldoAnterior)} de saldo anterior`}</div>
+                        ) : (
+                          <Badge status={temAprovado ? "aguardando valores" : arquivos.length ? "aguardando aprovação" : "aguardando arquivo"} />
+                        )}
+                        <GhostButton onClick={() => setEditandoRepasseId(r.id)}><Pencil size={12} /> Editar</GhostButton>
+                        {confirmarExclusaoRepasseId === r.id ? (
+                          <>
+                            <GhostButton tone="red" onClick={() => excluirRepasse(r.id)}>Confirmar exclusão</GhostButton>
+                            <GhostButton onClick={() => setConfirmarExclusaoRepasseId(null)}>Cancelar</GhostButton>
+                          </>
+                        ) : (
+                          <GhostButton tone="red" onClick={() => setConfirmarExclusaoRepasseId(r.id)}><Trash2 size={12} /> Excluir</GhostButton>
+                        )}
+                      </div>
+                    </div>
+
+                    {!r.valoresDefinidos && arquivos.length === 0 && (
+                      <div className="text-xs text-slate-400 mt-2">Aguardando o conselho anexar o arquivo do Plano de Aplicação.</div>
+                    )}
+
+                    {arquivosPendentes.length > 0 && (
+                      <div className="mt-3 pt-3 border-t border-slate-100 space-y-1.5">
+                        <div className="text-xs font-medium text-slate-500 mb-1">Arquivo(s) do Plano de Aplicação para análise</div>
+                        {arquivosPendentes.map((a) => (
+                          <div key={a.id} className="flex flex-wrap items-center justify-between gap-2 bg-slate-50 border border-slate-200 rounded-md px-3 py-2 text-sm">
+                            <a href={a.url} target="_blank" rel="noreferrer" download={a.nome} className="text-teal-700 underline">{a.nome}</a>
+                            <div className="flex gap-2">
+                              <GhostButton tone="green" onClick={() => decidirArquivoPlano(r.id, a.id, true)}><CheckCircle2 size={12} /> Aceitar</GhostButton>
+                              <GhostButton tone="red" onClick={() => decidirArquivoPlano(r.id, a.id, false)}><XCircle size={12} /> Recusar</GhostButton>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {!r.valoresDefinidos && temAprovado && (
+                      <DefinirValoresForm saldoAnterior={saldoAnteriorPreview} onSalvar={(cc, cp) => definirValoresRepasse(r.id, cc, cp)} />
+                    )}
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {tab === "categorias" && (
+          <div>
+            <SectionTitle icon={FileText}>Categorias de gasto por conselho</SectionTitle>
+            <Card className="mb-4">
+              <div className={isMobile ? "grid grid-cols-1 gap-2 mb-3" : "grid grid-cols-2 gap-2 mb-3"}>
+                <select value={conselhoCatSel} onChange={(e) => { setConselhoCatSel(Number(e.target.value)); setRepasseCatSel(null); setErroValorCategoria(null); setValoresEditados({}); }} className="border border-slate-300 rounded px-2 py-1 text-sm">
+                  {db.conselhos.map((c) => <option key={c.id} value={c.id}>{c.nomeConselho}</option>)}
+                </select>
+                <select value={repasseCatSel || ""} onChange={(e) => { setRepasseCatSel(e.target.value); setErroValorCategoria(null); setValoresEditados({}); }} className="border border-slate-300 rounded px-2 py-1 text-sm" disabled={repassesDoConselhoCat.length === 0}>
+                  <option value="">{repassesDoConselhoCat.length === 0 ? "Nenhum repasse com valores definidos" : "Selecione o repasse para definir valores das categorias"}</option>
+                  {repassesDoConselhoCat.map((r) => <option key={r.id} value={r.id}>{r.descricao}</option>)}
+                </select>
+              </div>
+
+              {repasseSelecionadoCat && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3 text-sm">
+                  <div className="bg-teal-50 border border-teal-100 rounded-md px-3 py-2"><div className="text-xs text-teal-700">Disponível em Custeio</div><div className="font-medium text-teal-800">{brl(disponivelCusteio)}</div></div>
+                  <div className="bg-orange-50 border border-orange-100 rounded-md px-3 py-2"><div className="text-xs text-orange-700">Disponível em Capital</div><div className="font-medium text-orange-800">{brl(disponivelCapital)}</div></div>
+                </div>
+              )}
+
+              <div className="text-xs font-medium text-slate-500 mb-2">Nova categoria</div>
+              <div className={isMobile ? "grid grid-cols-1 gap-2 mb-2" : "grid grid-cols-3 gap-2 mb-2"}>
+                <input placeholder="Nome da categoria" value={novaCategoria.nome} onChange={(e) => setNovaCategoria({ ...novaCategoria, nome: e.target.value.toUpperCase() })} className={isMobile ? "border border-slate-300 rounded px-2 py-1 text-sm" : "border border-slate-300 rounded px-2 py-1 text-sm col-span-2"} />
+                <select value={novaCategoria.tipo} onChange={(e) => setNovaCategoria({ ...novaCategoria, tipo: e.target.value })} className="border border-slate-300 rounded px-2 py-1 text-sm">
+                  <option>Custeio</option>
+                  <option>Capital</option>
+                </select>
+              </div>
+              {novaCategoria.tipo === "Custeio" && (
+                <div className="mb-2">
+                  <div className="text-xs text-slate-500 mb-1">Subcategoria (Custeio)</div>
+                  <select value={novaCategoria.subtipo} onChange={(e) => setNovaCategoria({ ...novaCategoria, subtipo: e.target.value })} className="border border-slate-300 rounded px-2 py-1 text-sm">
+                    <option>Consumo</option>
+                    <option>Serviço</option>
+                  </select>
+                </div>
+              )}
+              {repasseCatSel ? (
+                <Field label="Valor destinado a esta categoria">
+                  <CurrencyInput cents={novaCategoria.valorCents} onChangeCents={(c) => setNovaCategoria({ ...novaCategoria, valorCents: c })} />
+                </Field>
+              ) : (
+                <div className="text-xs text-slate-400 mb-2">Selecione um repasse acima para já informar o valor desta categoria.</div>
+              )}
+              <div className="mt-2"><PrimaryButton onClick={cadastrarCategoria}><Plus size={14} /> Cadastrar categoria</PrimaryButton></div>
+              {repasseCatSel && novaCategoria.valorCents > 0 && (
+                <div className="text-xs text-slate-500 mt-2">O valor preenchido acima só é confirmado quando você clicar em "Salvar valores das categorias", logo abaixo da lista.</div>
+              )}
+            </Card>
+
+            <div className="flex gap-2 mb-2">
+              <input placeholder="Buscar categoria por nome" value={filtroNomeCategoria} onChange={(e) => setFiltroNomeCategoria(e.target.value.toUpperCase())} className="flex-1 border border-slate-300 rounded px-2 py-1 text-sm" />
+              <select value={filtroTipoCategoria} onChange={(e) => setFiltroTipoCategoria(e.target.value)} className="border border-slate-300 rounded px-2 py-1 text-sm">
+                <option>Todos</option>
+                <option>Custeio</option>
+                <option>Capital</option>
+              </select>
+            </div>
+
+            <div className="space-y-1.5">
+              {(db.categoriasPorConselho[conselhoCatSel] || [])
+                .filter((c) => filtroTipoCategoria === "Todos" || c.tipo === filtroTipoCategoria)
+                .filter((c) => !filtroNomeCategoria || c.nome.toLowerCase().includes(filtroNomeCategoria.toLowerCase()))
+                .map((c) => {
+                  if (editandoCategoriaId === c.id) {
+                    return <CategoriaEditForm key={c.id} categoria={c} onSalvar={(dados) => salvarEdicaoCategoria(c.id, dados)} onCancelar={() => setEditandoCategoriaId(null)} />;
+                  }
+                  const cents = Object.prototype.hasOwnProperty.call(valoresEditados, c.id) ? valoresEditados[c.id] : reaisToCents(valorFinalCategoria(c.id));
+                  return (
+                    <div key={c.id} className="flex items-center justify-between bg-white border border-slate-200 rounded-md px-3 py-2 text-sm gap-3">
+                      <div>
+                        <div className="text-slate-800">{c.nome}</div>
+                        <div className="text-xs text-slate-500">{c.tipo}{c.subtipo && ` · ${c.subtipo}`}</div>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        {repasseCatSel ? (
+                          <div className="w-40"><CurrencyInput cents={cents} onChangeCents={(v) => estagiarValorCategoria(c.id, v)} /></div>
+                        ) : (
+                          <div className="text-xs text-slate-400">Selecione um repasse para definir o valor</div>
+                        )}
+                        <GhostButton onClick={() => setEditandoCategoriaId(c.id)}><Pencil size={12} /> Editar</GhostButton>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+
+            {repasseCatSel && (
+              <div className="mt-3">
+                {erroValorCategoria && <div className="text-xs text-red-600 mb-2">{erroValorCategoria}</div>}
+                <PrimaryButton disabled={!temEdicoesPendentes} onClick={() => salvarValoresCategorias(Number(repasseCatSel))}>
+                  <Save size={14} /> Salvar valores das categorias
+                </PrimaryButton>
+              </div>
+            )}
+          </div>
+        )}
+
+        {tab === "remanejamentos" && (
+          <div>
+            <SectionTitle icon={ArrowLeftRight}>Solicitações de remanejamento</SectionTitle>
+            {remSolicitados.length === 0 ? <div className="text-sm text-slate-500">Nenhuma solicitação pendente.</div> : (
+              <div className="space-y-2">
+                {remSolicitados.map((r) => (
+                  <Card key={r.id}>
+                    <div className="flex items-center justify-between">
+                      <div className="text-sm text-slate-800">{conselhoById[r.conselhoId]?.nomeConselho}: {categoriaById[r.origemId]?.nome} → {categoriaById[r.destinoId]?.nome} · {brl(r.valor)}</div>
+                      <div className="flex gap-2">
+                        <GhostButton tone="green" onClick={() => decidirRemanejamento(r, true)}><CheckCircle2 size={13} /> Aprovar</GhostButton>
+                        <GhostButton tone="red" onClick={() => decidirRemanejamento(r, false)}><XCircle size={13} /> Reprovar</GhostButton>
+                      </div>
+                    </div>
+                    <div className="text-xs text-slate-500 mt-1">{r.justificativa}</div>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {tab === "lancamentos" && (
+          <div>
+            <SectionTitle icon={Receipt}>Lançamentos (todos os conselhos)</SectionTitle>
+            <div className="flex flex-wrap gap-2 mb-3">
+              <select value={filtroConselhoLanc} onChange={(e) => setFiltroConselhoLanc(e.target.value)} className="border border-slate-300 rounded px-2 py-1 text-sm">
+                <option>Todos</option>
+                {db.conselhos.map((c) => <option key={c.id} value={c.nomeConselho}>{c.nomeConselho}</option>)}
+              </select>
+              <select value={filtroStatusLanc} onChange={(e) => setFiltroStatusLanc(e.target.value)} className="border border-slate-300 rounded px-2 py-1 text-sm">
+                <option>Todos</option>
+                <option value="registrado">Registrado</option>
+                <option value="aguardando autorização">Aguardando autorização</option>
+                <option value="com pendência">Com pendência</option>
+              </select>
+            </div>
+            <div className="space-y-2">
+              {db.lancamentos
+                .filter((l) => filtroConselhoLanc === "Todos" || conselhoById[l.conselhoId]?.nomeConselho === filtroConselhoLanc)
+                .filter((l) => filtroStatusLanc === "Todos" || l.status === filtroStatusLanc)
+                .slice()
+                .sort((a, b) => (a.data < b.data ? 1 : a.data > b.data ? -1 : b.id - a.id))
+                .map((l) => (
+                  <Card key={l.id}>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-sm font-medium text-slate-800">{conselhoById[l.conselhoId]?.nomeConselho} — {categoriaById[l.categoriaId]?.nome} · {brl(l.valor)}</div>
+                        <div className="text-xs text-slate-500">{displayDate(l.data)}{l.fornecedor && ` · Fornecedor: ${l.fornecedor}`}{l.numeroNF && ` · NF ${l.numeroNF}`} · lançado por {l.lancadoPor}</div>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <Badge status={l.status} />
+                        <GhostButton onClick={() => imprimirComprovanteLancamento(l, conselhoById[l.conselhoId]?.nomeConselho || "-", categoriaById[l.categoriaId]?.nome || "-")}><Printer size={12} /> Imprimir</GhostButton>
+                        {editandoLancId === l.id ? null : <GhostButton onClick={() => setEditandoLancId(l.id)}><Pencil size={12} /> Editar</GhostButton>}
+                      </div>
+                    </div>
+                    {editandoLancId === l.id && <EditLancamentoForm lanc={l} onSave={salvarEdicaoLancamentoCoord} onCancel={() => setEditandoLancId(null)} />}
+                    {l.itens && l.itens.length > 0 && (
+                      <div className="mt-2 pt-2 border-t border-slate-100 text-xs text-slate-500 space-y-0.5">
+                        {l.itens.map((it, idx) => <div key={idx}>{it.descricao} — {it.quantidade} x {brl(it.valorUnitario)} = {brl(it.quantidade * it.valorUnitario)}</div>)}
+                      </div>
+                    )}
+                    {l.arquivosNF && l.arquivosNF.length > 0 && (
+                      <div className="mt-2 pt-2 border-t border-slate-100 flex flex-wrap items-center gap-2">
+                        {l.arquivosNF.map((a, idx) => (
+                          <a key={idx} href={a.url} target="_blank" rel="noreferrer" download={a.nome} className="text-xs text-teal-700 underline flex items-center gap-1"><Receipt size={11} /> {a.nome}</a>
+                        ))}
+                      </div>
+                    )}
+                    {l.orcamentos && l.orcamentos.length > 0 && (
+                      <div className="mt-2 pt-2 border-t border-slate-100 flex flex-wrap items-center gap-2">
+                        <span className="text-xs text-slate-400">Orçamentos:</span>
+                        {l.orcamentos.map((a, idx) => (
+                          <a key={idx} href={a.url} target="_blank" rel="noreferrer" download={a.nome} className="text-xs text-teal-700 underline flex items-center gap-1"><FileText size={11} /> {a.nome}</a>
+                        ))}
+                      </div>
+                    )}
+                    {l.historico.length > 0 && (
+                      <div className="mt-2 pt-2 border-t border-slate-100 text-xs text-slate-500 space-y-0.5">
+                        {l.historico.map((h, idx) => <div key={idx}>{h.data} — {h.campo}: {h.de} → {h.para}</div>)}
+                      </div>
+                    )}
+                  </Card>
+                ))}
+            </div>
+          </div>
+        )}
+
+        {tab === "conferencia" && (
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <SectionTitle icon={ClipboardCheck}>Lançamentos (acompanhamento)</SectionTitle>
+              <ReportButtons
+                titulo="Relatório de lançamentos"
+                nomeArquivo="relatorio_lancamentos"
+                header={["Conselho", "Categoria", "Data", "Fornecedor", "Nº NF", "Valor", "Status"]}
+                linhas={db.lancamentos.filter((l) => l.status !== "aguardando autorização").map((l) => [conselhoById[l.conselhoId]?.nomeConselho, categoriaById[l.categoriaId]?.nome, displayDate(l.data), l.fornecedor || "-", l.numeroNF || "-", brl(l.valor), l.status])}
+              />
+            </div>
+            <div className="text-xs text-slate-500 mb-3">Os lançamentos já entram registrados assim que o presidente lança — esta tela é para acompanhamento e sinalização de pendências, não para aprovação.</div>
+            <div className="space-y-2">
+              {db.lancamentos.filter((l) => l.status !== "aguardando autorização").map((l) => (
+                <Card key={l.id}>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="text-sm text-slate-800">{conselhoById[l.conselhoId]?.nomeConselho} — {categoriaById[l.categoriaId]?.nome} — {brl(l.valor)}</div>
+                      <div className="text-xs text-slate-500">{displayDate(l.data)} · {l.descricao}</div>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Badge status={l.status} />
+                      <GhostButton tone={l.status === "com pendência" ? "green" : "red"} onClick={() => alternarPendenciaLancamento(l.id)}>
+                        <Flag size={12} /> {l.status === "com pendência" ? "Remover sinalização" : "Sinalizar pendência"}
+                      </GhostButton>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {tab === "rendimentos" && (
+          <div>
+            <SectionTitle icon={TrendingUp}>Rendimentos informados pelos conselhos</SectionTitle>
+            <div className="text-xs text-slate-500 mb-3">Avalie os rendimentos informados. Você pode corrigir o valor e a alocação por categoria antes de aprovar.</div>
+            {(() => {
+              const rendimentos = (db.rendimentos || []).slice().sort((a, b) => b.id - a.id);
+              const pendentes = rendimentos.filter((r) => r.status === "aguardando avaliação");
+              const decididos = rendimentos.filter((r) => r.status !== "aguardando avaliação");
+              return (
+                <div className="space-y-6">
+                  <div>
+                    <div className="text-xs font-medium text-slate-500 mb-2">Aguardando avaliação</div>
+                    {pendentes.length === 0 ? <div className="text-sm text-slate-500">Nenhum rendimento pendente.</div> : (
+                      <div className="space-y-2">
+                        {pendentes.map((r) => (
+                          <RendimentoCard key={r.id} r={r} conselhoNome={conselhoById[r.conselhoId]?.nomeConselho} categorias={db.categoriasPorConselho[r.conselhoId] || []} categoriaById={categoriaById} onDecidir={decidirRendimento} />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <div className="text-xs font-medium text-slate-500 mb-2">Histórico de decisões</div>
+                    {decididos.length === 0 ? <div className="text-sm text-slate-500">Nenhum rendimento avaliado ainda.</div> : (
+                      <div className="space-y-2">
+                        {decididos.map((r) => (
+                          <RendimentoCard key={r.id} r={r} conselhoNome={conselhoById[r.conselhoId]?.nomeConselho} categorias={db.categoriasPorConselho[r.conselhoId] || []} categoriaById={categoriaById} onDecidir={decidirRendimento} />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+        )}
+
+        {tab === "prestacao" && (
+          <div>
+            <SectionTitle icon={Lock}>Prestação de Contas</SectionTitle>
+            <div className="text-xs text-slate-500 mb-3">Avalie os períodos encaminhados pelos conselhos. Ao aprovar, o período permanece travado; o conselho só pode alterar mediante reabertura por aqui.</div>
+            {(() => {
+              const prestacoes = (db.prestacoesContas || []).slice().sort((a, b) => (a.dataEnvio < b.dataEnvio ? 1 : -1));
+              const pendentesAvaliacao = prestacoes.filter((p) => p.status === "aguardando avaliação");
+              const decididas = prestacoes.filter((p) => p.status !== "aguardando avaliação");
+              return (
+                <div className="space-y-6">
+                  <div>
+                    <div className="text-xs font-medium text-slate-500 mb-2">Aguardando avaliação</div>
+                    {pendentesAvaliacao.length === 0 ? <div className="text-sm text-slate-500">Nenhuma prestação de contas pendente.</div> : (
+                      <div className="space-y-2">
+                        {pendentesAvaliacao.map((p) => (
+                          <PrestacaoContasCard key={p.id} p={p} conselhoNome={conselhoById[p.conselhoId]?.nomeConselho} onDecidir={decidirPrestacaoContas} onReabrir={reabrirPrestacaoContas} />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <div className="text-xs font-medium text-slate-500 mb-2">Histórico de decisões</div>
+                    {decididas.length === 0 ? <div className="text-sm text-slate-500">Nenhuma prestação de contas avaliada ainda.</div> : (
+                      <div className="space-y-2">
+                        {decididas.map((p) => (
+                          <PrestacaoContasCard key={p.id} p={p} conselhoNome={conselhoById[p.conselhoId]?.nomeConselho} onDecidir={decidirPrestacaoContas} onReabrir={reabrirPrestacaoContas} />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+        )}
+
+        {tab === "relatorios" && (() => {
+          const todasCategoriasCoord = Object.entries(db.categoriasPorConselho).flatMap(([cId, cats]) => cats.map((c) => ({ ...c, conselhoId: Number(cId) })));
+          const fontesPersonalizado = {
+            conselhos: {
+              label: "Conselhos",
+              colunas: [
+                { chave: "nomeConselho", label: "Conselho", tipo: "texto" },
+                { chave: "escolas", label: "Escolas", tipo: "texto" },
+                { chave: "cnpj", label: "CNPJ", tipo: "texto" },
+                { chave: "presidente", label: "Presidente", tipo: "texto" },
+                { chave: "tesoureiro", label: "Tesoureiro", tipo: "texto" },
+                { chave: "vencimento", label: "Vencimento", tipo: "texto" },
+                { chave: "diasRestantes", label: "Dias restantes", tipo: "numero" },
+              ],
+              linhas: db.conselhos.map((c) => ({ nomeConselho: c.nomeConselho, escolas: c.escolas.join(", "), cnpj: c.cnpj, presidente: c.presidente, tesoureiro: c.tesoureiro || "-", vencimento: displayDate(c.vencimento), diasRestantes: diasRestantes(c.vencimento) ?? 0 })),
+            },
+            repasses: {
+              label: "Repasses",
+              colunas: [
+                { chave: "conselho", label: "Conselho", tipo: "texto" },
+                { chave: "descricao", label: "Repasse", tipo: "texto" },
+                { chave: "data", label: "Data", tipo: "texto" },
+                { chave: "custeio", label: "Custeio", tipo: "numero", moeda: true },
+                { chave: "capital", label: "Capital", tipo: "numero", moeda: true },
+                { chave: "total", label: "Total", tipo: "numero", moeda: true },
+              ],
+              linhas: db.repasses.map((r) => ({ conselho: conselhoById[r.conselhoId]?.nomeConselho, descricao: r.descricao, data: displayDate(r.data), custeio: r.custeio, capital: r.capital, total: r.custeio + r.capital })),
+            },
+            categorias: {
+              label: "Categorias (previsto x executado)",
+              colunas: [
+                { chave: "conselho", label: "Conselho", tipo: "texto" },
+                { chave: "nome", label: "Categoria", tipo: "texto" },
+                { chave: "tipo", label: "Tipo", tipo: "texto" },
+                { chave: "subtipo", label: "Subcategoria", tipo: "texto" },
+                { chave: "previsto", label: "Previsto", tipo: "numero", moeda: true },
+                { chave: "executado", label: "Executado", tipo: "numero", moeda: true },
+                { chave: "saldo", label: "Saldo", tipo: "numero", moeda: true },
+              ],
+              linhas: todasCategoriasCoord.map((c) => {
+                const previsto = db.planos.filter((p) => db.repasses.some((r) => r.id === p.repasseId && r.conselhoId === c.conselhoId)).flatMap((p) => p.itens).filter((i) => i.categoriaId === c.id).reduce((s, i) => s + i.valorPrevisto, 0);
+                const executado = db.lancamentos.filter((l) => l.categoriaId === c.id && l.status !== "aguardando autorização").reduce((s, l) => s + l.valor, 0);
+                return { conselho: conselhoById[c.conselhoId]?.nomeConselho, nome: c.nome, tipo: c.tipo, subtipo: c.subtipo || "-", previsto, executado, saldo: previsto - executado };
+              }),
+            },
+            lancamentos: {
+              label: "Lançamentos",
+              colunas: [
+                { chave: "conselho", label: "Conselho", tipo: "texto" },
+                { chave: "categoria", label: "Categoria", tipo: "texto" },
+                { chave: "data", label: "Data", tipo: "texto" },
+                { chave: "fornecedor", label: "Fornecedor", tipo: "texto" },
+                { chave: "numeroNF", label: "Nº NF", tipo: "texto" },
+                { chave: "valor", label: "Valor", tipo: "numero", moeda: true },
+                { chave: "status", label: "Status", tipo: "texto" },
+              ],
+              linhas: db.lancamentos.map((l) => ({ conselho: conselhoById[l.conselhoId]?.nomeConselho, categoria: categoriaById[l.categoriaId]?.nome, data: displayDate(l.data), fornecedor: l.fornecedor || "-", numeroNF: l.numeroNF || "-", valor: l.valor, status: l.status })),
+            },
+            remanejamentos: {
+              label: "Remanejamentos",
+              colunas: [
+                { chave: "conselho", label: "Conselho", tipo: "texto" },
+                { chave: "origem", label: "De", tipo: "texto" },
+                { chave: "destino", label: "Para", tipo: "texto" },
+                { chave: "valor", label: "Valor", tipo: "numero", moeda: true },
+                { chave: "status", label: "Status", tipo: "texto" },
+                { chave: "justificativa", label: "Justificativa", tipo: "texto" },
+              ],
+              linhas: db.remanejamentos.map((r) => ({ conselho: conselhoById[r.conselhoId]?.nomeConselho, origem: categoriaById[r.origemId]?.nome, destino: categoriaById[r.destinoId]?.nome, valor: r.valor, status: r.status, justificativa: r.justificativa })),
+            },
+            historico: {
+              label: "Histórico",
+              colunas: [
+                { chave: "conselho", label: "Conselho", tipo: "texto" },
+                { chave: "dataHora", label: "Data/Hora", tipo: "texto" },
+                { chave: "perfil", label: "Perfil", tipo: "texto" },
+                { chave: "acao", label: "Ação", tipo: "texto" },
+              ],
+              linhas: (db.historicoGeral || []).map((h) => ({ conselho: h.conselhoNome || "-", dataHora: h.dataHora, perfil: h.perfil, acao: h.acao })),
+            },
+          };
+
+          return (
+          <div className="space-y-4">
+            <SectionTitle icon={BarChart3}>Relatórios</SectionTitle>
+
+            <Card>
+              <div className="flex items-center justify-between mb-1">
+                <div className="text-sm font-medium text-slate-800">Consolidado por conselho</div>
+                <ReportButtons
+                  titulo="Relatório consolidado por conselho"
+                  nomeArquivo="relatorio_consolidado_conselhos"
+                  header={["Conselho", "Repassado", "Executado", "Saldo"]}
+                  linhas={db.conselhos.map((c) => {
+                    const reps = db.repasses.filter((r) => r.conselhoId === c.id);
+                    const repassado = reps.reduce((s, r) => s + r.custeio + r.capital, 0);
+                    const executado = db.lancamentos.filter((l) => l.conselhoId === c.id && l.status !== "aguardando autorização").reduce((s, l) => s + l.valor, 0);
+                    return [c.nomeConselho, brl(repassado), brl(executado), brl(repassado - executado)];
+                  })}
+                />
+              </div>
+              <div className="text-xs text-slate-500">Total repassado, executado e saldo de cada conselho.</div>
+            </Card>
+
+            <Card>
+              <div className="flex items-center justify-between mb-2">
+                <div className="text-sm font-medium text-slate-800">Por repasse (organizado por repasse individual)</div>
+                <ReportButtons
+                  titulo="Relatório por repasse"
+                  nomeArquivo="relatorio_repasses"
+                  header={["Conselho", "Repasse", "Data", "Repassado", "Executado", "Saldo"]}
+                  linhas={db.repasses.map((r) => {
+                    const s = computeSaldoRepasse(db, r, categoriaById);
+                    return [conselhoById[r.conselhoId]?.nomeConselho, r.descricao, displayDate(r.data), brl(r.custeio + r.capital), brl(s.execCusteio + s.execCapital), brl(s.saldoCusteio + s.saldoCapital)];
+                  })}
+                />
+              </div>
+              <div className="space-y-2">
+                {db.repasses.map((r) => {
+                  const s = computeSaldoRepasse(db, r, categoriaById);
+                  return (
+                    <div key={r.id} className="text-xs text-slate-600 bg-slate-50 border border-slate-200 rounded-md px-3 py-2">
+                      <div className="font-medium text-slate-800 mb-1">{conselhoById[r.conselhoId]?.nomeConselho} — {r.descricao} · {displayDate(r.data)}</div>
+                      <div className={isMobile ? "grid grid-cols-1 gap-3" : "grid grid-cols-3 gap-3"}>
+                        <div>Repassado: <span className="font-medium text-slate-800">{brl(r.custeio + r.capital)}</span></div>
+                        <div>Executado: <span className="font-medium text-slate-800">{brl(s.execCusteio + s.execCapital)}</span></div>
+                        <div>Saldo: <span className="font-medium text-slate-800">{brl(s.saldoCusteio + s.saldoCapital)}</span></div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="text-xs text-slate-500 mt-2">Base para os relatórios trimestral e semestral (informativo), por repasse individual.</div>
+            </Card>
+
+            <Card>
+              <div className="flex items-center justify-between mb-1">
+                <div className="text-sm font-medium text-slate-800">Categorias de gasto (todos os conselhos)</div>
+                <ReportButtons
+                  titulo="Relatório de categorias de gasto"
+                  nomeArquivo="relatorio_categorias_geral"
+                  header={["Conselho", "Categoria", "Tipo", "Previsto", "Executado", "Saldo"]}
+                  linhas={Object.entries(db.categoriasPorConselho).flatMap(([cId, cats]) => cats.map((c) => {
+                    const conselhoIdNum = Number(cId);
+                    const previsto = db.planos.filter((p) => db.repasses.some((r) => r.id === p.repasseId && r.conselhoId === conselhoIdNum)).flatMap((p) => p.itens).filter((i) => i.categoriaId === c.id).reduce((s, i) => s + i.valorPrevisto, 0);
+                    const executado = db.lancamentos.filter((l) => l.categoriaId === c.id && l.status !== "aguardando autorização").reduce((s, l) => s + l.valor, 0);
+                    return [conselhoById[conselhoIdNum]?.nomeConselho, c.nome, c.tipo, brl(previsto), brl(executado), brl(previsto - executado)];
+                  }))}
+                />
+              </div>
+              <div className="text-xs text-slate-500">Previsto x executado de cada categoria cadastrada, em todos os conselhos.</div>
+            </Card>
+
+            <Card>
+              <div className="flex items-center justify-between mb-1">
+                <div className="text-sm font-medium text-slate-800">Remanejamentos</div>
+                <ReportButtons
+                  titulo="Relatório de remanejamentos"
+                  nomeArquivo="relatorio_remanejamentos"
+                  header={["Conselho", "De", "Para", "Valor", "Status", "Justificativa"]}
+                  linhas={db.remanejamentos.map((r) => [conselhoById[r.conselhoId]?.nomeConselho, categoriaById[r.origemId]?.nome, categoriaById[r.destinoId]?.nome, brl(r.valor), r.status, r.justificativa])}
+                />
+              </div>
+              <div className="text-xs text-slate-500">Todas as solicitações de remanejamento, aprovadas, reprovadas ou pendentes.</div>
+            </Card>
+
+            <Card>
+              <div className="flex items-center justify-between mb-1">
+                <div className="text-sm font-medium text-slate-800">Vencimento dos conselhos</div>
+                <ReportButtons
+                  titulo="Relatório de vencimento dos conselhos"
+                  nomeArquivo="relatorio_vencimento_conselhos"
+                  header={["Conselho", "Vencimento", "Situação"]}
+                  linhas={db.conselhos.map((c) => {
+                    const dias = diasRestantes(c.vencimento);
+                    const situacao = dias === null ? "-" : dias < 0 ? `Vencido há ${Math.abs(dias)} dias` : `Vence em ${dias} dias`;
+                    return [c.nomeConselho, displayDate(c.vencimento), situacao];
+                  })}
+                />
+              </div>
+              <div className="text-xs text-slate-500">Situação do mandato deliberativo de cada conselho.</div>
+            </Card>
+
+            <RelatorioPersonalizado fontes={fontesPersonalizado} />
+          </div>
+          );
+        })()}
+
+        {tab === "historico" && (() => {
+          const entradas = (db.historicoGeral || [])
+            .filter((h) => filtroConselhoHistorico === "Todos" || String(h.conselhoId) === filtroConselhoHistorico)
+            .slice().reverse();
+          return (
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <SectionTitle icon={History}>Histórico de modificações</SectionTitle>
+                <ReportButtons
+                  titulo="Histórico geral de modificações"
+                  nomeArquivo="historico_geral"
+                  header={["Data/Hora", "Perfil", "Conselho", "Ação"]}
+                  linhas={entradas.map((h) => [h.dataHora, h.perfil, h.conselhoNome || "-", h.acao])}
+                />
+              </div>
+              <select value={filtroConselhoHistorico} onChange={(e) => setFiltroConselhoHistorico(e.target.value)} className="border border-slate-300 rounded px-2 py-1 text-sm mb-3">
+                <option value="Todos">Todos os conselhos</option>
+                {db.conselhos.map((c) => <option key={c.id} value={String(c.id)}>{c.nomeConselho}</option>)}
+              </select>
+              {entradas.length === 0 ? <div className="text-sm text-slate-500">Nenhuma modificação registrada ainda.</div> : (
+                <div className="space-y-1.5">
+                  {entradas.map((h) => (
+                    <div key={h.id} className="bg-white border border-slate-200 rounded-md px-3 py-2 text-sm">
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-800">{h.acao}</span>
+                        <span className="text-xs text-slate-400">{h.dataHora}</span>
+                      </div>
+                      <div className="text-xs text-slate-500">{h.perfil}{h.conselhoNome ? ` · ${h.conselhoNome}` : ""}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })()}
+      </div>
+    </div>
+  );
+}
+
+// ================= GERAL =================
+function GeralView({ db, menuAberto, setMenuAberto, usuarioLogado }) {
+  const [tab, setTab] = useState("dashboard");
+  const isMobile = useIsMobile();
+  const { conselhoById, categoriaById } = useLookups(db);
+  const [expandido, setExpandido] = useState(null);
+  const [filtroConselhoLancGeral, setFiltroConselhoLancGeral] = useState("Todos");
+  const [filtroStatusLancGeral, setFiltroStatusLancGeral] = useState("Todos");
+
+  const totalRepassado = db.repasses.reduce((s, r) => s + r.custeio + r.capital, 0);
+  const totalExecutado = db.lancamentos.filter((l) => l.status !== "aguardando autorização").reduce((s, l) => s + l.valor, 0);
+
+  const todasCategorias = Object.entries(db.categoriasPorConselho).flatMap(([conselhoId, cats]) => cats.map((c) => ({ ...c, conselhoId: Number(conselhoId) })));
+
+  const tabs = [
+    { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { id: "lancamentos", label: "Lançamentos", icon: Receipt },
+    { id: "relatorios", label: "Relatórios", icon: BarChart3 },
+  ];
+
+  return (
+    <div className={isMobile ? "flex flex-col gap-4" : "flex flex-row gap-6"}>
+      <NavAbas tabs={tabs} tab={tab} setTab={setTab} isMobile={isMobile} menuAberto={menuAberto} setMenuAberto={setMenuAberto} />
+
+      <div className="flex-1 min-w-0">
+        {tab === "dashboard" && (
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <SectionTitle icon={LayoutDashboard}>Dashboard consolidado</SectionTitle>
+              <ReportButtons
+                titulo="Relatório consolidado"
+                nomeArquivo="relatorio_consolidado"
+                header={["Conselho", "Repassado", "Executado", "Saldo"]}
+                linhas={db.conselhos.map((c) => {
+                  const reps = db.repasses.filter((r) => r.conselhoId === c.id);
+                  const repassado = reps.reduce((s, r) => s + r.custeio + r.capital, 0);
+                  const executado = db.lancamentos.filter((l) => l.conselhoId === c.id && l.status !== "aguardando autorização").reduce((s, l) => s + l.valor, 0);
+                  return [c.nomeConselho, brl(repassado), brl(executado), brl(repassado - executado)];
+                })}
+              />
+            </div>
+            <div className={isMobile ? "grid grid-cols-1 gap-3 mb-6" : "grid grid-cols-3 gap-3 mb-6"}>
+              <Card><div className="text-xs text-slate-500">Total repassado</div><div className="text-lg font-medium text-slate-800">{brl(totalRepassado)}</div></Card>
+              <Card><div className="text-xs text-slate-500">Total executado</div><div className="text-lg font-medium text-slate-800">{brl(totalExecutado)}</div></Card>
+              <Card><div className="text-xs text-slate-500">Saldo consolidado</div><div className="text-lg font-medium text-slate-800">{brl(totalRepassado - totalExecutado)}</div></Card>
+            </div>
+            <SectionTitle icon={Landmark}>Por conselho</SectionTitle>
+            <div className="space-y-2">
+              {db.conselhos.map((conselho) => {
+                const reps = db.repasses.filter((r) => r.conselhoId === conselho.id);
+                const repassadoConselho = reps.reduce((s, r) => s + r.custeio + r.capital, 0);
+                const executadoConselho = db.lancamentos.filter((l) => l.conselhoId === conselho.id && l.status !== "aguardando autorização").reduce((s, l) => s + l.valor, 0);
+                const aberto = expandido === conselho.id;
+                return (
+                  <Card key={conselho.id}>
+                    <button className="w-full flex items-center justify-between text-left" onClick={() => setExpandido(aberto ? null : conselho.id)}>
+                      <div>
+                        <div className="text-sm font-medium text-slate-800">{conselho.nomeConselho}</div>
+                        <div className="text-xs text-slate-500 flex items-center gap-1"><School size={11} /> {conselho.escolas.join(", ")}</div>
+                        <div className="text-xs text-slate-500 mt-0.5">Repassado {brl(repassadoConselho)} · Executado {brl(executadoConselho)} · Saldo {brl(repassadoConselho - executadoConselho)}</div>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <VencimentoBadge vencimento={conselho.vencimento} />
+                        <ChevronRight size={16} className={`text-slate-400 transition-transform ${aberto ? "rotate-90" : ""}`} />
+                      </div>
+                    </button>
+                    {aberto && (
+                      <div className="mt-3 pt-3 border-t border-slate-100 space-y-2">
+                        {reps.map((r) => {
+                          const s = computeSaldoRepasse(db, r, categoriaById);
+                          return (
+                            <div key={r.id} className="text-xs text-slate-600 flex items-center justify-between">
+                              <span>{r.descricao} · {displayDate(r.data)}{r.saldoAnterior > 0 && " (com saldo remanescente)"}</span>
+                              <span>Custeio: {brl(s.saldoCusteio)} de {brl(s.totalCusteio)} · Capital: {brl(s.saldoCapital)} de {brl(s.totalCapital)}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {tab === "lancamentos" && (
+          <div>
+            <SectionTitle icon={Receipt}>Lançamentos (todos os conselhos)</SectionTitle>
+            <div className="flex flex-wrap gap-2 mb-3">
+              <select value={filtroConselhoLancGeral} onChange={(e) => setFiltroConselhoLancGeral(e.target.value)} className="border border-slate-300 rounded px-2 py-1 text-sm">
+                <option>Todos</option>
+                {db.conselhos.map((c) => <option key={c.id} value={c.nomeConselho}>{c.nomeConselho}</option>)}
+              </select>
+              <select value={filtroStatusLancGeral} onChange={(e) => setFiltroStatusLancGeral(e.target.value)} className="border border-slate-300 rounded px-2 py-1 text-sm">
+                <option>Todos</option>
+                <option value="registrado">Registrado</option>
+                <option value="aguardando autorização">Aguardando autorização</option>
+                <option value="com pendência">Com pendência</option>
+              </select>
+            </div>
+            <div className="space-y-2">
+              {db.lancamentos
+                .filter((l) => filtroConselhoLancGeral === "Todos" || conselhoById[l.conselhoId]?.nomeConselho === filtroConselhoLancGeral)
+                .filter((l) => filtroStatusLancGeral === "Todos" || l.status === filtroStatusLancGeral)
+                .slice()
+                .sort((a, b) => (a.data < b.data ? 1 : a.data > b.data ? -1 : b.id - a.id))
+                .map((l) => (
+                  <Card key={l.id}>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-sm font-medium text-slate-800">{conselhoById[l.conselhoId]?.nomeConselho} — {categoriaById[l.categoriaId]?.nome} · {brl(l.valor)}</div>
+                        <div className="text-xs text-slate-500">{displayDate(l.data)}{l.fornecedor && ` · Fornecedor: ${l.fornecedor}`}{l.numeroNF && ` · NF ${l.numeroNF}`} · lançado por {l.lancadoPor}</div>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <Badge status={l.status} />
+                        <GhostButton onClick={() => imprimirComprovanteLancamento(l, conselhoById[l.conselhoId]?.nomeConselho || "-", categoriaById[l.categoriaId]?.nome || "-")}><Printer size={12} /> Imprimir</GhostButton>
+                      </div>
+                    </div>
+                    {l.itens && l.itens.length > 0 && (
+                      <div className="mt-2 pt-2 border-t border-slate-100 text-xs text-slate-500 space-y-0.5">
+                        {l.itens.map((it, idx) => <div key={idx}>{it.descricao} — {it.quantidade} x {brl(it.valorUnitario)} = {brl(it.quantidade * it.valorUnitario)}</div>)}
+                      </div>
+                    )}
+                    {l.arquivosNF && l.arquivosNF.length > 0 && (
+                      <div className="mt-2 pt-2 border-t border-slate-100 flex flex-wrap items-center gap-2">
+                        {l.arquivosNF.map((a, idx) => (
+                          <a key={idx} href={a.url} target="_blank" rel="noreferrer" download={a.nome} className="text-xs text-teal-700 underline flex items-center gap-1"><Receipt size={11} /> {a.nome}</a>
+                        ))}
+                      </div>
+                    )}
+                    {l.orcamentos && l.orcamentos.length > 0 && (
+                      <div className="mt-2 pt-2 border-t border-slate-100 flex flex-wrap items-center gap-2">
+                        <span className="text-xs text-slate-400">Orçamentos:</span>
+                        {l.orcamentos.map((a, idx) => (
+                          <a key={idx} href={a.url} target="_blank" rel="noreferrer" download={a.nome} className="text-xs text-teal-700 underline flex items-center gap-1"><FileText size={11} /> {a.nome}</a>
+                        ))}
+                      </div>
+                    )}
+                  </Card>
+                ))}
+            </div>
+          </div>
+        )}
+
+        {tab === "relatorios" && (() => {
+          const fontesPersonalizado = {
+            conselhos: {
+              label: "Conselhos",
+              colunas: [
+                { chave: "nomeConselho", label: "Conselho", tipo: "texto" },
+                { chave: "escolas", label: "Escolas", tipo: "texto" },
+                { chave: "cnpj", label: "CNPJ", tipo: "texto" },
+                { chave: "presidente", label: "Presidente", tipo: "texto" },
+                { chave: "tesoureiro", label: "Tesoureiro", tipo: "texto" },
+                { chave: "vencimento", label: "Vencimento", tipo: "texto" },
+                { chave: "diasRestantes", label: "Dias restantes", tipo: "numero" },
+              ],
+              linhas: db.conselhos.map((c) => ({ nomeConselho: c.nomeConselho, escolas: c.escolas.join(", "), cnpj: c.cnpj, presidente: c.presidente, tesoureiro: c.tesoureiro || "-", vencimento: displayDate(c.vencimento), diasRestantes: diasRestantes(c.vencimento) ?? 0 })),
+            },
+            repasses: {
+              label: "Repasses",
+              colunas: [
+                { chave: "conselho", label: "Conselho", tipo: "texto" },
+                { chave: "descricao", label: "Repasse", tipo: "texto" },
+                { chave: "data", label: "Data", tipo: "texto" },
+                { chave: "custeio", label: "Custeio", tipo: "numero", moeda: true },
+                { chave: "capital", label: "Capital", tipo: "numero", moeda: true },
+                { chave: "total", label: "Total", tipo: "numero", moeda: true },
+              ],
+              linhas: db.repasses.map((r) => ({ conselho: conselhoById[r.conselhoId]?.nomeConselho, descricao: r.descricao, data: displayDate(r.data), custeio: r.custeio, capital: r.capital, total: r.custeio + r.capital })),
+            },
+            categorias: {
+              label: "Categorias (previsto x executado)",
+              colunas: [
+                { chave: "conselho", label: "Conselho", tipo: "texto" },
+                { chave: "nome", label: "Categoria", tipo: "texto" },
+                { chave: "tipo", label: "Tipo", tipo: "texto" },
+                { chave: "subtipo", label: "Subcategoria", tipo: "texto" },
+                { chave: "previsto", label: "Previsto", tipo: "numero", moeda: true },
+                { chave: "executado", label: "Executado", tipo: "numero", moeda: true },
+                { chave: "saldo", label: "Saldo", tipo: "numero", moeda: true },
+              ],
+              linhas: todasCategorias.map((c) => {
+                const previsto = db.planos.filter((p) => db.repasses.some((r) => r.id === p.repasseId && r.conselhoId === c.conselhoId)).flatMap((p) => p.itens).filter((i) => i.categoriaId === c.id).reduce((s, i) => s + i.valorPrevisto, 0);
+                const executado = db.lancamentos.filter((l) => l.categoriaId === c.id && l.status !== "aguardando autorização").reduce((s, l) => s + l.valor, 0);
+                return { conselho: conselhoById[c.conselhoId]?.nomeConselho, nome: c.nome, tipo: c.tipo, subtipo: c.subtipo || "-", previsto, executado, saldo: previsto - executado };
+              }),
+            },
+            lancamentos: {
+              label: "Lançamentos",
+              colunas: [
+                { chave: "conselho", label: "Conselho", tipo: "texto" },
+                { chave: "categoria", label: "Categoria", tipo: "texto" },
+                { chave: "data", label: "Data", tipo: "texto" },
+                { chave: "fornecedor", label: "Fornecedor", tipo: "texto" },
+                { chave: "numeroNF", label: "Nº NF", tipo: "texto" },
+                { chave: "valor", label: "Valor", tipo: "numero", moeda: true },
+                { chave: "status", label: "Status", tipo: "texto" },
+              ],
+              linhas: db.lancamentos.map((l) => ({ conselho: conselhoById[l.conselhoId]?.nomeConselho, categoria: categoriaById[l.categoriaId]?.nome, data: displayDate(l.data), fornecedor: l.fornecedor || "-", numeroNF: l.numeroNF || "-", valor: l.valor, status: l.status })),
+            },
+            remanejamentos: {
+              label: "Remanejamentos",
+              colunas: [
+                { chave: "conselho", label: "Conselho", tipo: "texto" },
+                { chave: "origem", label: "De", tipo: "texto" },
+                { chave: "destino", label: "Para", tipo: "texto" },
+                { chave: "valor", label: "Valor", tipo: "numero", moeda: true },
+                { chave: "status", label: "Status", tipo: "texto" },
+                { chave: "justificativa", label: "Justificativa", tipo: "texto" },
+              ],
+              linhas: db.remanejamentos.map((r) => ({ conselho: conselhoById[r.conselhoId]?.nomeConselho, origem: categoriaById[r.origemId]?.nome, destino: categoriaById[r.destinoId]?.nome, valor: r.valor, status: r.status, justificativa: r.justificativa })),
+            },
+            historico: {
+              label: "Histórico",
+              colunas: [
+                { chave: "conselho", label: "Conselho", tipo: "texto" },
+                { chave: "dataHora", label: "Data/Hora", tipo: "texto" },
+                { chave: "perfil", label: "Perfil", tipo: "texto" },
+                { chave: "acao", label: "Ação", tipo: "texto" },
+              ],
+              linhas: (db.historicoGeral || []).map((h) => ({ conselho: h.conselhoNome || "-", dataHora: h.dataHora, perfil: h.perfil, acao: h.acao })),
+            },
+          };
+
+          return (
+          <div className="space-y-4">
+            <SectionTitle icon={BarChart3}>Relatórios</SectionTitle>
+
+            <Card>
+              <div className="flex items-center justify-between mb-1">
+                <div className="text-sm font-medium text-slate-800">Consolidado por conselho</div>
+                <ReportButtons
+                  titulo="Relatório consolidado por conselho"
+                  nomeArquivo="relatorio_consolidado_conselhos"
+                  header={["Conselho", "Repassado", "Executado", "Saldo"]}
+                  linhas={db.conselhos.map((c) => {
+                    const reps = db.repasses.filter((r) => r.conselhoId === c.id);
+                    const repassado = reps.reduce((s, r) => s + r.custeio + r.capital, 0);
+                    const executado = db.lancamentos.filter((l) => l.conselhoId === c.id && l.status !== "aguardando autorização").reduce((s, l) => s + l.valor, 0);
+                    return [c.nomeConselho, brl(repassado), brl(executado), brl(repassado - executado)];
+                  })}
+                />
+              </div>
+              <div className="text-xs text-slate-500">Total repassado, executado e saldo de cada conselho.</div>
+            </Card>
+
+            <Card>
+              <div className="flex items-center justify-between mb-1">
+                <div className="text-sm font-medium text-slate-800">Por repasse</div>
+                <ReportButtons
+                  titulo="Relatório por repasse"
+                  nomeArquivo="relatorio_por_repasse"
+                  header={["Conselho", "Repasse", "Data", "Repassado", "Executado", "Saldo"]}
+                  linhas={db.repasses.map((r) => {
+                    const s = computeSaldoRepasse(db, r, categoriaById);
+                    return [conselhoById[r.conselhoId]?.nomeConselho, r.descricao, displayDate(r.data), brl(r.custeio + r.capital), brl(s.execCusteio + s.execCapital), brl(s.saldoCusteio + s.saldoCapital)];
+                  })}
+                />
+              </div>
+              <div className="text-xs text-slate-500">Cada repasse recebido, individualmente, com saldo por repasse.</div>
+            </Card>
+
+            <Card>
+              <div className="flex items-center justify-between mb-1">
+                <div className="text-sm font-medium text-slate-800">Categorias de gasto (todos os conselhos)</div>
+                <ReportButtons
+                  titulo="Relatório de categorias de gasto"
+                  nomeArquivo="relatorio_categorias"
+                  header={["Conselho", "Categoria", "Tipo", "Previsto", "Executado", "Saldo"]}
+                  linhas={todasCategorias.map((c) => {
+                    const previsto = db.planos.filter((p) => db.repasses.some((r) => r.id === p.repasseId && r.conselhoId === c.conselhoId)).flatMap((p) => p.itens).filter((i) => i.categoriaId === c.id).reduce((s, i) => s + i.valorPrevisto, 0);
+                    const executado = db.lancamentos.filter((l) => l.categoriaId === c.id && l.status !== "aguardando autorização").reduce((s, l) => s + l.valor, 0);
+                    return [conselhoById[c.conselhoId]?.nomeConselho, c.nome, c.tipo, brl(previsto), brl(executado), brl(previsto - executado)];
+                  })}
+                />
+              </div>
+              <div className="text-xs text-slate-500">Previsto x executado de cada categoria, em todos os conselhos.</div>
+            </Card>
+
+            <Card>
+              <div className="flex items-center justify-between mb-1">
+                <div className="text-sm font-medium text-slate-800">Conselhos escolares</div>
+                <ReportButtons
+                  titulo="Relatório de conselhos escolares"
+                  nomeArquivo="relatorio_conselhos_geral"
+                  header={["Conselho", "Escolas", "CNPJ", "Presidente", "Tesoureiro", "Vencimento do conselho"]}
+                  linhas={db.conselhos.map((c) => [c.nomeConselho, c.escolas.join(", "), c.cnpj, c.presidente, c.tesoureiro || "-", displayDate(c.vencimento)])}
+                />
+              </div>
+              <div className="text-xs text-slate-500">Cadastro completo dos conselhos e vencimento do mandato deliberativo.</div>
+            </Card>
+
+            <RelatorioPersonalizado fontes={fontesPersonalizado} />
+          </div>
+          );
+        })()}
+      </div>
+    </div>
+  );
+}
+
+// ================= AUTENTICAÇÃO =================
+function LoginPage({ usuarios, onLogin, onIrParaRegistro, avisoOffline }) {
+  const [nivelAcesso, setNivelAcesso] = useState(NIVEIS_ACESSO[0]);
+  const [usuarioId, setUsuarioId] = useState("");
+  const [login, setLogin] = useState("");
+  const [senha, setSenha] = useState("");
+  const [erro, setErro] = useState(null);
+  const [mostrarEsqueci, setMostrarEsqueci] = useState(false);
+  const [emailRecuperacao, setEmailRecuperacao] = useState("");
+  const [mensagemRecuperacao, setMensagemRecuperacao] = useState(null);
+
+  const usuariosDoNivel = usuarios.filter((u) => u.nivelAcesso === nivelAcesso && u.status === "ativo");
+
+  useEffect(() => {
+    const lista = usuarios.filter((u) => u.nivelAcesso === nivelAcesso && u.status === "ativo");
+    setUsuarioId(lista[0] ? String(lista[0].id) : "");
+    setErro(null);
+  }, [nivelAcesso, usuarios]);
+
+  function handleEntrar() {
+    // Fase de testes: login e senha ainda não são exigidos para entrar — basta escolher o nível de acesso.
+    const usuario = usuarios.find((u) => String(u.id) === String(usuarioId));
+    if (!usuario) { setErro("Nenhum usuário ativo disponível para este nível de acesso."); return; }
+    setErro(null);
+    onLogin(usuario);
+  }
+
+  const [enviandoRecuperacao, setEnviandoRecuperacao] = useState(false);
+  async function handleRecuperar() {
+    if (!emailRecuperacao) return;
+    setEnviandoRecuperacao(true);
+    await apiChamar({ action: "recuperarSenhaPorEmail", email: emailRecuperacao });
+    setEnviandoRecuperacao(false);
+    setMensagemRecuperacao("Se o e-mail estiver cadastrado, enviamos uma nova senha para ele.");
+  }
+
+  return (
+    <div className="min-h-screen flex flex-col bg-slate-100">
+      <div className="flex-1 flex items-center justify-center p-4">
+        <Card className="w-full max-w-sm">
+          {avisoOffline && (
+            <div className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-md px-3 py-2 mb-4">
+              ⚠️ Não foi possível conectar à planilha agora — mostrando dados de demonstração. ({avisoOffline})
+            </div>
+          )}
+          <div className="flex justify-center mb-4">
+            <img src={LOGO_PAF_LOGIN} alt="Logo PAF" className="h-16 w-auto object-contain" />
+          </div>
+          {!mostrarEsqueci ? (
+            <>
+              <div className="text-sm font-medium text-slate-800 mb-1 text-center">Acesso ao Sistema PAF</div>
+              <div className="text-xs text-slate-400 mb-4 text-center">Versão de testes — login e senha ainda não são obrigatórios</div>
+              <div className="space-y-3 mb-3">
+                <Field label="Nível de acesso">
+                  <select value={nivelAcesso} onChange={(e) => setNivelAcesso(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1.5 text-sm">
+                    {NIVEIS_ACESSO.map((n) => <option key={n} value={n}>{n}</option>)}
+                  </select>
+                </Field>
+                {usuariosDoNivel.length > 1 && (
+                  <Field label="Usuário">
+                    <select value={usuarioId} onChange={(e) => setUsuarioId(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1.5 text-sm">
+                      {usuariosDoNivel.map((u) => <option key={u.id} value={u.id}>{u.nomeCompleto}</option>)}
+                    </select>
+                  </Field>
+                )}
+                <Field label="Login">
+                  <input value={login} onChange={(e) => setLogin(e.target.value)} placeholder="NOME.ULTIMOSOBRENOME" className="w-full border border-slate-300 rounded px-2 py-1.5 text-sm" />
+                </Field>
+                <Field label="Senha">
+                  <CampoSenha value={senha} onChange={(e) => setSenha(e.target.value)} />
+                </Field>
+              </div>
+              {erro && <div className="text-xs text-red-600 mb-3">{erro}</div>}
+              <PrimaryButton onClick={handleEntrar} className="w-full justify-center mb-3">Entrar</PrimaryButton>
+              <div className="flex items-center justify-between text-xs">
+                <button onClick={() => { setMostrarEsqueci(true); setErro(null); }} className="text-teal-700 hover:underline">Esqueci minha senha</button>
+                <button onClick={onIrParaRegistro} className="text-teal-700 hover:underline">Solicitar cadastro</button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="text-sm font-medium text-slate-800 mb-4 text-center">Recuperar senha</div>
+              <Field label="E-mail cadastrado">
+                <input type="email" value={emailRecuperacao} onChange={(e) => setEmailRecuperacao(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1.5 text-sm mb-3" />
+              </Field>
+              {mensagemRecuperacao && <div className="text-xs text-slate-600 mb-3">{mensagemRecuperacao}</div>}
+              <PrimaryButton onClick={handleRecuperar} disabled={enviandoRecuperacao} className="w-full justify-center mb-2">{enviandoRecuperacao ? "Enviando..." : "Enviar"}</PrimaryButton>
+              <button onClick={() => { setMostrarEsqueci(false); setMensagemRecuperacao(null); setEmailRecuperacao(""); }} className="text-xs text-teal-700 hover:underline block text-center w-full mt-2">Voltar ao login</button>
+            </>
+          )}
+        </Card>
+      </div>
+      <footer style={{ backgroundColor: "#171810" }} className="px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-2 shrink-0">
+        <div className="text-xs text-slate-400">Sistema PAF — Programa de Autonomia Financeira</div>
+        <img src={LOGO_DKN} alt="Logo DKN Sistemas" className="h-6 w-auto object-contain" />
+      </footer>
+    </div>
+  );
+}
+
+function RegistroPage({ onEnviar, onVoltar }) {
+  const isMobile = useIsMobile();
+  const [nomeCompleto, setNomeCompleto] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [telefone, setTelefone] = useState("");
+  const [cargo, setCargo] = useState("");
+  const [email, setEmail] = useState("");
+  const [nivelAcesso, setNivelAcesso] = useState(NIVEIS_ACESSO[0]);
+  const [enviado, setEnviado] = useState(false);
+  const [loginGerado, setLoginGerado] = useState("");
+  const [erro, setErro] = useState(null);
+
+  async function handleEnviar() {
+    if (!nomeCompleto || !cpf || !telefone || !cargo || !email) { setErro("Preencha todos os campos."); return; }
+    setErro(null);
+    const resultado = await onEnviar({ nomeCompleto, cpf, telefone, cargo, email, nivelAcesso });
+    if (!resultado?.ok) { setErro("Não foi possível enviar a solicitação agora. Tente novamente."); return; }
+    setLoginGerado(resultado.login);
+    setEnviado(true);
+  }
+
+  if (enviado) {
+    return (
+      <div className="min-h-screen flex flex-col bg-slate-100">
+        <div className="flex-1 flex items-center justify-center p-4">
+          <Card className="w-full max-w-sm text-center">
+            <div className="flex justify-center mb-4">
+              <img src={LOGO_PAF_LOGIN} alt="Logo PAF" className="h-14 w-auto object-contain" />
+            </div>
+            <CheckCircle2 className="mx-auto text-emerald-600 mb-3" size={32} />
+            <div className="text-sm font-medium text-slate-800 mb-2">Solicitação enviada!</div>
+            <div className="text-xs text-slate-500 mb-4">Seu cadastro está aguardando aprovação do Administrador Geral, que também definirá a qual conselho você pertence (quando aplicável). A senha só é liberada após a aprovação.</div>
+            <div className="bg-slate-50 border border-slate-200 rounded-md px-3 py-2 text-sm mb-4">
+              Login: <span className="font-medium">{loginGerado}</span>
+            </div>
+            <PrimaryButton onClick={onVoltar} className="w-full justify-center">Voltar ao login</PrimaryButton>
+          </Card>
+        </div>
+        <footer style={{ backgroundColor: "#171810" }} className="px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-2 shrink-0">
+          <div className="text-xs text-slate-400">Sistema PAF — Programa de Autonomia Financeira</div>
+          <img src={LOGO_DKN} alt="Logo DKN Sistemas" className="h-6 w-auto object-contain" />
+        </footer>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen flex flex-col bg-slate-100">
+      <div className="flex-1 flex items-center justify-center p-4">
+        <Card className="w-full max-w-md">
+          <div className="flex justify-center mb-4">
+            <img src={LOGO_PAF_LOGIN} alt="Logo PAF" className="h-14 w-auto object-contain" />
+          </div>
+          <div className="text-sm font-medium text-slate-800 mb-4 text-center">Solicitar cadastro</div>
+          <div className="space-y-3">
+            <Field label="Nome completo"><input value={nomeCompleto} onChange={(e) => setNomeCompleto(e.target.value.toUpperCase())} className="w-full border border-slate-300 rounded px-2 py-1.5 text-sm" /></Field>
+            <div className={isMobile ? "grid grid-cols-1 gap-3" : "grid grid-cols-2 gap-3"}>
+              <Field label="CPF"><input value={cpf} onChange={(e) => setCpf(formatarCPF(e.target.value))} inputMode="numeric" placeholder="000.000.000-00" className="w-full border border-slate-300 rounded px-2 py-1.5 text-sm" /></Field>
+              <Field label="Telefone"><input value={telefone} onChange={(e) => setTelefone(formatarTelefone(e.target.value))} inputMode="numeric" placeholder="(00) 00000-0000" className="w-full border border-slate-300 rounded px-2 py-1.5 text-sm" /></Field>
+            </div>
+            <Field label="Cargo"><input value={cargo} onChange={(e) => setCargo(e.target.value.toUpperCase())} className="w-full border border-slate-300 rounded px-2 py-1.5 text-sm" /></Field>
+            <Field label="E-mail"><input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1.5 text-sm" /></Field>
+            <Field label="Nível de acesso desejado">
+              <select value={nivelAcesso} onChange={(e) => setNivelAcesso(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1.5 text-sm">
+                {NIVEIS_ACESSO.slice(0, 4).map((n) => <option key={n} value={n}>{n}</option>)}
+              </select>
+            </Field>
+            <div className="text-xs text-slate-400">O conselho ao qual você pertence (quando aplicável) será definido pelo Administrador na aprovação.</div>
+          </div>
+          {erro && <div className="text-xs text-red-600 mt-3">{erro}</div>}
+          <PrimaryButton onClick={handleEnviar} className="w-full justify-center mt-4">Enviar solicitação</PrimaryButton>
+          <button onClick={onVoltar} className="text-xs text-teal-700 hover:underline block text-center w-full mt-3">Voltar ao login</button>
+        </Card>
+      </div>
+      <footer style={{ backgroundColor: "#171810" }} className="px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-2 shrink-0">
+        <div className="text-xs text-slate-400">Sistema PAF — Programa de Autonomia Financeira</div>
+        <img src={LOGO_DKN} alt="Logo DKN Sistemas" className="h-6 w-auto object-contain" />
+      </footer>
+    </div>
+  );
+}
+
+function UsuarioForm({ inicial, conselhos, onSalvar, onCancelar }) {
+  const isMobile = useIsMobile();
+  const [nomeCompleto, setNomeCompleto] = useState(inicial?.nomeCompleto || "");
+  const [cpf, setCpf] = useState(inicial?.cpf || "");
+  const [telefone, setTelefone] = useState(inicial?.telefone || "");
+  const [cargo, setCargo] = useState(inicial?.cargo || "");
+  const [email, setEmail] = useState(inicial?.email || "");
+  const [nivelAcesso, setNivelAcesso] = useState(inicial?.nivelAcesso || NIVEIS_ACESSO[0]);
+  const [conselhoId, setConselhoId] = useState(inicial?.conselhoId ? String(inicial.conselhoId) : "");
+  const [erro, setErro] = useState(null);
+
+  const precisaConselho = nivelAcesso === "Presidente do conselho" || nivelAcesso === "Assessor educacional administrativo financeiro";
+
+  function salvar() {
+    if (!nomeCompleto || !cpf || !telefone || !cargo || !email) { setErro("Preencha todos os campos."); return; }
+    if (precisaConselho && !conselhoId) { setErro("Selecione o conselho."); return; }
+    setErro(null);
+    onSalvar({ nomeCompleto, cpf, telefone, cargo, email, nivelAcesso, conselhoId: precisaConselho ? Number(conselhoId) : null });
+  }
+
+  return (
+    <Card className="mb-3">
+      <div className="text-xs font-medium text-slate-500 mb-2">{inicial ? "Editar usuário" : "Novo usuário"}</div>
+      <div className="space-y-2">
+        <Field label="Nome completo"><input value={nomeCompleto} onChange={(e) => setNomeCompleto(e.target.value.toUpperCase())} className="w-full border border-slate-300 rounded px-2 py-1 text-sm" /></Field>
+        <div className={isMobile ? "grid grid-cols-1 gap-2" : "grid grid-cols-2 gap-2"}>
+          <Field label="CPF"><input value={cpf} onChange={(e) => setCpf(formatarCPF(e.target.value))} inputMode="numeric" placeholder="000.000.000-00" className="w-full border border-slate-300 rounded px-2 py-1 text-sm" /></Field>
+          <Field label="Telefone"><input value={telefone} onChange={(e) => setTelefone(formatarTelefone(e.target.value))} inputMode="numeric" placeholder="(00) 00000-0000" className="w-full border border-slate-300 rounded px-2 py-1 text-sm" /></Field>
+        </div>
+        <Field label="Cargo"><input value={cargo} onChange={(e) => setCargo(e.target.value.toUpperCase())} className="w-full border border-slate-300 rounded px-2 py-1 text-sm" /></Field>
+        <Field label="E-mail"><input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1 text-sm" /></Field>
+        <Field label="Nível de acesso">
+          <select value={nivelAcesso} onChange={(e) => setNivelAcesso(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1 text-sm">
+            {NIVEIS_ACESSO.map((n) => <option key={n} value={n}>{n}</option>)}
+          </select>
+        </Field>
+        {precisaConselho && (
+          <Field label="Conselho">
+            <select value={conselhoId} onChange={(e) => setConselhoId(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1 text-sm">
+              <option value="">Selecione</option>
+              {conselhos.map((c) => <option key={c.id} value={c.id}>{c.nomeConselho}</option>)}
+            </select>
+          </Field>
+        )}
+      </div>
+      {erro && <div className="text-xs text-red-600 mt-2">{erro}</div>}
+      <div className="flex gap-2 mt-3">
+        <PrimaryButton onClick={salvar}><CheckCircle2 size={14} /> Salvar</PrimaryButton>
+        <GhostButton onClick={onCancelar}>Cancelar</GhostButton>
+      </div>
+    </Card>
+  );
+}
+
+function AdminView({ db, setDb, menuAberto, setMenuAberto, usuarioLogado }) {
+  const [tab, setTab] = useState("dashboard");
+  const isMobile = useIsMobile();
+  const { conselhoById, categoriaById } = useLookups(db);
+  const [conselhoEscolhido, setConselhoEscolhido] = useState({});
+
+  const [mostrarNovoUsuario, setMostrarNovoUsuario] = useState(false);
+  const [editandoUsuarioId, setEditandoUsuarioId] = useState(null);
+  const [confirmarExclusaoUsuarioId, setConfirmarExclusaoUsuarioId] = useState(null);
+
+  const [mostrarNovoConselhoAdmin, setMostrarNovoConselhoAdmin] = useState(false);
+  const [editandoConselhoIdAdmin, setEditandoConselhoIdAdmin] = useState(null);
+  const inputBackupRef = useRef(null);
+  const [mensagemBackup, setMensagemBackup] = useState(null);
+
+  function exportarBackupDados() {
+    const conteudo = JSON.stringify(db, null, 2);
+    const blob = new Blob([conteudo], { type: "application/json;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `backup_sistema_paf_${todayISO()}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    registrarHistorico(setDb, { perfil: "Administrador Geral", usuario: usuarioLogado?.nomeCompleto || "Administrador", conselhoId: null, conselhoNome: null, acao: "Exportou um backup completo dos dados" });
+  }
+
+  function importarBackupDados(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      try {
+        const dados = JSON.parse(evt.target.result);
+        if (!dados || !Array.isArray(dados.conselhos)) throw new Error("formato inválido");
+        setDb(dados);
+        setMensagemBackup("Backup importado com sucesso.");
+        registrarHistorico(setDb, { perfil: "Administrador Geral", usuario: usuarioLogado?.nomeCompleto || "Administrador", conselhoId: null, conselhoNome: null, acao: "Importou um backup de dados" });
+      } catch (err) {
+        setMensagemBackup("Não foi possível importar o arquivo — verifique se é um backup válido do sistema.");
+      }
+    };
+    reader.readAsText(file);
+    if (inputBackupRef.current) inputBackupRef.current.value = "";
+  }
+
+  const [confirmarExclusaoConselhoAdmin, setConfirmarExclusaoConselhoAdmin] = useState(null);
+
+  const pendentes = db.usuarios.filter((u) => u.status === "pendente");
+  const nomeAdmin = usuarioLogado?.nomeCompleto || "Administrador";
+
+  async function aprovar(id) {
+    const usuario = db.usuarios.find((u) => u.id === id);
+    const precisaConselho = usuario?.nivelAcesso === "Presidente do conselho" || usuario?.nivelAcesso === "Assessor educacional administrativo financeiro";
+    const conselhoId = precisaConselho ? Number(conselhoEscolhido[id]) : null;
+    if (precisaConselho && !conselhoEscolhido[id]) return;
+    setDb((prev) => ({ ...prev, usuarios: prev.usuarios.map((u) => (u.id === id ? { ...u, status: "ativo", conselhoId } : u)) }));
+    const resultado = await apiChamar({ action: "aprovarCadastro", usuarioId: id, conselhoId: conselhoId || "" });
+    if (!resultado?.ok) { alert(`Não foi possível aprovar o cadastro. ${resultado?.erro ? "Detalhe: " + resultado.erro : "Verifique se o Apps Script foi implantado com a versão mais recente."}`); return; }
+    registrarHistorico(setDb, { perfil: "Administrador Geral", usuario: nomeAdmin, conselhoId, conselhoNome: conselhoById[conselhoId]?.nomeConselho || null, acao: `Aprovou o cadastro de ${usuario?.nomeCompleto} (${usuario?.nivelAcesso})` });
+    alert(`Cadastro de ${usuario?.nomeCompleto} aprovado! Um e-mail com o login e a senha foi enviado para ${usuario?.email}.`);
+  }
+  function reprovar(id) {
+    const usuario = db.usuarios.find((u) => u.id === id);
+    setDb((prev) => ({ ...prev, usuarios: prev.usuarios.map((u) => (u.id === id ? { ...u, status: "reprovado" } : u)) }));
+    apiAtualizar("usuarios", id, { status: "reprovado" });
+    registrarHistorico(setDb, { perfil: "Administrador Geral", usuario: nomeAdmin, conselhoId: usuario?.conselhoId || null, conselhoNome: conselhoById[usuario?.conselhoId]?.nomeConselho || null, acao: `Reprovou o cadastro de ${usuario?.nomeCompleto} (${usuario?.nivelAcesso})` });
+  }
+  function alternarStatus(id) {
+    const usuario = db.usuarios.find((u) => u.id === id);
+    const novoStatus = usuario?.status === "ativo" ? "inativo" : "ativo";
+    setDb((prev) => ({ ...prev, usuarios: prev.usuarios.map((u) => (u.id === id ? { ...u, status: novoStatus } : u)) }));
+    apiAtualizar("usuarios", id, { status: novoStatus });
+    registrarHistorico(setDb, { perfil: "Administrador Geral", usuario: nomeAdmin, conselhoId: usuario?.conselhoId || null, conselhoNome: conselhoById[usuario?.conselhoId]?.nomeConselho || null, acao: `${novoStatus === "ativo" ? "Ativou" : "Desativou"} o acesso de ${usuario?.nomeCompleto}` });
+  }
+
+  async function cadastrarUsuario(dados) {
+    const resultado = await apiChamar({ action: "criarUsuarioAdmin", dados: { ...dados, conselhoId: dados.conselhoId || "" } });
+    if (!resultado?.ok) { alert("Não foi possível cadastrar o usuário. Tente novamente."); return; }
+    const id = genId();
+    setDb((prev) => ({ ...prev, usuarios: [...prev.usuarios, { id, ...dados, login: resultado.login, status: "ativo" }] }));
+    setMostrarNovoUsuario(false);
+    registrarHistorico(setDb, { perfil: "Administrador Geral", usuario: nomeAdmin, conselhoId: dados.conselhoId, conselhoNome: conselhoById[dados.conselhoId]?.nomeConselho || null, acao: `Cadastrou o usuário ${dados.nomeCompleto} (${dados.nivelAcesso})` });
+    alert(`Usuário criado!\n\nLogin: ${resultado.login}\nSenha: ${resultado.senha}\n\nAnote agora — a senha não poderá ser vista de novo (só redefinida).`);
+  }
+
+  function salvarEdicaoUsuario(id, dados) {
+    setDb((prev) => ({ ...prev, usuarios: prev.usuarios.map((u) => (u.id === id ? { ...u, ...dados } : u)) }));
+    setEditandoUsuarioId(null);
+    apiAtualizar("usuarios", id, { nomeCompleto: dados.nomeCompleto, cpf: dados.cpf, telefone: dados.telefone, cargo: dados.cargo, email: dados.email, nivelAcesso: dados.nivelAcesso, conselhoId: dados.conselhoId || "" });
+    registrarHistorico(setDb, { perfil: "Administrador Geral", usuario: nomeAdmin, conselhoId: dados.conselhoId, conselhoNome: conselhoById[dados.conselhoId]?.nomeConselho || null, acao: `Editou o cadastro de ${dados.nomeCompleto}` });
+  }
+
+  async function redefinirSenha(id) {
+    const usuario = db.usuarios.find((u) => u.id === id);
+    const resultado = await apiChamar({ action: "redefinirSenhaAdmin", usuarioId: id });
+    if (!resultado?.ok) { alert(`Não foi possível redefinir a senha. ${resultado?.erro ? "Detalhe: " + resultado.erro : "Verifique se o Apps Script foi implantado com a versão mais recente."}`); return; }
+    registrarHistorico(setDb, { perfil: "Administrador Geral", usuario: nomeAdmin, conselhoId: usuario?.conselhoId || null, conselhoNome: conselhoById[usuario?.conselhoId]?.nomeConselho || null, acao: `Redefiniu a senha de ${usuario?.nomeCompleto}` });
+    alert(`Nova senha de ${usuario?.nomeCompleto}: ${resultado.senha}\n\nAnote agora — não será possível ver de novo.`);
+  }
+
+  function excluirUsuarioPermanente(id) {
+    const usuario = db.usuarios.find((u) => u.id === id);
+    setDb((prev) => ({ ...prev, usuarios: prev.usuarios.filter((u) => u.id !== id) }));
+    setConfirmarExclusaoUsuarioId(null);
+    apiExcluir("usuarios", id);
+    registrarHistorico(setDb, { perfil: "Administrador Geral", usuario: nomeAdmin, conselhoId: usuario?.conselhoId || null, conselhoNome: conselhoById[usuario?.conselhoId]?.nomeConselho || null, acao: `Excluiu permanentemente o usuário ${usuario?.nomeCompleto}` });
+  }
+
+  function cadastrarConselhoAdmin(dados) {
+    const id = genId();
+    setDb((prev) => ({ ...prev, conselhos: [...prev.conselhos, { id, ...dados }], categoriasPorConselho: { ...prev.categoriasPorConselho, [id]: [] } }));
+    setMostrarNovoConselhoAdmin(false);
+    apiInserir("conselhos", { id, nomeConselho: dados.nomeConselho, escolas: (dados.escolas || []).join(";"), cnpj: dados.cnpj, presidente: dados.presidente, tesoureiro: dados.tesoureiro || "", vencimento: dados.vencimento });
+    registrarHistorico(setDb, { perfil: "Administrador Geral", usuario: nomeAdmin, conselhoId: id, conselhoNome: dados.nomeConselho, acao: `Cadastrou o conselho ${dados.nomeConselho}` });
+  }
+  function salvarEdicaoConselhoAdmin(id, dados) {
+    setDb((prev) => ({ ...prev, conselhos: prev.conselhos.map((c) => (c.id === id ? { ...c, ...dados } : c)) }));
+    setEditandoConselhoIdAdmin(null);
+    apiAtualizar("conselhos", id, { nomeConselho: dados.nomeConselho, escolas: (dados.escolas || []).join(";"), cnpj: dados.cnpj, presidente: dados.presidente, tesoureiro: dados.tesoureiro || "", vencimento: dados.vencimento });
+    registrarHistorico(setDb, { perfil: "Administrador Geral", usuario: nomeAdmin, conselhoId: id, conselhoNome: dados.nomeConselho, acao: `Editou o cadastro do conselho ${dados.nomeConselho}` });
+  }
+  function excluirConselhoAdmin(id) {
+    const conselho = db.conselhos.find((c) => c.id === id);
+    const repasseIds = db.repasses.filter((r) => r.conselhoId === id).map((r) => r.id);
+    setDb((prev) => {
+      const { [id]: _, ...restoCategorias } = prev.categoriasPorConselho;
+      return {
+        ...prev,
+        conselhos: prev.conselhos.filter((c) => c.id !== id),
+        categoriasPorConselho: restoCategorias,
+        repasses: prev.repasses.filter((r) => r.conselhoId !== id),
+        planos: prev.planos.filter((p) => !repasseIds.includes(p.repasseId)),
+        lancamentos: prev.lancamentos.filter((l) => l.conselhoId !== id),
+        remanejamentos: prev.remanejamentos.filter((r) => r.conselhoId !== id),
+      };
+    });
+    setConfirmarExclusaoConselhoAdmin(null);
+    apiExcluir("conselhos", id);
+    apiExcluirEmCascata("categorias", "conselhoId", id);
+    apiExcluirEmCascata("repasses", "conselhoId", id);
+    apiExcluirEmCascata("lancamentos", "conselhoId", id);
+    apiExcluirEmCascata("remanejamentos", "conselhoId", id);
+    repasseIds.forEach((rid) => {
+      apiExcluirEmCascata("planoItens", "repasseId", rid);
+      apiExcluirEmCascata("arquivosPlano", "repasseId", rid);
+    });
+    registrarHistorico(setDb, { perfil: "Administrador Geral", usuario: nomeAdmin, conselhoId: null, conselhoNome: null, acao: `Excluiu o conselho ${conselho?.nomeConselho || ""}` });
+  }
+
+  const totalRepassado = db.repasses.reduce((s, r) => s + r.custeio + r.capital, 0);
+  const totalExecutado = db.lancamentos.filter((l) => l.status !== "aguardando autorização").reduce((s, l) => s + l.valor, 0);
+  const repassesAguardando = db.repasses.filter((r) => !r.valoresDefinidos).length;
+  const usuariosAtivos = db.usuarios.filter((u) => u.status === "ativo").length;
+  const lancamentosPendencia = db.lancamentos.filter((l) => l.status === "com pendência").length;
+  const remanejamentosPendentes = db.remanejamentos.filter((r) => r.status === "solicitado").length;
+
+  const todasCategoriasAdmin = Object.entries(db.categoriasPorConselho).flatMap(([cId, cats]) => cats.map((c) => ({ ...c, conselhoId: Number(cId) })));
+  const fontesPersonalizadoAdmin = {
+    conselhos: {
+      label: "Conselhos",
+      colunas: [
+        { chave: "nomeConselho", label: "Conselho", tipo: "texto" },
+        { chave: "escolas", label: "Escolas", tipo: "texto" },
+        { chave: "cnpj", label: "CNPJ", tipo: "texto" },
+        { chave: "presidente", label: "Presidente", tipo: "texto" },
+        { chave: "tesoureiro", label: "Tesoureiro", tipo: "texto" },
+        { chave: "vencimento", label: "Vencimento", tipo: "texto" },
+        { chave: "diasRestantes", label: "Dias restantes", tipo: "numero" },
+      ],
+      linhas: db.conselhos.map((c) => ({ nomeConselho: c.nomeConselho, escolas: c.escolas.join(", "), cnpj: c.cnpj, presidente: c.presidente, tesoureiro: c.tesoureiro || "-", vencimento: displayDate(c.vencimento), diasRestantes: diasRestantes(c.vencimento) ?? 0 })),
+    },
+    usuarios: {
+      label: "Usuários",
+      colunas: [
+        { chave: "nomeCompleto", label: "Nome", tipo: "texto" },
+        { chave: "nivelAcesso", label: "Nível de acesso", tipo: "texto" },
+        { chave: "conselho", label: "Conselho", tipo: "texto" },
+        { chave: "login", label: "Login", tipo: "texto" },
+        { chave: "status", label: "Status", tipo: "texto" },
+      ],
+      linhas: db.usuarios.map((u) => ({ nomeCompleto: u.nomeCompleto, nivelAcesso: u.nivelAcesso, conselho: conselhoById[u.conselhoId]?.nomeConselho || "-", login: u.login, status: u.status })),
+    },
+    repasses: {
+      label: "Repasses",
+      colunas: [
+        { chave: "conselho", label: "Conselho", tipo: "texto" },
+        { chave: "descricao", label: "Repasse", tipo: "texto" },
+        { chave: "data", label: "Data", tipo: "texto" },
+        { chave: "custeio", label: "Custeio", tipo: "numero", moeda: true },
+        { chave: "capital", label: "Capital", tipo: "numero", moeda: true },
+        { chave: "total", label: "Total", tipo: "numero", moeda: true },
+      ],
+      linhas: db.repasses.map((r) => ({ conselho: conselhoById[r.conselhoId]?.nomeConselho, descricao: r.descricao, data: displayDate(r.data), custeio: r.custeio, capital: r.capital, total: r.custeio + r.capital })),
+    },
+    categorias: {
+      label: "Categorias (previsto x executado)",
+      colunas: [
+        { chave: "conselho", label: "Conselho", tipo: "texto" },
+        { chave: "nome", label: "Categoria", tipo: "texto" },
+        { chave: "tipo", label: "Tipo", tipo: "texto" },
+        { chave: "subtipo", label: "Subcategoria", tipo: "texto" },
+        { chave: "previsto", label: "Previsto", tipo: "numero", moeda: true },
+        { chave: "executado", label: "Executado", tipo: "numero", moeda: true },
+        { chave: "saldo", label: "Saldo", tipo: "numero", moeda: true },
+      ],
+      linhas: todasCategoriasAdmin.map((c) => {
+        const previsto = db.planos.filter((p) => db.repasses.some((r) => r.id === p.repasseId && r.conselhoId === c.conselhoId)).flatMap((p) => p.itens).filter((i) => i.categoriaId === c.id).reduce((s, i) => s + i.valorPrevisto, 0);
+        const executado = db.lancamentos.filter((l) => l.categoriaId === c.id && l.status !== "aguardando autorização").reduce((s, l) => s + l.valor, 0);
+        return { conselho: conselhoById[c.conselhoId]?.nomeConselho, nome: c.nome, tipo: c.tipo, subtipo: c.subtipo || "-", previsto, executado, saldo: previsto - executado };
+      }),
+    },
+    lancamentos: {
+      label: "Lançamentos",
+      colunas: [
+        { chave: "conselho", label: "Conselho", tipo: "texto" },
+        { chave: "categoria", label: "Categoria", tipo: "texto" },
+        { chave: "data", label: "Data", tipo: "texto" },
+        { chave: "fornecedor", label: "Fornecedor", tipo: "texto" },
+        { chave: "numeroNF", label: "Nº NF", tipo: "texto" },
+        { chave: "valor", label: "Valor", tipo: "numero", moeda: true },
+        { chave: "status", label: "Status", tipo: "texto" },
+      ],
+      linhas: db.lancamentos.map((l) => ({ conselho: conselhoById[l.conselhoId]?.nomeConselho, categoria: categoriaById[l.categoriaId]?.nome, data: displayDate(l.data), fornecedor: l.fornecedor || "-", numeroNF: l.numeroNF || "-", valor: l.valor, status: l.status })),
+    },
+    remanejamentos: {
+      label: "Remanejamentos",
+      colunas: [
+        { chave: "conselho", label: "Conselho", tipo: "texto" },
+        { chave: "origem", label: "De", tipo: "texto" },
+        { chave: "destino", label: "Para", tipo: "texto" },
+        { chave: "valor", label: "Valor", tipo: "numero", moeda: true },
+        { chave: "status", label: "Status", tipo: "texto" },
+        { chave: "justificativa", label: "Justificativa", tipo: "texto" },
+      ],
+      linhas: db.remanejamentos.map((r) => ({ conselho: conselhoById[r.conselhoId]?.nomeConselho, origem: categoriaById[r.origemId]?.nome, destino: categoriaById[r.destinoId]?.nome, valor: r.valor, status: r.status, justificativa: r.justificativa })),
+    },
+    historico: {
+      label: "Histórico",
+      colunas: [
+        { chave: "conselho", label: "Conselho", tipo: "texto" },
+        { chave: "dataHora", label: "Data/Hora", tipo: "texto" },
+        { chave: "perfil", label: "Perfil", tipo: "texto" },
+        { chave: "acao", label: "Ação", tipo: "texto" },
+      ],
+      linhas: (db.historicoGeral || []).map((h) => ({ conselho: h.conselhoNome || "-", dataHora: h.dataHora, perfil: h.perfil, acao: h.acao })),
+    },
+  };
+
+  const tabs = [
+    { id: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+    { id: "solicitacoes", label: `Solicitações${pendentes.length ? ` (${pendentes.length})` : ""}`, icon: CheckCircle2 },
+    { id: "usuarios", label: "Usuários", icon: Users },
+    { id: "conselhos", label: "Conselhos", icon: Landmark },
+    { id: "relatorios", label: "Relatórios", icon: BarChart3 },
+    { id: "historico", label: "Histórico", icon: History },
+  ];
+
+  return (
+    <div className={isMobile ? "flex flex-col gap-4" : "flex flex-row gap-6"}>
+      <NavAbas tabs={tabs} tab={tab} setTab={setTab} isMobile={isMobile} menuAberto={menuAberto} setMenuAberto={setMenuAberto} />
+
+      <div className="flex-1 min-w-0">
+        {tab === "dashboard" && (
+          <div>
+            <SectionTitle icon={LayoutDashboard}>Dashboard geral do sistema</SectionTitle>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+              <Card className="bg-teal-50 border-teal-100"><div className="text-xs text-teal-700">Total repassado</div><div className="text-lg font-semibold text-teal-800">{brl(totalRepassado)}</div></Card>
+              <Card className="bg-orange-50 border-orange-100"><div className="text-xs text-orange-700">Total executado</div><div className="text-lg font-semibold text-orange-800">{brl(totalExecutado)}</div></Card>
+              <Card className="bg-purple-50 border-purple-100"><div className="text-xs text-purple-700">Saldo consolidado</div><div className="text-lg font-semibold text-purple-800">{brl(totalRepassado - totalExecutado)}</div></Card>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+              <Card><div className="text-xs text-slate-500">Conselhos</div><div className="text-lg font-medium text-slate-800">{db.conselhos.length}</div></Card>
+              <Card><div className="text-xs text-slate-500">Usuários ativos</div><div className="text-lg font-medium text-slate-800">{usuariosAtivos}</div></Card>
+              <Card><div className="text-xs text-slate-500">Solicitações pendentes</div><div className="text-lg font-medium text-slate-800">{pendentes.length}</div></Card>
+              <Card><div className="text-xs text-slate-500">Repasses aguardando análise/valores</div><div className="text-lg font-medium text-slate-800">{repassesAguardando}</div></Card>
+              <Card><div className="text-xs text-slate-500">Remanejamentos pendentes</div><div className="text-lg font-medium text-slate-800">{remanejamentosPendentes}</div></Card>
+              <Card><div className="text-xs text-slate-500">Lançamentos com pendência</div><div className="text-lg font-medium text-slate-800">{lancamentosPendencia}</div></Card>
+            </div>
+            <SectionTitle icon={Landmark}>Por conselho</SectionTitle>
+            <div className="space-y-2">
+              {db.conselhos.map((c) => {
+                const reps = db.repasses.filter((r) => r.conselhoId === c.id);
+                const repassado = reps.reduce((s, r) => s + r.custeio + r.capital, 0);
+                const executado = db.lancamentos.filter((l) => l.conselhoId === c.id && l.status !== "aguardando autorização").reduce((s, l) => s + l.valor, 0);
+                return (
+                  <Card key={c.id}>
+                    <div className="flex items-center justify-between flex-wrap gap-2">
+                      <div className="text-sm text-slate-800">{c.nomeConselho}</div>
+                      <div className="text-xs text-slate-500">Repassado {brl(repassado)} · Executado {brl(executado)} · Saldo {brl(repassado - executado)}</div>
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
+
+            <Card className="my-6">
+              <div className="text-xs font-medium text-slate-500 mb-2">Execução ao longo do tempo (todos os conselhos)</div>
+              {(() => {
+                const dadosMes = agruparLancamentosPorMes(db.lancamentos);
+                return dadosMes.length === 0 ? <div className="text-sm text-slate-500 py-10 text-center">Nenhuma despesa lançada ainda.</div> : (
+                  <ResponsiveContainer width="100%" height={220}>
+                    <LineChart data={dadosMes}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                      <XAxis dataKey="mes" tick={{ fontSize: 11 }} />
+                      <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `${v / 1000}k`} />
+                      <Tooltip formatter={(v) => brl(v)} />
+                      <Line type="monotone" dataKey="Executado" stroke="#0f766e" strokeWidth={2} dot={{ r: 3 }} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                );
+              })()}
+            </Card>
+
+            <SectionTitle icon={FileDown}>Backup dos dados</SectionTitle>
+            <Card>
+              <div className="text-xs text-slate-500 mb-3">Como este protótipo não usa um banco de dados real, exporte um backup para guardar o estado atual, ou importe um backup salvo anteriormente para restaurar.</div>
+              <div className="flex flex-wrap gap-2">
+                <GhostButton onClick={exportarBackupDados}><FileDown size={12} /> Exportar backup</GhostButton>
+                <GhostButton onClick={() => inputBackupRef.current?.click()}><Save size={12} /> Importar backup</GhostButton>
+                <input ref={inputBackupRef} type="file" accept="application/json" onChange={importarBackupDados} className="hidden" />
+              </div>
+              {mensagemBackup && <div className="text-xs text-slate-600 mt-2">{mensagemBackup}</div>}
+            </Card>
+          </div>
+        )}
+
+        {tab === "solicitacoes" && (
+          <div>
+            <SectionTitle icon={CheckCircle2}>Solicitações de cadastro pendentes</SectionTitle>
+            {pendentes.length === 0 ? <div className="text-sm text-slate-500">Nenhuma solicitação pendente.</div> : (
+              <div className="space-y-2">
+                {pendentes.map((u) => {
+                  const precisaConselho = u.nivelAcesso === "Presidente do conselho" || u.nivelAcesso === "Assessor educacional administrativo financeiro";
+                  return (
+                    <Card key={u.id}>
+                      <div className="flex items-center justify-between flex-wrap gap-2">
+                        <div>
+                          <div className="text-sm font-medium text-slate-800">{u.nomeCompleto} — {u.nivelAcesso}</div>
+                          <div className="text-xs text-slate-500">CPF {u.cpf} · {u.telefone} · {u.email} · Cargo: {u.cargo}</div>
+                          <div className="text-xs text-slate-500">Login: <span className="font-medium">{u.login}</span></div>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-2">
+                          {precisaConselho && (
+                            <select value={conselhoEscolhido[u.id] || ""} onChange={(e) => setConselhoEscolhido((prev) => ({ ...prev, [u.id]: e.target.value }))} className="border border-slate-300 rounded px-2 py-1 text-sm">
+                              <option value="">Selecione o conselho</option>
+                              {db.conselhos.map((c) => <option key={c.id} value={c.id}>{c.nomeConselho}</option>)}
+                            </select>
+                          )}
+                          <GhostButton tone="green" onClick={() => aprovar(u.id)} disabled={precisaConselho && !conselhoEscolhido[u.id]}><CheckCircle2 size={13} /> Aprovar</GhostButton>
+                          <GhostButton tone="red" onClick={() => reprovar(u.id)}><XCircle size={13} /> Reprovar</GhostButton>
+                        </div>
+                      </div>
+                    </Card>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
+
+        {tab === "usuarios" && (
+          <div>
+            <SectionTitle icon={Users}>Usuários do sistema</SectionTitle>
+            {mostrarNovoUsuario ? (
+              <UsuarioForm conselhos={db.conselhos} onSalvar={cadastrarUsuario} onCancelar={() => setMostrarNovoUsuario(false)} />
+            ) : (
+              <div className="mb-3"><PrimaryButton onClick={() => setMostrarNovoUsuario(true)}><Plus size={14} /> Novo usuário</PrimaryButton></div>
+            )}
+            <div className="space-y-2">
+              {db.usuarios.filter((u) => u.status !== "pendente").map((u) => (
+                editandoUsuarioId === u.id ? (
+                  <UsuarioForm key={u.id} inicial={u} conselhos={db.conselhos} onSalvar={(dados) => salvarEdicaoUsuario(u.id, dados)} onCancelar={() => setEditandoUsuarioId(null)} />
+                ) : (
+                  <Card key={u.id}>
+                    <div className="flex items-center justify-between flex-wrap gap-2">
+                      <div className="flex items-center gap-2.5">
+                        <UserCircle size={28} className="text-slate-300 shrink-0" />
+                        <div>
+                          <div className="text-sm font-medium text-slate-800">{u.nomeCompleto} — {u.nivelAcesso}</div>
+                          <div className="text-xs text-slate-500">Login: {u.login} · {u.email}{u.conselhoId && ` · ${conselhoById[u.conselhoId]?.nomeConselho}`}</div>
+                        </div>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <Badge status={u.status} />
+                        <GhostButton onClick={() => redefinirSenha(u.id)}><Save size={12} /> Redefinir senha</GhostButton>
+                        <GhostButton onClick={() => setEditandoUsuarioId(u.id)}><Pencil size={12} /> Editar</GhostButton>
+                        <GhostButton tone={u.status === "ativo" ? "red" : "green"} onClick={() => alternarStatus(u.id)}>{u.status === "ativo" ? "Desativar" : "Ativar"}</GhostButton>
+                        {confirmarExclusaoUsuarioId === u.id ? (
+                          <>
+                            <GhostButton tone="red" onClick={() => excluirUsuarioPermanente(u.id)}>Confirmar exclusão</GhostButton>
+                            <GhostButton onClick={() => setConfirmarExclusaoUsuarioId(null)}>Cancelar</GhostButton>
+                          </>
+                        ) : (
+                          <GhostButton tone="red" onClick={() => setConfirmarExclusaoUsuarioId(u.id)}><Trash2 size={12} /> Excluir</GhostButton>
+                        )}
+                      </div>
+                    </div>
+                  </Card>
+                )
+              ))}
+            </div>
+          </div>
+        )}
+
+        {tab === "conselhos" && (
+          <div>
+            <SectionTitle icon={Landmark}>Conselhos escolares</SectionTitle>
+            {mostrarNovoConselhoAdmin ? (
+              <ConselhoForm onSalvar={cadastrarConselhoAdmin} onCancelar={() => setMostrarNovoConselhoAdmin(false)} />
+            ) : (
+              <div className="mb-3"><PrimaryButton onClick={() => setMostrarNovoConselhoAdmin(true)}><Plus size={14} /> Novo conselho</PrimaryButton></div>
+            )}
+            <div className="space-y-2">
+              {db.conselhos.map((c) => (
+                editandoConselhoIdAdmin === c.id ? (
+                  <ConselhoForm key={c.id} inicial={c} onSalvar={(dados) => salvarEdicaoConselhoAdmin(c.id, dados)} onCancelar={() => setEditandoConselhoIdAdmin(null)} />
+                ) : (
+                  <Card key={c.id}>
+                    <div className="flex items-center justify-between flex-wrap gap-2">
+                      <div>
+                        <div className="text-sm font-medium text-slate-800">{c.nomeConselho}</div>
+                        <div className="text-xs text-slate-500 flex items-center gap-1 mt-0.5"><School size={12} /> {c.escolas.join(", ")}</div>
+                        <div className="text-xs text-slate-500 mt-0.5">CNPJ {c.cnpj} · Presidente: {c.presidente}{c.tesoureiro && ` · Tesoureiro: ${c.tesoureiro}`}</div>
+                      </div>
+                      <div className="flex flex-col items-end gap-2">
+                        <VencimentoBadge vencimento={c.vencimento} />
+                        <div className="flex gap-2">
+                          <GhostButton onClick={() => setEditandoConselhoIdAdmin(c.id)}><Pencil size={12} /> Editar</GhostButton>
+                          {confirmarExclusaoConselhoAdmin === c.id ? (
+                            <>
+                              <GhostButton tone="red" onClick={() => excluirConselhoAdmin(c.id)}>Confirmar exclusão</GhostButton>
+                              <GhostButton onClick={() => setConfirmarExclusaoConselhoAdmin(null)}>Cancelar</GhostButton>
+                            </>
+                          ) : (
+                            <GhostButton tone="red" onClick={() => setConfirmarExclusaoConselhoAdmin(c.id)}><Trash2 size={12} /> Excluir</GhostButton>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                )
+              ))}
+            </div>
+          </div>
+        )}
+
+        {tab === "relatorios" && (
+          <div className="space-y-4">
+            <SectionTitle icon={BarChart3}>Relatórios</SectionTitle>
+            <Card>
+              <div className="flex items-center justify-between mb-1">
+                <div className="text-sm font-medium text-slate-800">Consolidado por conselho</div>
+                <ReportButtons
+                  titulo="Relatório consolidado por conselho"
+                  nomeArquivo="relatorio_consolidado_admin"
+                  header={["Conselho", "Repassado", "Executado", "Saldo"]}
+                  linhas={db.conselhos.map((c) => {
+                    const reps = db.repasses.filter((r) => r.conselhoId === c.id);
+                    const repassado = reps.reduce((s, r) => s + r.custeio + r.capital, 0);
+                    const executado = db.lancamentos.filter((l) => l.conselhoId === c.id && l.status !== "aguardando autorização").reduce((s, l) => s + l.valor, 0);
+                    return [c.nomeConselho, brl(repassado), brl(executado), brl(repassado - executado)];
+                  })}
+                />
+              </div>
+              <div className="text-xs text-slate-500">Total repassado, executado e saldo de cada conselho.</div>
+            </Card>
+            <RelatorioPersonalizado fontes={fontesPersonalizadoAdmin} />
+          </div>
+        )}
+
+        {tab === "historico" && (() => {
+          const entradas = (db.historicoGeral || []).slice().reverse();
+          return (
+            <div>
+              <SectionTitle icon={History}>Histórico geral de modificações</SectionTitle>
+              {entradas.length === 0 ? <div className="text-sm text-slate-500">Nenhuma modificação registrada ainda.</div> : (
+                <div className="space-y-1.5">
+                  {entradas.map((h) => (
+                    <div key={h.id} className="bg-white border border-slate-200 rounded-md px-3 py-2 text-sm">
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-800">{h.acao}</span>
+                        <span className="text-xs text-slate-400">{h.dataHora}</span>
+                      </div>
+                      <div className="text-xs text-slate-500">{h.perfil}{h.conselhoNome ? ` · ${h.conselhoNome}` : ""}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })()}
+      </div>
+    </div>
+  );
+}
+
+// ================= APP =================
+function nivelParaPerfil(nivel) {
+  if (nivel === "Presidente do conselho" || nivel === "Assessor educacional administrativo financeiro") return "presidente";
+  if (nivel === "Coordenador") return "coordenador";
+  if (nivel === "Secretário") return "geral";
+  if (nivel === "Administrador Geral") return "admin";
+  return "presidente";
+}
+
+function getNotificacoes(db, usuarioLogado) {
+  if (!usuarioLogado) return [];
+  const nivel = usuarioLogado.nivelAcesso;
+  const notifs = [];
+  const conselhosVencendo = db.conselhos
+    .map((c) => ({ ...c, dias: diasRestantes(c.vencimento) }))
+    .filter((c) => c.dias !== null && c.dias <= 30);
+  const textoVencimento = (c) => (c.dias < 0 ? `${c.nomeConselho}: conselho vencido há ${Math.abs(c.dias)} dias` : `${c.nomeConselho}: conselho vence em ${c.dias} dias`);
+
+  if (nivel === "Presidente do conselho" || nivel === "Assessor educacional administrativo financeiro") {
+    const meusLancamentos = db.lancamentos.filter((l) => l.conselhoId === usuarioLogado.conselhoId);
+    const aguardando = meusLancamentos.filter((l) => l.status === "aguardando autorização").length;
+    if (nivel === "Presidente do conselho" && aguardando > 0) {
+      notifs.push({ id: "autorizacao", texto: `${aguardando} lançamento(s) aguardando sua autorização`, tipo: "urgente" });
+    }
+    const meuConselho = conselhosVencendo.find((c) => c.id === usuarioLogado.conselhoId);
+    if (meuConselho) notifs.push({ id: "vencimento", texto: textoVencimento(meuConselho), tipo: meuConselho.dias < 0 ? "urgente" : "aviso" });
+    const meusRepassesPendentes = db.repasses.filter((r) => r.conselhoId === usuarioLogado.conselhoId && !r.valoresDefinidos).length;
+    if (meusRepassesPendentes > 0) notifs.push({ id: "repasses", texto: `${meusRepassesPendentes} repasse(s) aguardando análise do Coordenador`, tipo: "info" });
+  }
+
+  if (nivel === "Coordenador") {
+    let arquivosPendentes = 0;
+    db.planos.forEach((p) => { arquivosPendentes += (p.arquivos || []).filter((a) => a.status === "aguardando aprovação").length; });
+    if (arquivosPendentes > 0) notifs.push({ id: "arquivos", texto: `${arquivosPendentes} arquivo(s) do Plano de Aplicação para analisar`, tipo: "urgente" });
+    const remSolicitados = db.remanejamentos.filter((r) => r.status === "solicitado").length;
+    if (remSolicitados > 0) notifs.push({ id: "remanejamentos", texto: `${remSolicitados} remanejamento(s) aguardando decisão`, tipo: "aviso" });
+    const comPendencia = db.lancamentos.filter((l) => l.status === "com pendência").length;
+    if (comPendencia > 0) notifs.push({ id: "pendencia", texto: `${comPendencia} lançamento(s) com pendência sinalizada`, tipo: "info" });
+    conselhosVencendo.forEach((c) => notifs.push({ id: `venc-${c.id}`, texto: textoVencimento(c), tipo: c.dias < 0 ? "urgente" : "aviso" }));
+  }
+
+  if (nivel === "Secretário") {
+    conselhosVencendo.forEach((c) => notifs.push({ id: `venc-${c.id}`, texto: textoVencimento(c), tipo: c.dias < 0 ? "urgente" : "aviso" }));
+  }
+
+  if (nivel === "Administrador Geral") {
+    const pendentes = db.usuarios.filter((u) => u.status === "pendente").length;
+    if (pendentes > 0) notifs.push({ id: "solicitacoes", texto: `${pendentes} solicitação(ões) de cadastro pendente(s)`, tipo: "urgente" });
+    conselhosVencendo.forEach((c) => notifs.push({ id: `venc-${c.id}`, texto: textoVencimento(c), tipo: c.dias < 0 ? "urgente" : "aviso" }));
+  }
+
+  return notifs;
+}
+
+function NotificacoesPanel({ notificacoes, onFechar }) {
+  return (
+    <div className="absolute right-0 top-full mt-2 w-80 max-w-[90vw] bg-white border border-slate-200 rounded-md shadow-lg p-3 z-50 text-slate-800">
+      <div className="flex items-center justify-between mb-2">
+        <div className="text-sm font-medium">Notificações</div>
+        <button onClick={onFechar} className="text-slate-400 hover:text-slate-600"><XCircle size={16} /></button>
+      </div>
+      {notificacoes.length === 0 ? (
+        <div className="text-xs text-slate-400 py-4 text-center">Nenhuma notificação no momento.</div>
+      ) : (
+        <div className="space-y-1.5 max-h-80 overflow-y-auto">
+          {notificacoes.map((n) => (
+            <div key={n.id} className={`text-xs px-2.5 py-2 rounded-md border ${n.tipo === "urgente" ? "bg-red-50 border-red-200 text-red-700" : n.tipo === "aviso" ? "bg-amber-50 border-amber-200 text-amber-700" : "bg-slate-50 border-slate-200 text-slate-600"}`}>
+              {n.texto}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function MeuPerfilPanel({ usuarioLogado, onSalvar, onFechar }) {
+  const [telefone, setTelefone] = useState(usuarioLogado.telefone || "");
+  const [email, setEmail] = useState(usuarioLogado.email || "");
+  const [novaSenha, setNovaSenha] = useState("");
+  const [confirmarSenha, setConfirmarSenha] = useState("");
+  const [erro, setErro] = useState(null);
+  const [sucesso, setSucesso] = useState(null);
+
+  function salvar() {
+    if (!telefone || !email) { setErro("Preencha todos os campos."); setSucesso(null); return; }
+    if (novaSenha && novaSenha !== confirmarSenha) { setErro("As senhas não coincidem."); setSucesso(null); return; }
+    setErro(null);
+    const dados = { telefone, email };
+    if (novaSenha) dados.senha = novaSenha;
+    onSalvar(dados);
+    setSucesso("Dados atualizados com sucesso.");
+    setNovaSenha("");
+    setConfirmarSenha("");
+  }
+
+  return (
+    <div className="absolute right-0 top-full mt-2 w-80 max-w-[90vw] bg-white border border-slate-200 rounded-md shadow-lg p-4 z-50 text-slate-800">
+      <div className="flex items-center gap-3 mb-3">
+        <UserCircle size={40} className="text-slate-300 shrink-0" />
+        <div>
+          <div className="text-sm font-medium">{usuarioLogado.nomeCompleto}</div>
+          <div className="text-xs text-slate-500">{usuarioLogado.nivelAcesso} · Login: {usuarioLogado.login}</div>
+        </div>
+      </div>
+      <div className="text-xs text-slate-500 bg-slate-50 border border-slate-200 rounded-md px-2.5 py-1.5 mb-3">Cargo: <span className="font-medium text-slate-700">{usuarioLogado.cargo}</span> <span className="text-slate-400">(alterado somente pelo Administrador Geral)</span></div>
+      <div className="space-y-2">
+        <Field label="Telefone"><input value={telefone} onChange={(e) => setTelefone(formatarTelefone(e.target.value))} inputMode="numeric" className="w-full border border-slate-300 rounded px-2 py-1 text-sm" /></Field>
+        <Field label="E-mail"><input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1 text-sm" /></Field>
+      </div>
+      <div className="border-t border-slate-100 mt-3 pt-3">
+        <div className="text-xs font-medium text-slate-500 mb-2">Trocar senha (opcional)</div>
+        <div className="space-y-2">
+          <Field label="Nova senha"><CampoSenha value={novaSenha} onChange={(e) => setNovaSenha(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1 text-sm" /></Field>
+          <Field label="Confirmar nova senha"><CampoSenha value={confirmarSenha} onChange={(e) => setConfirmarSenha(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1 text-sm" /></Field>
+        </div>
+      </div>
+      {erro && <div className="text-xs text-red-600 mt-3">{erro}</div>}
+      {sucesso && <div className="text-xs text-emerald-600 mt-3">{sucesso}</div>}
+      <div className="flex gap-2 mt-3">
+        <PrimaryButton onClick={salvar}><CheckCircle2 size={14} /> Salvar</PrimaryButton>
+        <GhostButton onClick={onFechar}>Fechar</GhostButton>
+      </div>
+    </div>
+  );
+}
+
+// URL do Google Apps Script (Etapa 1: conexão com a planilha real via Google Sheets)
+const API_URL = "https://script.google.com/macros/s/AKfycbzapyJq8X2fOXxp4RLelmXbYIZwin1XV2so7YIO_LvAqwZtZFgrHXkyZ1A3DirgMv-n1A/exec";
+
+function SistemaPAF() {
+  const [db, setDb] = useState(null);
+  const [carregando, setCarregando] = useState(true);
+  const [erroCarregamento, setErroCarregamento] = useState(null);
+  const [usuarioLogado, setUsuarioLogado] = useState(null);
+  const [telaAuth, setTelaAuth] = useState("login");
+  const [conselhoId, setConselhoId] = useState(1);
+  const [menuAberto, setMenuAberto] = useState(() => (typeof window !== "undefined" ? window.innerWidth >= 768 : true));
+  const [notifAberto, setNotifAberto] = useState(false);
+  const [perfilAberto, setPerfilAberto] = useState(false);
+
+  useEffect(() => {
+    fetch(`${API_URL}?action=getDb`)
+      .then((res) => res.json())
+      .then((dados) => {
+        if (dados.erro) throw new Error(dados.erro);
+        setDb(dados);
+        setCarregando(false);
+      })
+      .catch((err) => {
+        setErroCarregamento(err.message || "Não foi possível conectar à planilha. Usando dados de demonstração.");
+        setDb(initialDB);
+        setCarregando(false);
+      });
+  }, []);
+
+  if (carregando) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-100">
+        <div className="text-center">
+          <img src={LOGO_PAF_LOGIN} alt="Logo PAF" className="h-16 w-auto object-contain mx-auto mb-4" />
+          <div className="text-sm text-slate-500">Carregando dados da planilha...</div>
+        </div>
+      </div>
+    );
+  }
+
+  function handleLogin(usuario) {
+    setUsuarioLogado(usuario);
+    if (usuario.conselhoId) setConselhoId(usuario.conselhoId);
+  }
+
+  function handleLogout() {
+    setUsuarioLogado(null);
+    setTelaAuth("login");
+  }
+
+  async function handleRegistro(dados) {
+    const resultado = await apiChamar({ action: "registrarSolicitacaoCadastro", dados });
+    if (resultado?.ok) {
+      const id = genId();
+      setDb((prev) => ({ ...prev, usuarios: [...prev.usuarios, { id, ...dados, conselhoId: null, login: resultado.login, status: "pendente" }] }));
+    }
+    return resultado;
+  }
+
+  async function handleAtualizarPerfil(dados) {
+    setDb((prev) => ({ ...prev, usuarios: prev.usuarios.map((u) => (u.id === usuarioLogado.id ? { ...u, telefone: dados.telefone, email: dados.email } : u)) }));
+    setUsuarioLogado((prev) => ({ ...prev, telefone: dados.telefone, email: dados.email }));
+    await apiChamar({ action: "atualizarPerfilUsuario", usuarioId: usuarioLogado.id, dados: { telefone: dados.telefone, email: dados.email, novaSenha: dados.senha || "" } });
+    registrarHistorico(setDb, { perfil: usuarioLogado.nivelAcesso, usuario: usuarioLogado.nomeCompleto, conselhoId: usuarioLogado.conselhoId || null, conselhoNome: null, acao: "Atualizou os próprios dados de perfil" });
+  }
+
+  if (!usuarioLogado) {
+    return telaAuth === "login" ? (
+      <LoginPage usuarios={db.usuarios} onLogin={handleLogin} onIrParaRegistro={() => setTelaAuth("registro")} avisoOffline={erroCarregamento} />
+    ) : (
+      <RegistroPage onEnviar={handleRegistro} onVoltar={() => setTelaAuth("login")} />
+    );
+  }
+
+  const perfil = nivelParaPerfil(usuarioLogado.nivelAcesso);
+  const notificacoes = getNotificacoes(db, usuarioLogado);
+
+  return (
+    <div className="min-h-screen flex flex-col bg-slate-50">
+      <header className="bg-slate-900 text-white px-4 sm:px-6 py-3 sm:py-4">
+        <div className="flex items-center justify-between flex-wrap gap-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <button onClick={() => setMenuAberto((v) => !v)} className="text-white p-1.5 rounded-md hover:bg-slate-800 transition-colors" title="Abrir/fechar menu">
+              <Menu size={20} />
+            </button>
+            <img src={LOGO_PAF} alt="Logo PAF - Programa de Autonomia Financeira" className="h-8 sm:h-10 w-auto object-contain" />
+          </div>
+          <div className="flex items-center gap-3 text-xs">
+            <div className="relative">
+              <button onClick={() => { setNotifAberto((v) => !v); setPerfilAberto(false); }} className="relative text-white p-1.5 rounded-md hover:bg-slate-800 transition-colors" title="Notificações">
+                <Bell size={18} />
+                {notificacoes.length > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-[10px] leading-none rounded-full w-4 h-4 flex items-center justify-center">{notificacoes.length}</span>
+                )}
+              </button>
+              {notifAberto && <NotificacoesPanel notificacoes={notificacoes} onFechar={() => setNotifAberto(false)} />}
+            </div>
+            <div className="relative">
+              <button onClick={() => { setPerfilAberto((v) => !v); setNotifAberto(false); }} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                <div className="text-right max-w-[100px] sm:max-w-none">
+                  <div className="font-medium truncate">{usuarioLogado.nomeCompleto}</div>
+                  <div className="text-slate-400 truncate">{usuarioLogado.nivelAcesso}</div>
+                </div>
+                <UserCircle size={26} className="text-slate-300 shrink-0" />
+              </button>
+              {perfilAberto && <MeuPerfilPanel usuarioLogado={usuarioLogado} onSalvar={handleAtualizarPerfil} onFechar={() => setPerfilAberto(false)} />}
+            </div>
+            <button onClick={handleLogout} className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-md text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors">
+              <XCircle size={13} /> Sair
+            </button>
+          </div>
+        </div>
+      </header>
+      <main className="flex-1 p-3 sm:p-6">
+        {perfil === "presidente" && <PresidenteView db={db} setDb={setDb} conselhoId={conselhoId} setConselhoId={setConselhoId} menuAberto={menuAberto} setMenuAberto={setMenuAberto} usuarioLogado={usuarioLogado} />}
+        {perfil === "coordenador" && <CoordenadorView db={db} setDb={setDb} menuAberto={menuAberto} setMenuAberto={setMenuAberto} usuarioLogado={usuarioLogado} />}
+        {perfil === "geral" && <GeralView db={db} menuAberto={menuAberto} setMenuAberto={setMenuAberto} usuarioLogado={usuarioLogado} />}
+        {perfil === "admin" && <AdminView db={db} setDb={setDb} menuAberto={menuAberto} setMenuAberto={setMenuAberto} usuarioLogado={usuarioLogado} />}
+      </main>
+      <footer style={{ backgroundColor: "#171810" }} className="px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-2 shrink-0">
+        <div className="text-xs text-slate-400">Sistema PAF — Programa de Autonomia Financeira</div>
+        <img src={LOGO_DKN} alt="Logo DKN Sistemas" className="h-6 w-auto object-contain" />
+      </footer>
+    </div>
+  );
+}
+
+// ---------- Rede de segurança: evita tela branca se algo der erro ----------
+class ErroGeral extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { erro: null };
+  }
+  static getDerivedStateFromError(erro) {
+    return { erro };
+  }
+  componentDidCatch(erro, info) {
+    console.error("Erro capturado pela aplicação:", erro, info);
+  }
+  render() {
+    if (this.state.erro) {
+      return React.createElement(
+        "div",
+        { style: { minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 24, fontFamily: "sans-serif", textAlign: "center" } },
+        React.createElement(
+          "div",
+          null,
+          React.createElement("div", { style: { fontSize: 16, fontWeight: 600, marginBottom: 8 } }, "Ops, algo deu errado ao carregar esta parte do sistema."),
+          React.createElement("div", { style: { fontSize: 13, color: "#64748b", marginBottom: 12 } }, "Tente recarregar a página. Se o erro continuar, avise o suporte com a mensagem abaixo."),
+          React.createElement("pre", { style: { fontSize: 11, color: "#b91c1c", background: "#fef2f2", padding: 12, borderRadius: 6, maxWidth: 600, overflow: "auto", textAlign: "left" } }, String(this.state.erro && this.state.erro.message))
+        )
+      );
+    }
+    return this.props.children;
+  }
+}
+
+// ---------- Ponto de entrada ----------
+const raiz = ReactDOM.createRoot(document.getElementById("root"));
+raiz.render(React.createElement(ErroGeral, null, React.createElement(SistemaPAF)));
